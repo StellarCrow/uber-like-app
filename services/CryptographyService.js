@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const saltRounds = require('config').bcrypt_salt_rounds;
+const ServerError = require('../errors/ServerError');
 
 /** Class representing logic for cryptography functions */
 class CryptographyService {
@@ -14,7 +15,7 @@ class CryptographyService {
       const hash = await bcrypt.hash(password, salt);
       return hash;
     } catch (err) {
-      throw new Error(err.message);
+      throw new ServerError(err.message);
     }
   }
 }

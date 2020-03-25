@@ -31,6 +31,9 @@ router.post('/users', async (req, res) => {
     const user = await UserService.registrate(newUser);
     return res.status(201).json({user: user});
   } catch (err) {
+    if (err.name === 'ServerError') {
+      return res.status(500).json({error: err.message});
+    }
     return res.status(400).json({error: err.message});
   }
 });

@@ -1,4 +1,5 @@
 const User = require('./schemas/User');
+const ServerError = require('../errors/ServerError');
 
 /** Class representing logic for interaction with User model in database */
 class UserModel {
@@ -6,7 +7,7 @@ class UserModel {
    * Create new user in database.
    * @param {object} user - user's credentials for registration.
    * @return {Promise} - Promise object represents new created user.
-   * @throw {Error} - error while creating user.
+   * @throw {ServerError} - error while creating user.
    */
   async create(user) {
     const {email, password, role, name} = user;
@@ -15,7 +16,7 @@ class UserModel {
           return user;
         })
         .catch((err) => {
-          throw new Error(err.message);
+          throw new ServerError(err.message);
         });
   }
 
@@ -24,7 +25,7 @@ class UserModel {
    * @param {string} email - user's email.
    * @return {Promise} - Promise object represents status (true/false)
    * if user with email exists.
-   * @throw {Error} - error while finding user.
+   * @throw {ServerError} - error while finding user.
    */
   async isEmailUnique(email) {
     return User.findOne({email: email})
@@ -33,7 +34,7 @@ class UserModel {
           return true;
         })
         .catch((err) => {
-          throw new Error(err.message);
+          throw new ServerError(err.message);
         });
   }
 }
