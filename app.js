@@ -1,11 +1,13 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const logger = require('morgan');
 const mongoose = require('mongoose');
+const config = require('config');
 const PORT = process.env.PORT || '3000';
-// const MONGO_URI = require("./config/keys").mongoURI;
+const MONGO_URI = `mongodb://${config.dbConfig.host}:${config.dbConfig.port}/${config.dbConfig.dbName}`;
 
-mongoose.connect('mongodb://localhost:27017/uber', {
+mongoose.connect(MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -13,6 +15,7 @@ console.log(mongoose.connection.readyState);
 
 const registerRoute = require('./routes/api/registration');
 
+app.use(logger('dev'));
 app.use(cors());
 app.use(express.json());
 

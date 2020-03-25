@@ -1,0 +1,9 @@
+{
+    "dbConfig": {
+        "host": "localhost",
+        "port": "27017",
+        "dbName": "uber_like_app"
+    },
+    "bcrypt_salt_rounds": 8,
+    "jwt_secret": "secret"
+}
