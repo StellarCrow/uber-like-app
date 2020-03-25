@@ -18,6 +18,18 @@ class CryptographyService {
       throw new ServerError(err.message);
     }
   }
+
+  /**
+   * Hash password.
+   * @param {string} password - password to compare.
+   * @param {string} userPassword - user's password from db.
+   * @return {Promise} Promise object represents boolean result of comparing.
+   */
+  async comparePasswords(password, userPassword) {
+    return bcrypt.compare(password, userPassword).then((result) => {
+      return result;
+    });
+  }
 }
 
 module.exports = new CryptographyService();

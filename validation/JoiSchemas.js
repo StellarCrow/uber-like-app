@@ -4,7 +4,6 @@ const Joi = require('@hapi/joi');
 class JoiSchema {
   /**
    * Registrate user.
-   * @param {object} user - user's credentials for registration.
    * @return {Promise} Promise object represents new user.
    */
   registration() {
@@ -13,6 +12,17 @@ class JoiSchema {
       email: Joi.string().email().required(),
       password: Joi.string().required(),
       role: Joi.string().valid('driver', 'shipper').required(),
+    });
+  }
+
+  /**
+   * Sign in user.
+   * @return {Promise} Promise object represents new user.
+   */
+  authorization() {
+    return Joi.object({
+      email: Joi.string().email().required(),
+      password: Joi.string().required(),
     });
   }
 }

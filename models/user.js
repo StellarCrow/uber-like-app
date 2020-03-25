@@ -27,11 +27,27 @@ class UserModel {
    * if user with email exists.
    * @throw {ServerError} - error while finding user.
    */
-  async isEmailUnique(email) {
+  async isEmailExists(email) {
     return User.findOne({email: email})
         .then((user) => {
-          if (user) return false;
-          return true;
+          if (user) return true;
+          return false;
+        })
+        .catch((err) => {
+          throw new ServerError(err.message);
+        });
+  }
+
+  /**
+   * Find user by email in database.
+   * @param {string} email - user's email.
+   * @return {Promise} - Promise object user found in db
+   * @throw {ServerError} - error while finding user.
+   */
+  async findByEmail(email) {
+    return User.findOne({email})
+        .then((user) => {
+          return user;
         })
         .catch((err) => {
           throw new ServerError(err.message);
