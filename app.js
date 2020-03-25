@@ -14,12 +14,14 @@ mongoose.connect(MONGO_URI, {
 console.log(mongoose.connection.readyState);
 
 const registerRoute = require('./routes/api/registration');
+const driversRoute = require('./routes/api/drivers');
 
 app.use(logger('dev'));
 app.use(cors());
 app.use(express.json());
 
 app.use('/api', registerRoute);
+app.use('/api', driversRoute);
 
 app.listen(PORT, () => {
   console.log(`Listening to requests on http://localhost:${PORT}`);

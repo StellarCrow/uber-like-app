@@ -3,17 +3,21 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const TruckSchema = new Schema({
-  name: {
-    type: String,
+  created_by: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
     required: true,
   },
-  description: String,
-  shipper: {type: mongoose.Schema.Types.ObjectId, ref: 'Shipper'},
-  driver: {type: mongoose.Schema.Types.ObjectId, ref: 'Driver'},
+  assigned_to: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
   status: {
     type: String,
+    enum: ['IS', 'OL'],
     required: true,
-    default: 'NEW',
+  },
+  type: {
+    type: String,
+    enum: ['SPRINTER', 'SS', 'LS'],
+    required: true,
   },
 });
 
