@@ -20,6 +20,7 @@ router.post('/drivers/:id/trucks', async (req, res) => {
     createdBy: req.params.id,
     status: 'IS',
     type: req.body.type,
+    name: req.body.name,
   };
   try {
     const truck = await DriverService.createTruck(truckInfo);
@@ -48,6 +49,12 @@ router.get('/drivers/:id/trucks', async (req, res) => {
 router.patch('/drivers/:id/trucks/:tid', async (req, res) => {
   const driverId = req.params.id;
   const truckId = req.params.tid;
+
+  // driver can assign only his trucks
+  if (driverId !== req.user.id) {
+    return res.status(403).json({error: 'Forbidden'});
+  }
+
   try {
     const assigned = await DriverService.assignTruck(driverId, truckId);
     return res.status(200).json({assignedTruck: assigned});

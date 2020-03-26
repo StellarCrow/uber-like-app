@@ -3,6 +3,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const TruckSchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+    default: 'Truck',
+  },
   created_by: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Driver',

@@ -8,9 +8,11 @@ const Driver = new Schema({
   assigned_truck: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Truck',
-    default: null,
   },
-  load: {type: mongoose.Schema.Types.ObjectId, ref: 'Load', default: null},
+  load: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Load',
+  },
   has_load: {
     required: true,
     default: false,

@@ -23,12 +23,13 @@ class DriverModel {
    * @throw {ServerError} - error while creating truck.
    */
   async createTruck(truckInfo) {
-    const {createdBy, status, type} = truckInfo;
+    const {createdBy, status, type, name} = truckInfo;
     try {
       const truck = await Truck.create({
         created_by: createdBy,
         status: status,
         type: type,
+        name: name,
       });
       const update = {$push: {trucks: truck._id}};
       await Driver.updateOne({_id: createdBy}, update);
@@ -73,23 +74,24 @@ class DriverModel {
    */
   async assignTruck(driverId, truckId) {
     try {
-      const assignedTruckToDriver = await Driver.findById(driverId)
+      const driver = await Driver.findById(driverId)
           .populate('assigned_truck');
       // if driver has assigned truck remove it
+      const assignedTruckToDriver = driver.assigned_truck;
       if (assignedTruckToDriver) {
         await Truck.findOneAndUpdate(
             {_id: assignedTruckToDriver._id},
-            {assigned_to: null},
+            {$unset: {assigned_to: ''}},
         );
       }
-      // assign new truck to user
-      const driver = await Driver.findOneAndUpdate(
+      // assign new truck to driver
+      const updatedDriver = await Driver.findOneAndUpdate(
           {_id: driverId},
           {assigned_truck: truckId},
           {new: true},
       );
       await Truck.findOneAndUpdate({_id: truckId}, {assigned_to: driverId});
-      return driver.assigned_truck;
+      return updatedDriver.assigned_truck;
     } catch (err) {
       throw new ServerError(err.message);
     }

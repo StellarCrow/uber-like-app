@@ -44,7 +44,8 @@ class UserService {
       throw new Error('Wrong password');
     }
     const payload = {
-      id: user._id,
+      id: user.role_id,
+      user_id: user._id,
       email: user.email,
       role: user.role,
     };
