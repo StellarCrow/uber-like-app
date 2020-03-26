@@ -66,6 +66,25 @@ class UserModel {
           throw new ServerError(err.message);
         });
   }
+
+  /**
+   * Update user's password in database.
+   * @param {string} id - user's id.
+   * @param {string} password - new password.
+   * @throw {ServerError} - error while finding user.
+   */
+  async updatePassword(id, password) {
+    try {
+      const user = await User.findOneAndUpdate(
+          {_id: id},
+          {password: password},
+          {new: true},
+      );
+      return user.password;
+    } catch (err) {
+      throw new ServerError(err.message);
+    }
+  }
 }
 
 module.exports = new UserModel();

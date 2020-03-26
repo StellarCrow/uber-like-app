@@ -51,6 +51,17 @@ class UserService {
     const jwtToken = jwt.sign(payload, secret);
     return {token: jwtToken, user: user};
   }
+
+  /**
+   * Registrate user.
+   * @param {string} id - user's id.
+   * @param {string} password - new password.
+   */
+  async changePassword(id, password) {
+    const hashedPassword = await CryptographyService.hashPassword(password);
+    const newPassword = await UserModel.updatePassword(id, hashedPassword);
+    return newPassword;
+  }
 }
 
 module.exports = new UserService();
