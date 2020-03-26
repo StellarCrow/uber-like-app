@@ -18,11 +18,15 @@ class UserModel {
     try {
       const newUser = await User.create({email, password, name, role});
       if (role === 'driver') {
-        userRole = await Driver.create({user_id: newUser._id});
+        userRole = await Driver.create({user: newUser._id});
       } else if (role === 'shipper') {
-        userRole = await Shipper.create({user_id: newUser._id});
+        userRole = await Shipper.create({user: newUser._id});
       }
-      updatedUser = await User.findOneAndUpdate({_id: newUser._id}, {role_id: userRole._id}, {new: true});
+      updatedUser = await User.findOneAndUpdate(
+          {_id: newUser._id},
+          {role_id: userRole._id},
+          {new: true},
+      );
       return updatedUser;
     } catch (err) {
       throw new ServerError(err.message);

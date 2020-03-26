@@ -1,4 +1,4 @@
-const User = require('./schemas/User');
+const Driver = require('./schemas/Driver');
 const Truck = require('./schemas/Truck');
 const ServerError = require('../errors/ServerError');
 
@@ -18,8 +18,8 @@ class DriverModel {
         status: status,
         type: type,
       });
-      const update = {}; // update user's trucks field
-      await User.updateOne({_id: createdBy}, update);
+      const update = {$push: {trucks: truck._id}};
+      await Driver.updateOne({_id: createdBy}, update);
       return truck;
     } catch (err) {
       throw new ServerError(err.message);
