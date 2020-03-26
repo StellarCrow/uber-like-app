@@ -13,6 +13,9 @@ mongoose.connect(MONGO_URI, {
 });
 console.log(mongoose.connection.readyState);
 
+const checkAuthorization = require('./routes/middleware/auth');
+const checkRole = require('./routes/middleware/сheckRole');
+
 const registerRoute = require('./routes/api/registration');
 const driversRoute = require('./routes/api/drivers');
 
@@ -21,6 +24,9 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api', registerRoute);
+
+app.use(checkAuthorization);
+app.use(checkRole('driver'));
 app.use('/api', driversRoute);
 
 app.listen(PORT, () => {

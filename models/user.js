@@ -58,7 +58,7 @@ class UserModel {
    * @throw {ServerError} - error while finding user.
    */
   async findByEmail(email) {
-    return await User.findOne({email})
+    return User.findOne({email})
         .then((user) => {
           return user;
         })
