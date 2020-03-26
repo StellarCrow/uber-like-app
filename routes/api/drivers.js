@@ -2,6 +2,16 @@ const express = require('express');
 const router = new express.Router();
 const DriverService = require('../../services/DriverService');
 
+router.get('/drivers/:id', async (req, res) => {
+  const driverId = req.params.id;
+  try {
+    const driver = await DriverService.getProfile(driverId);
+    return res.status(200).json({driver: driver});
+  } catch (err) {
+    return res.status(500).json({error: err.message});
+  }
+});
+
 router.post('/drivers/:id/trucks', async (req, res) => {
   const truckInfo = {
     createdBy: req.params.id,

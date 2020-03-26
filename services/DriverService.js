@@ -2,6 +2,15 @@ const DriverModel = require('../models/driver');
 /** Class representing business logic for common user actions */
 class DriverService {
   /**
+   * Get driver's profile.
+   * @param {string} driverId - id of driver, which info we need to extract.
+   * @return {Promise} Promise object represents driver instance.
+   */
+  async getProfile(driverId) {
+    const driver = await DriverModel.getFullProfile(driverId);
+    return driver;
+  }
+  /**
    * Create truck.
    * @param {object} truckInfo - info for creating new truck.
    * @return {Promise} Promise object represents new truck.

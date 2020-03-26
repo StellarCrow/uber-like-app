@@ -6,6 +6,16 @@ const ServerError = require('../errors/ServerError');
 class DriverModel {
   /**
    * Create new truck in database.
+   * @param {string} id - truck information for creation.
+   * @return {Promise} - Promise object represents driver instance.
+   * @throw {ServerError} - error while creating truck.
+   */
+  async getFullProfile(id) {
+    const driver = await Driver.findById(id).populate('user').exec();
+    return driver;
+  }
+  /**
+   * Create new truck in database.
    * @param {Object} truckInfo - truck information for creation.
    * @return {Promise} - Promise object represents new created truck.
    * @throw {ServerError} - error while creating truck.
