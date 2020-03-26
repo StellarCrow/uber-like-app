@@ -24,6 +24,7 @@ const UserSchema = new Schema({
     enum: ['driver', 'shipper'],
     required: true,
   },
+  role_id: {type: mongoose.Schema.Types.ObjectId, ref: 'Shipper' || 'Driver'},
 });
 
 module.exports = mongoose.model('User', UserSchema);

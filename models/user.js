@@ -1,4 +1,6 @@
 const User = require('./schemas/User');
+const Driver = require('./schemas/Driver');
+const Shipper = require('./schemas/Shipper');
 const ServerError = require('../errors/ServerError');
 
 /** Class representing logic for interaction with User model in database */
@@ -11,13 +13,20 @@ class UserModel {
    */
   async create(user) {
     const {email, password, role, name} = user;
-    return User.create({email, password, name, role})
-        .then((user) => {
-          return user;
-        })
-        .catch((err) => {
-          throw new ServerError(err.message);
-        });
+    let updatedUser;
+    let userRole;
+    try {
+      const newUser = await User.create({email, password, name, role});
+      if (role === 'driver') {
+        userRole = await Driver.create({user_id: newUser._id});
+      } else if (role === 'shipper') {
+        userRole = await Shipper.create({user_id: newUser._id});
+      }
+      updatedUser = await User.findOneAndUpdate({_id: newUser._id}, {role_id: userRole._id}, {new: true});
+      return updatedUser;
+    } catch (err) {
+      throw new ServerError(err.message);
+    }
   }
 
   /**
@@ -45,7 +54,7 @@ class UserModel {
    * @throw {ServerError} - error while finding user.
    */
   async findByEmail(email) {
-    return User.findOne({email})
+    return await User.findOne({email})
         .then((user) => {
           return user;
         })
