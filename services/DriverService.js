@@ -8,6 +8,9 @@ class DriverService {
    */
   async getProfile(driverId) {
     const driver = await DriverModel.getFullProfile(driverId);
+    if (!driver) {
+      throw new Error('Driver not found');
+    }
     return driver;
   }
   /**
@@ -27,6 +30,23 @@ class DriverService {
   async getTrucks(driverId) {
     const trucks = await DriverModel.getTrucks(driverId);
     return trucks;
+  }
+
+  /**
+   * Create truck.
+   * @param {String} driver - driver's id.
+   * @param {String} truck - truck's id to assign.
+   * @return {String} Promise object represents array of driver's trucks.
+   */
+  async assignTruck(driver, truck) {
+    const hasAssignedLoad = await DriverModel.hasAssignedLoad(driver);
+    if (hasAssignedLoad) {
+      throw new Error(
+          'Driver cannot assign truck, because he already has assigned load',
+      );
+    }
+    const assigned = await DriverModel.assignTruck(driver, truck);
+    return assigned;
   }
 }
 

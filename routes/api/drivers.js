@@ -8,7 +8,10 @@ router.get('/drivers/:id', async (req, res) => {
     const driver = await DriverService.getProfile(driverId);
     return res.status(200).json({driver: driver});
   } catch (err) {
-    return res.status(500).json({error: err.message});
+    if (err.name === 'ServerError') {
+      return res.status(500).json({error: err.message});
+    }
+    return res.status(404).json({error: err.message});
   }
 });
 
@@ -39,6 +42,19 @@ router.get('/drivers/:id/trucks', async (req, res) => {
     return res.status(200).json({trucks: trucks});
   } catch (err) {
     return res.status(500).json({error: err.message});
+  }
+});
+
+router.patch('/drivers/:id/trucks/:tid', async (req, res) => {
+  const driverId = req.params.id;
+  const truckId = req.params.tid;
+  try {
+    const assigned = await DriverService.assignTruck(driverId, truckId);
+    return res.status(200).json({assignedTruck: assigned});
+  } catch (err) {
+    if (err.name === 'ServerError') {
+      return res.status(500).json({error: err.message});
+    }
   }
 });
 

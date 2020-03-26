@@ -11,7 +11,9 @@ class DriverModel {
    * @throw {ServerError} - error while creating truck.
    */
   async getFullProfile(id) {
-    const driver = await Driver.findById(id).populate('user').exec();
+    const driver = await Driver.findById(id)
+        .populate('user')
+        .exec();
     return driver;
   }
   /**
@@ -48,6 +50,46 @@ class DriverModel {
           .populate('trucks')
           .exec();
       return driver.trucks;
+    } catch (err) {
+      throw new ServerError(err.message);
+    }
+  }
+  /**
+   * Check if driver has assigned to him load.
+   * @param {string} driverId - driver's id.
+   * @return {true|false} - true if load assigned and false if not.
+   * @throw {ServerError} - db error.
+   */
+  async hasAssignedLoad(driverId) {
+    const driver = await Driver.findById(driverId);
+    return driver.has_load;
+  }
+  /**
+   * Assign truck to driver.
+   * @param {string} driverId - driver's id.
+   * @param {string} truckId - truck id to assign.
+   * @return {true|false} - true if load assigned and false if not.
+   * @throw {ServerError} - db error.
+   */
+  async assignTruck(driverId, truckId) {
+    try {
+      const assignedTruckToDriver = await Driver.findById(driverId)
+          .populate('assigned_truck');
+      // if driver has assigned truck remove it
+      if (assignedTruckToDriver) {
+        await Truck.findOneAndUpdate(
+            {_id: assignedTruckToDriver._id},
+            {assigned_to: null},
+        );
+      }
+      // assign new truck to user
+      const driver = await Driver.findOneAndUpdate(
+          {_id: driverId},
+          {assigned_truck: truckId},
+          {new: true},
+      );
+      await Truck.findOneAndUpdate({_id: truckId}, {assigned_to: driverId});
+      return driver.assigned_truck;
     } catch (err) {
       throw new ServerError(err.message);
     }

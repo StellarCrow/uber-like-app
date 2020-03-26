@@ -5,13 +5,14 @@ const Schema = mongoose.Schema;
 const TruckSchema = new Schema({
   created_by: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'Driver',
     required: true,
   },
-  assigned_to: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+  assigned_to: {type: mongoose.Schema.Types.ObjectId, ref: 'Driver'},
   status: {
     type: String,
-    enum: ['IS', 'OL'],
+    enum: ['IS', 'OL', 'FREE'],
+    default: 'FREE',
     required: true,
   },
   type: {
