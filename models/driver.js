@@ -25,6 +25,23 @@ class DriverModel {
       throw new ServerError(err.message);
     }
   }
+
+  /**
+   * Get array of user's trucks from database.
+   * @param {string} driverId - driver's id.
+   * @return {Promise} - Promise object represents array of trucks.
+   * @throw {ServerError} - error while getting trucks.
+   */
+  async getTrucks(driverId) {
+    try {
+      const driver = await Driver.findById(driverId)
+          .populate('trucks')
+          .exec();
+      return driver.trucks;
+    } catch (err) {
+      throw new ServerError(err.message);
+    }
+  }
 }
 
 module.exports = new DriverModel();

@@ -10,6 +10,15 @@ class DriverService {
     const truck = await DriverModel.createTruck(truckInfo);
     return truck;
   }
+  /**
+   * Create truck.
+   * @param {string} driverId - driver's id.
+   * @return {Promise} Promise object represents array of driver's trucks.
+   */
+  async getTrucks(driverId) {
+    const trucks = await DriverModel.getTrucks(driverId);
+    return trucks;
+  }
 }
 
 module.exports = new DriverService();

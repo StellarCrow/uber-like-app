@@ -6,7 +6,7 @@ module.exports = (req, res, next) => {
     return res.status(401).json({message: 'Unauthorized user'});
   }
 
-  const [jwtToken] = req.headers['authorization'].split(' ');
+  const jwtToken = req.headers['authorization'].split(' ')[1];
   try {
     const user = jwt.verify(jwtToken, secret);
     req.user = user;
