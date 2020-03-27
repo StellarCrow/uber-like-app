@@ -14,6 +14,15 @@ class ShipperService {
     delete shipperObject.user.password;
     return shipperObject;
   }
+  /**
+   * Delete shipper's profile.
+   * @param {string} shipperId - id of shipper needed to delete.
+   * @return {Promise} Promise object represents deleted shipper instance.
+   */
+  async deleteShipper(shipperId) {
+    const deletedShipper = await ShipperModel.delete(shipperId);
+    return deletedShipper;
+  }
 }
 
 module.exports = new ShipperService();
