@@ -36,18 +36,18 @@ class DriverService {
 
   /**
    * Create truck.
-   * @param {String} driver - driver's id.
-   * @param {String} truck - truck's id to assign.
+   * @param {String} driverId - driver's id.
+   * @param {String} truckId - truck's id to assign.
    * @return {Promise} Promise object represents id of assigned truck.
    */
-  async assignTruck(driver, truck) {
-    const hasAssignedLoad = await DriverModel.hasAssignedLoad(driver);
+  async assignTruck(driverId, truckId) {
+    const hasAssignedLoad = await DriverModel.hasAssignedLoad(driverId);
     if (hasAssignedLoad) {
       throw new Error(
           'Driver cannot assign truck, because he already has assigned load',
       );
     }
-    const assigned = await DriverModel.assignTruck(driver, truck);
+    const assigned = await DriverModel.assignTruck(driverId, truckId);
     return assigned;
   }
 
@@ -59,13 +59,26 @@ class DriverService {
    */
   async updateTruck(driver, truckInfo) {
     const truckId = truckInfo.id;
-    const isTruckAssigned = await DriverModel.isTruckAssigned(driver, truckId);
-    console.log(isTruckAssigned);
-    if (isTruckAssigned) {
+    const truckAssigned = await DriverModel.isTruckAssigned(driver, truckId);
+    if (truckAssigned) {
       throw new Error('You are not allowed to update assigned truck');
     }
     const updatedTruck = await DriverModel.updateTruck(truckInfo);
     return updatedTruck;
+  }
+  /**
+   * Update truck info.
+   * @param {String} driverId - driver's id.
+   * @param {String} truckId - id of truck to delete.
+   * @return {Promise} Promise object represents updated truck.
+   */
+  async deleteTruck(driverId, truckId) {
+    const truckAssigned = await DriverModel.isTruckAssigned(driverId, truckId);
+    if (truckAssigned) {
+      throw new Error('You are not allowed to delete assigned truck');
+    }
+    const deletedTruck = await DriverModel.deleteTruck(driverId, truckId);
+    return deletedTruck;
   }
 }
 

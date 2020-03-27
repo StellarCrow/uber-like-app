@@ -113,4 +113,30 @@ router.put(
     },
 );
 
+// delete truck
+router.delete(
+    '/drivers/:id/trucks/:sid',
+    validate(schemas.routeIds, 'params'),
+    checkPermission(),
+    async (req, res) => {
+      const driverId = req.params.id;
+      const truckId = req.params.sid;
+
+      try {
+        const deletedTruck = await DriverService.deleteTruck(driverId, truckId);
+        if (!deletedTruck) {
+          return res
+              .status(404)
+              .json({error: `Truck width id ${truckId} does not exist!`});
+        }
+        res.status(200).json({message: 'Truck was successfully deleted'});
+      } catch (err) {
+        if (err.name === 'ServerError') {
+          res.status(500).json({error: err.message});
+        }
+        res.status(400).json({error: err.message});
+      }
+    },
+);
+
 module.exports = router;

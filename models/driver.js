@@ -138,6 +138,27 @@ class DriverModel {
       return new ServerError(err.message);
     }
   }
+
+  /**
+   * Delete truck.
+   * @param {string} driverId - driver's id.
+   * @param {string} truckId - id of truck to delete.
+   * @return {Promise} - Promise object represents deleted truck instance.
+   * @throw {ServerError} - db error.
+   */
+  async deleteTruck(driverId, truckId) {
+    try {
+      const deletedTruck = await Truck.findOneAndRemove({_id: truckId});
+      if (!deletedTruck) return null;
+      await Driver.findOneAndUpdate(
+          {_id: driverId},
+          {$pull: {trucks: truckId}},
+      );
+      return deletedTruck;
+    } catch (err) {
+      throw new ServerError(err.message);
+    }
+  }
 }
 
 module.exports = new DriverModel();
