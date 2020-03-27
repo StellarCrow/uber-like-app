@@ -1,6 +1,7 @@
 const Driver = require('./schemas/Driver');
 const Truck = require('./schemas/Truck');
 const ServerError = require('../errors/ServerError');
+const truckStatus = require('../utils/statuses').truckStatus;
 
 /** Class representing logic for interaction with Driver model in database */
 class DriverModel {
@@ -74,14 +75,20 @@ class DriverModel {
    */
   async assignTruck(driverId, truckId) {
     try {
+      const truckToAssign = await Truck.findById(truckId);
+      if (!truckToAssign) {
+        return null;
+      }
+    } catch (err) {
+      throw new ServerError(err.message);
+    }
+    try {
       const driver = await Driver.findById(driverId).populate('assigned_truck');
       // if driver has assigned truck remove it
       const assignedTruckToDriver = driver.assigned_truck;
       if (assignedTruckToDriver) {
-        await Truck.findOneAndUpdate(
-            {_id: assignedTruckToDriver._id},
-            {$unset: {assigned_to: ''}},
-        );
+        const update = {$unset: {assigned_to: ''}, status: truckStatus.FREE};
+        await Truck.findOneAndUpdate({_id: assignedTruckToDriver._id}, update);
       }
       // assign new truck to driver
       const updatedDriver = await Driver.findOneAndUpdate(
@@ -89,10 +96,46 @@ class DriverModel {
           {assigned_truck: truckId},
           {new: true},
       );
-      await Truck.findOneAndUpdate({_id: truckId}, {assigned_to: driverId});
+      await Truck.findOneAndUpdate(
+          {_id: truckId},
+          {assigned_to: driverId, status: truckStatus.IN_SERVICE},
+      );
       return updatedDriver.assigned_truck;
     } catch (err) {
       throw new ServerError(err.message);
+    }
+  }
+
+  /**
+   * Check if driver assigned truck.
+   * @param {string} driverId - driver's id.
+   * @param {string} truckId - truck's id.
+   * @return {true|false} - true if truck is assigned, false if not.
+   * @throw {ServerError} - db error.
+   */
+  async isTruckAssigned(driverId, truckId) {
+    const driverInstance = await Driver.findById(driverId);
+    return driverInstance.assigned_truck == truckId;
+  }
+
+  /**
+   * Update truck.
+   * @param {object} truckInfo - truck info.
+   * @return {Promise} - Promise object represents updated truck instance.
+   * @throw {ServerError} - db error.
+   */
+  async updateTruck(truckInfo) {
+    const {id, name} = truckInfo;
+    try {
+      const updatedTruck = await Truck.findOneAndUpdate(
+          {_id: id},
+          {name: name},
+          {new: true},
+      );
+      if (!updatedTruck) return null;
+      return updatedTruck;
+    } catch (err) {
+      return new ServerError(err.message);
     }
   }
 }

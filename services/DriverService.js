@@ -38,7 +38,7 @@ class DriverService {
    * Create truck.
    * @param {String} driver - driver's id.
    * @param {String} truck - truck's id to assign.
-   * @return {String} Promise object represents array of driver's trucks.
+   * @return {Promise} Promise object represents id of assigned truck.
    */
   async assignTruck(driver, truck) {
     const hasAssignedLoad = await DriverModel.hasAssignedLoad(driver);
@@ -49,6 +49,23 @@ class DriverService {
     }
     const assigned = await DriverModel.assignTruck(driver, truck);
     return assigned;
+  }
+
+  /**
+   * Update truck info.
+   * @param {String} driver - driver's id.
+   * @param {String} truckInfo - truck info to update.
+   * @return {Promise} Promise object represents updated truck.
+   */
+  async updateTruck(driver, truckInfo) {
+    const truckId = truckInfo.id;
+    const isTruckAssigned = await DriverModel.isTruckAssigned(driver, truckId);
+    console.log(isTruckAssigned);
+    if (isTruckAssigned) {
+      throw new Error('You are not allowed to update assigned truck');
+    }
+    const updatedTruck = await DriverModel.updateTruck(truckInfo);
+    return updatedTruck;
   }
 }
 

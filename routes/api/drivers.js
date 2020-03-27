@@ -5,7 +5,6 @@ const checkPermission = require('../middleware/checkUserPermission.js');
 const validate = require('../middleware/requestValidator');
 const schemas = require('../../validation/JoiSchemas');
 
-
 // driver full profile info
 router.get(
     '/drivers/:id',
@@ -33,7 +32,7 @@ router.post(
       const driverId = req.params.id;
       const truckInfo = {
         createdBy: driverId,
-        status: 'IS',
+        status: 'FREE',
         type: req.body.type,
         name: req.body.name,
       };
@@ -63,7 +62,8 @@ router.get(
 );
 
 // assign truck
-router.patch('/drivers/:id/trucks/:sid',
+router.patch(
+    '/drivers/:id/trucks/:sid',
     validate(schemas.routeIds, 'params'),
     checkPermission(),
     async (req, res) => {
@@ -72,26 +72,45 @@ router.patch('/drivers/:id/trucks/:sid',
 
       try {
         const assigned = await DriverService.assignTruck(driverId, truckId);
+        if (!assigned) {
+          return res
+              .status(404)
+              .json({error: `Truck width id ${truckId} does not exist!`});
+        }
         return res.status(200).json({assignedTruck: assigned});
       } catch (err) {
         if (err.name === 'ServerError') {
           return res.status(500).json({error: err.message});
         }
       }
-    });
+    },
+);
 
 // update truck info
-router.put('/drivers/:id/trucks/:sid',
+router.put(
+    '/drivers/:id/trucks/:sid',
     validate(schemas.routeIds, 'params'),
     checkPermission(),
+    validate(schemas.truckUpdate, 'body'),
     async (req, res) => {
       const driverId = req.params.id;
       const truckId = req.params.sid;
+      const truckInfo = {
+        id: truckId,
+        name: req.body.name,
+      };
       try {
-        await DriverService.updateTruck(driverId, truckId);
+        const updatedTruck = await DriverService.updateTruck(driverId, truckInfo);
+        if (!updatedTruck) {
+          return res
+              .status(404)
+              .json({error: `Truck width id ${truckId} does not exist!`});
+        }
+        return res.status(200).json({truck: updatedTruck});
       } catch (err) {
-        res.status(500);
+        res.status(500).json({error: err.message});
       }
-    });
+    },
+);
 
 module.exports = router;

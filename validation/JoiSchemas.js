@@ -25,6 +25,9 @@ const schemas = {
     id: Joi.objectId().required(),
     sid: Joi.objectId().required(),
   }),
+  truckUpdate: Joi.object({
+    name: Joi.string().required(),
+  }),
 };
 
 module.exports = schemas;
