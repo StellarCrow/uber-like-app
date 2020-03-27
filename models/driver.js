@@ -12,10 +12,14 @@ class DriverModel {
    * @throw {ServerError} - error while creating truck.
    */
   async getFullProfile(id) {
-    const driver = await Driver.findById(id)
-        .populate('user')
-        .exec();
-    return driver;
+    try {
+      const driver = await Driver.findById(id)
+          .populate('user')
+          .exec();
+      return driver;
+    } catch (err) {
+      throw new ServerError(err.message);
+    }
   }
   /**
    * Create new truck in database.
