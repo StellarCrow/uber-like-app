@@ -2,6 +2,7 @@ const User = require('./schemas/User');
 const Driver = require('./schemas/Driver');
 const Shipper = require('./schemas/Shipper');
 const ServerError = require('../errors/ServerError');
+const roles = require('../utils/roles');
 
 /** Class representing logic for interaction with User model in database */
 class UserModel {
@@ -17,9 +18,9 @@ class UserModel {
     let userRole;
     try {
       const newUser = await User.create({email, password, name, role});
-      if (role === 'driver') {
+      if (role === roles.DRIVER) {
         userRole = await Driver.create({user: newUser._id});
-      } else if (role === 'shipper') {
+      } else if (role === roles.SHIPPER) {
         userRole = await Shipper.create({user: newUser._id});
       }
       updatedUser = await User.findOneAndUpdate(
@@ -41,14 +42,12 @@ class UserModel {
    * @throw {ServerError} - error while finding user.
    */
   async isEmailExists(email) {
-    return User.findOne({email: email})
-        .then((user) => {
-          if (user) return true;
-          return false;
-        })
-        .catch((err) => {
-          throw new ServerError(err.message);
-        });
+    try {
+      const user = await User.findOne({email: email});
+      return user;
+    } catch (err) {
+      throw new ServerError(err.message);
+    }
   }
 
   /**
@@ -75,12 +74,11 @@ class UserModel {
    */
   async updatePassword(id, password) {
     try {
-      const user = await User.findOneAndUpdate(
+      await User.findOneAndUpdate(
           {_id: id},
           {password: password},
           {new: true},
       );
-      return user.password;
     } catch (err) {
       throw new ServerError(err.message);
     }

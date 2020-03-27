@@ -69,13 +69,12 @@ class DriverModel {
    * Assign truck to driver.
    * @param {string} driverId - driver's id.
    * @param {string} truckId - truck id to assign.
-   * @return {true|false} - true if load assigned and false if not.
+   * @return {string} - id of assigned truck.
    * @throw {ServerError} - db error.
    */
   async assignTruck(driverId, truckId) {
     try {
-      const driver = await Driver.findById(driverId)
-          .populate('assigned_truck');
+      const driver = await Driver.findById(driverId).populate('assigned_truck');
       // if driver has assigned truck remove it
       const assignedTruckToDriver = driver.assigned_truck;
       if (assignedTruckToDriver) {

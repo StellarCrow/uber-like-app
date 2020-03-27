@@ -60,8 +60,7 @@ class UserService {
    */
   async changePassword(id, password) {
     const hashedPassword = await CryptographyService.hashPassword(password);
-    const newPassword = await UserModel.updatePassword(id, hashedPassword);
-    return newPassword;
+    await UserModel.updatePassword(id, hashedPassword);
   }
 }
 
