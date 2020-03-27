@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
   const jwtToken = req.headers['authorization'].split(' ')[1];
   try {
     const user = jwt.verify(jwtToken, secret);
-    req.user = user;
+    req.jwtUser = user;
   } catch (err) {
     return res.status(401).json({message: 'Unauthorized user'});
   }

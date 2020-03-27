@@ -11,7 +11,9 @@ class DriverService {
     if (!driver) {
       throw new Error('Driver not found');
     }
-    return driver;
+    const driverObject = driver.toObject();
+    delete driverObject.user.password;
+    return driverObject;
   }
   /**
    * Create truck.

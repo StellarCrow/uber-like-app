@@ -23,7 +23,9 @@ class UserService {
       throw new Error('Error while hashing password.');
     }
     const newUser = await UserModel.create(user);
-    return newUser;
+    const userObject = newUser.toObject();
+    delete userObject.password;
+    return userObject;
   }
   /**
    * Registrate user.
@@ -50,7 +52,9 @@ class UserService {
       role: user.role,
     };
     const jwtToken = jwt.sign(payload, secret);
-    return {token: jwtToken, user: user};
+    const userObject = user.toObject();
+    delete userObject.password;
+    return {token: jwtToken, user: userObject};
   }
 
   /**

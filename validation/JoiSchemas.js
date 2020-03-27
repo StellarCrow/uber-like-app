@@ -1,4 +1,5 @@
 const Joi = require('@hapi/joi');
+Joi.objectId = require('joi-objectid')(Joi);
 
 const schemas = {
   registration: Joi.object({
@@ -16,6 +17,13 @@ const schemas = {
         .email()
         .required(),
     password: Joi.string().required(),
+  }),
+  routeId: Joi.object({
+    id: Joi.objectId().required(),
+  }),
+  routeIds: Joi.object({
+    id: Joi.objectId().required(),
+    sid: Joi.objectId().required(),
   }),
 };
 

@@ -57,13 +57,12 @@ class UserModel {
    * @throw {ServerError} - error while finding user.
    */
   async findByEmail(email) {
-    return User.findOne({email})
-        .then((user) => {
-          return user;
-        })
-        .catch((err) => {
-          throw new ServerError(err.message);
-        });
+    try {
+      const user = User.findOne({email});
+      return user;
+    } catch (err) {
+      throw new ServerError(err.message);
+    }
   }
 
   /**
@@ -74,11 +73,7 @@ class UserModel {
    */
   async updatePassword(id, password) {
     try {
-      await User.findOneAndUpdate(
-          {_id: id},
-          {password: password},
-          {new: true},
-      );
+      await User.findOneAndUpdate({_id: id}, {password: password}, {new: true});
     } catch (err) {
       throw new ServerError(err.message);
     }
