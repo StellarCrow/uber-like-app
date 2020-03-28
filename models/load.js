@@ -89,12 +89,32 @@ class LoadModel {
    * @throw {ServerError} - error while deleting load.
    */
   async delete(id) {
-    const deletedLoad = await Load.findOneAndRemove({_id: id});
-    await Shipper.findOneAndUpdate(
-        {_id: deletedLoad.created_by},
-        {$pull: {loads: id}},
-    );
-    return deletedLoad;
+    try {
+      const deletedLoad = await Load.findOneAndRemove({_id: id});
+      await Shipper.findOneAndUpdate(
+          {_id: deletedLoad.created_by},
+          {$pull: {loads: id}},
+      );
+      return deletedLoad;
+    } catch (err) {
+      throw new ServerError(err.message);
+    }
+  }
+
+  /**
+   * Delete load.
+   * @param {string} id - load where to add new log.
+   * @param {string} message - message for log.
+   * @return {Promise} - Promise object represents updated load instance.
+   * @throw {ServerError} - error while deleting load.
+   */
+  async addLog(id, message) {
+    const update = {$push: {logs: {message}}};
+    try {
+      await Load.findOneAndUpdate({_id: id}, update);
+    } catch (err) {
+      throw new ServerError(err.message);
+    }
   }
 }
 
