@@ -121,6 +121,35 @@ class LoadModel {
   }
 
   /**
+   * Get load.
+   * @param {string} id - load id.
+   * @return {Promise} - Promise object represents load instance.
+   * @throw {ServerError} - error while deleting load.
+   */
+  async getLoad(id) {
+    try {
+      const loadInstance = await Load.findById(id);
+      const load = loadInstance.toObject();
+      const isAssignedTo = Object.prototype.hasOwnProperty.call(
+          load,
+          'assigned_to',
+      );
+      if (isAssignedTo) {
+        const driver = await Driver.findById(load.assigned_to).populate('user');
+        const driverInfo = {
+          name: driver.user.name,
+          _id: driver.user._id,
+          role_id: driver._id,
+        };
+        load.assigned_to = driverInfo;
+      }
+      return load;
+    } catch (err) {
+      throw new ServerError(err.message);
+    }
+  }
+
+  /**
    * Change load status.
    * @param {string} id - load.
    * @param {string} status - new status for load.

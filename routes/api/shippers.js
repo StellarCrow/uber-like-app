@@ -130,7 +130,9 @@ router.post(
 
       try {
         await ShipperService.postLoad(loadId);
-        return res.status(200).json({message: 'Load was successfully posted. Driver is assigned.'});
+        return res
+            .status(200)
+            .json({message: 'Load was successfully posted. Driver is assigned.'});
       } catch (err) {
         if (err.name === 'ServerError') {
           return res.status(500).json({error: err.message});
@@ -140,4 +142,22 @@ router.post(
     },
 );
 
+// get shipping info
+router.get(
+    '/shippers/:id/loads/:sid',
+    validate(schemas.routeIds, 'params'),
+    checkPermission(role.SHIPPER),
+    async (req, res) => {
+      const loadId = req.params.sid;
+      try {
+        const load = await ShipperService.getLoad(loadId);
+        if (!load) {
+          return res.status(404).json({error: 'Load not found'});
+        }
+        return res.status(200).json({load: load});
+      } catch (err) {
+        return res.status(500).json({error: err.message});
+      }
+    },
+);
 module.exports = router;

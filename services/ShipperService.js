@@ -103,6 +103,16 @@ class ShipperService {
     await LoadModel.changeState(loadId, loadState.EN_ROUTE_TO_PICK_UP);
     await LoadModel.addLog(loadId, logMessage.EN_ROUTE_TO_PICKUP);
   }
+
+  /**
+   * Post load.
+   * @param {string} loadId - id of load needed to post.
+   * @return {Promise} Promise object represents new load instance.
+   */
+  async getLoad(loadId) {
+    const load = await LoadModel.getLoad(loadId);
+    return load;
+  }
 }
 
 module.exports = new ShipperService();
