@@ -105,13 +105,23 @@ class ShipperService {
   }
 
   /**
-   * Post load.
-   * @param {string} loadId - id of load needed to post.
+   * Get load.
+   * @param {string} loadId - id of load needed to return.
    * @return {Promise} Promise object represents new load instance.
    */
   async getLoad(loadId) {
     const load = await LoadModel.getLoad(loadId);
     return load;
+  }
+
+  /**
+   * Get list of loads.
+   * @param {string} shipperId - shipper id, whose loads need to return.
+   * @return {Promise} Promise object represents new load instance.
+   */
+  async getLoadsList(shipperId) {
+    const loads = await ShipperModel.getLoadsList(shipperId);
+    return loads;
   }
 }
 

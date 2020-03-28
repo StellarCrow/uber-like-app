@@ -23,10 +23,25 @@ class ShipperModel {
   }
 
   /**
-   * Get full shipper profile info.
+   * Get list of loads.
    * @param {string} id - shipper id.
-   * @return {Promise} - Promise object represents shipper instance.
-   * @throw {ServerError} - error while creating truck.
+   * @return {Promise} - Promise object represents load instance.
+   * @throw {ServerError} - error while deleting load.
+   */
+  async getLoadsList(id) {
+    try {
+      const {loads} = await Shipper.findById(id).populate('loads');
+      return loads;
+    } catch (err) {
+      throw new ServerError(err.message);
+    }
+  }
+
+  /**
+   * Delete shipper profile.
+   * @param {string} id - shipper id.
+   * @return {Promise} - Promise object represents deleted shipper instance.
+   * @throw {ServerError} - error while deleting shipper.
    */
   async delete(id) {
     try {

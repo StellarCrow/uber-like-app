@@ -160,4 +160,20 @@ router.get(
       }
     },
 );
+
+// get list of loads
+router.get(
+    '/shippers/:id/loads/',
+    validate(schemas.routeId, 'params'),
+    checkPermission(role.SHIPPER),
+    async (req, res) => {
+      const shipperId = req.params.id;
+      try {
+        const loads = await ShipperService.getLoadsList(shipperId);
+        return res.status(200).json({loads: loads});
+      } catch (err) {
+        return res.status(500).json({error: err.message});
+      }
+    },
+);
 module.exports = router;
