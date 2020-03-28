@@ -1,5 +1,6 @@
 const ShipperModel = require('../models/shipper');
 const LoadModel = require('../models/load');
+const {logMessage, loadStatus, loadState} = require('../utils/loadConstants');
 
 /** Class representing business logic for shipper actions */
 class ShipperService {
@@ -67,6 +68,35 @@ class ShipperService {
     }
     const deletedLoad = await LoadModel.delete(loadId);
     return deletedLoad;
+  }
+
+  /**
+   * Post load.
+   * @param {string} loadId - id of load needed to post.
+   * @return {Promise} Promise object represents new load instance.
+   */
+  async postLoad(loadId) {
+    const isLoadExist = await LoadModel.isLoadExist(loadId);
+    if (!isLoadExist) {
+      throw new Error('Load not found.');
+    }
+
+    await LoadModel.changeStatus(loadId, loadStatus.POSTED);
+    await LoadModel.addLog(loadId, logMessage.POSTING_LOAD);
+
+    const truck = await LoadModel.findTruck(loadId);
+    if (!truck) {
+      await LoadModel.changeStatus(loadId, loadStatus.NEW);
+      await LoadModel.addLog(loadId, logMessage.DRIVER_NOT_FOUND);
+      throw new Error('Driver not found. Load state changed to NEW.');
+    }
+
+    const driverId = truck.assigned_to;
+    await LoadModel.assignToDriver(loadId, driverId);
+    await LoadModel.changeStatus(loadId, loadStatus.ASSIGNED);
+    await LoadModel.addLog(loadId, logMessage.DRIVER_FOUND);
+    await LoadModel.changeState(loadId, loadState.EN_ROUTE_TO_PICK_UP);
+    await LoadModel.addLog(loadId, logMessage.STATE_EN_ROUTE_TO_PICKUP);
   }
 }
 

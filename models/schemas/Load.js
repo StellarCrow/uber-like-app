@@ -1,11 +1,5 @@
 const mongoose = require('mongoose');
-const statusArray = ['NEW', 'POSTED', 'ASSIGNED', 'SHIPPED'];
-const stateArray = [
-  'En route to Pick Up',
-  'Arrived to Pick Up',
-  'En route to delivery',
-  'Arrived to delivery',
-];
+const {loadStateEnum, loadStatusEnum} = require('../../utils/loadConstants');
 
 const Schema = mongoose.Schema;
 
@@ -28,11 +22,11 @@ const LoadSchema = new Schema({
     type: String,
     required: true,
     default: 'NEW',
-    enum: statusArray,
+    enum: loadStatusEnum,
   },
   state: {
     type: String,
-    enum: stateArray,
+    enum: loadStateEnum,
   },
   logs: [
     {

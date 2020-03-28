@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
-const {type, truckTypesArray} = require('../../utils/truckTypes');
+const {
+  type,
+  truckStatusEnum,
+  truckTypesEnum,
+} = require('../../utils/truckConstants');
 
 const Schema = mongoose.Schema;
 
@@ -17,13 +21,13 @@ const TruckSchema = new Schema({
   assigned_to: {type: mongoose.Schema.Types.ObjectId, ref: 'Driver'},
   status: {
     type: String,
-    enum: ['IS', 'OL', 'FREE'],
+    enum: truckStatusEnum,
     default: 'FREE',
     required: true,
   },
   type: {
     type: String,
-    enum: truckTypesArray,
+    enum: truckTypesEnum,
     required: true,
   },
   payload: {

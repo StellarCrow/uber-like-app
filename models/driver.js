@@ -1,7 +1,7 @@
 const Driver = require('./schemas/Driver');
 const Truck = require('./schemas/Truck');
 const ServerError = require('../errors/ServerError');
-const truckStatus = require('../utils/statuses').truckStatus;
+const {truckStatus} = require('../utils/truckConstants');
 
 /** Class representing logic for interaction with Driver model in database */
 class DriverModel {

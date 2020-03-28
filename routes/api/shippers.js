@@ -120,4 +120,24 @@ router.delete(
     },
 );
 
+// post load
+router.post(
+    '/shippers/:id/loads/:sid',
+    validate(schemas.routeIds, 'params'),
+    checkPermission(role.SHIPPER),
+    async (req, res) => {
+      const loadId = req.params.sid;
+
+      try {
+        await ShipperService.postLoad(loadId);
+        return res.status(200).json({message: 'Load was successfully posted. Driver is assigned.'});
+      } catch (err) {
+        if (err.name === 'ServerError') {
+          return res.status(500).json({error: err.message});
+        }
+        return res.status(404).json({error: err.message});
+      }
+    },
+);
+
 module.exports = router;

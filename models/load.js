@@ -1,7 +1,10 @@
 const Load = require('./schemas/Load');
 const Shipper = require('./schemas/Shipper');
+const Truck = require('./schemas/Truck');
+const Driver = require('./schemas/Driver');
 const ServerError = require('../errors/ServerError');
-const loadStatus = require('../utils/statuses').loadStatus;
+const {loadStatus} = require('../utils/loadConstants');
+const {truckStatus} = require('../utils/truckConstants');
 
 /** Class representing logic for interaction with Load model in database */
 class LoadModel {
@@ -112,6 +115,83 @@ class LoadModel {
     const update = {$push: {logs: {message}}};
     try {
       await Load.findOneAndUpdate({_id: id}, update);
+    } catch (err) {
+      throw new ServerError(err.message);
+    }
+  }
+
+  /**
+   * Change load status.
+   * @param {string} id - load.
+   * @param {string} status - new status for load.
+   * @throw {ServerError} - error while deleting load.
+   */
+  async changeStatus(id, status) {
+    try {
+      await Load.findOneAndUpdate({_id: id}, {status: status});
+    } catch (err) {
+      throw new ServerError(err.message);
+    }
+  }
+
+  /**
+   * Change load state.
+   * @param {string} id - load.
+   * @param {string} state - new state for load.
+   * @throw {ServerError} - error while deleting load.
+   */
+  async changeState(id, state) {
+    try {
+      await Load.findOneAndUpdate({_id: id}, {state: state});
+    } catch (err) {
+      throw new ServerError(err.message);
+    }
+  }
+
+  /**
+   * Find truck for load.
+   * @param {string} id - load.
+   * @return {object} found truck
+   * @throw {ServerError} - error while deleting load.
+   */
+  async findTruck(id) {
+    try {
+      const truckList = await Truck.find({status: truckStatus.IN_SERVICE});
+      if (truckList.length === 0) return null;
+
+      const load = await Load.findById(id);
+      let foundTruck = null;
+      for (const truck of truckList) {
+        if (load.payload > truck.payload) continue;
+        if (load.dimensions.width > truck.dimensions.width) continue;
+        if (load.dimensions.height > truck.dimensions.height) continue;
+        if (load.dimensions.length > truck.dimensions.length) continue;
+        foundTruck = truck;
+        break;
+      }
+      return foundTruck;
+    } catch (err) {
+      throw new ServerError(err.message);
+    }
+  }
+
+  /**
+   * Assign load to driver.
+   * @param {string} loadId - load.
+   * @param {string} driverId - driver.
+   * @throw {ServerError} - error while deleting load.
+   */
+  async assignToDriver(loadId, driverId) {
+    try {
+      await Load.findOneAndUpdate({_id: loadId}, {assigned_to: driverId});
+      const driver = await Driver.findOneAndUpdate(
+          {_id: driverId},
+          {load: loadId, has_load: true},
+      );
+      await Truck.findOneAndUpdate(
+          {_id: driver.assigned_truck},
+          {status: truckStatus.ON_LOAD},
+      );
     } catch (err) {
       throw new ServerError(err.message);
     }
