@@ -28,6 +28,27 @@ const schemas = {
   truckUpdate: Joi.object({
     name: Joi.string().required(),
   }),
+  createLoad: Joi.object({
+    name: Joi.string().required(),
+    description: Joi.string(),
+    status: Joi.string().pattern(/NEW/).required(),
+    dimensions: Joi.object({
+      width: Joi.number().required(),
+      length: Joi.number().required(),
+      height: Joi.number().required(),
+    }).required(),
+    payload: Joi.number().required(),
+    deliveryAddress: Joi.object({
+      city: Joi.string().required(),
+      street: Joi.string().required(),
+      zip: Joi.string().length(5).required(),
+    }).required(),
+    pickUpAddress: Joi.object({
+      city: Joi.string().required(),
+      street: Joi.string().required(),
+      zip: Joi.string().length(5).required(),
+    }).required(),
+  }),
 };
 
 module.exports = schemas;

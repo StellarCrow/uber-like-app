@@ -34,9 +34,38 @@ router.delete(
         if (!deletedShipper) {
           return res.status(404).json({error: 'Not found'});
         }
-        return res.status(200).json({message: 'Shipper was successfully deleted'});
+        return res
+            .status(200)
+            .json({message: 'Shipper was successfully deleted'});
       } catch (err) {
         res.status(500).json({error: err.message});
+      }
+    },
+);
+
+// create load
+router.post(
+    '/shippers/:id/loads',
+    validate(schemas.routeId, 'params'),
+    checkPermission(role.SHIPPER),
+    validate(schemas.createLoad, 'body'),
+    async (req, res) => {
+      const shipperId = req.params.id;
+      const loadInfo = {
+        name: req.body.name,
+        description: req.body.description,
+        status: req.body.status,
+        dimensions: req.body.dimensions,
+        payload: req.body.payload,
+        deliveryAddress: req.body.deliveryAddress,
+        pickUpAddress: req.body.pickUpAddress,
+      };
+
+      try {
+        const newLoad = await ShipperService.createLoad(shipperId, loadInfo);
+        return res.status(201).json({load: newLoad});
+      } catch (err) {
+        return res.status(500).json({error: err.message});
       }
     },
 );

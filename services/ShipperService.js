@@ -23,6 +23,17 @@ class ShipperService {
     const deletedShipper = await ShipperModel.delete(shipperId);
     return deletedShipper;
   }
+
+  /**
+   * Create new load.
+   * @param {string} shipperId - id of shipper who creates load.
+   * @param {string} loadInfo - id of shipper needed to delete.
+   * @return {Promise} Promise object represents new load instance.
+   */
+  async createLoad(shipperId, loadInfo) {
+    const newLoad = await ShipperModel.createLoad(shipperId, loadInfo);
+    return newLoad;
+  }
 }
 
 module.exports = new ShipperService();
