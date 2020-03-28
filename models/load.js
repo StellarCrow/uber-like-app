@@ -81,6 +81,21 @@ class LoadModel {
       throw new ServerError(err.message);
     }
   }
+
+  /**
+   * Delete load.
+   * @param {string} id - load id to delete.
+   * @return {Promise} - Promise object represents updated load instance.
+   * @throw {ServerError} - error while deleting load.
+   */
+  async delete(id) {
+    const deletedLoad = await Load.findOneAndRemove({_id: id});
+    await Shipper.findOneAndUpdate(
+        {_id: deletedLoad.created_by},
+        {$pull: {loads: id}},
+    );
+    return deletedLoad;
+  }
 }
 
 module.exports = new LoadModel();

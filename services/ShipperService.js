@@ -52,6 +52,22 @@ class ShipperService {
     const updatedLoad = await LoadModel.updateLoad(loadId, infoToUpdate);
     return updatedLoad;
   }
+
+  /**
+   * Delete load.
+   * @param {string} loadId - id of load needed to delete.
+   * @return {Promise} Promise object represents new load instance.
+   */
+  async deleteLoad(loadId) {
+    const isLoadExist = await LoadModel.isLoadExist(loadId);
+    if (!isLoadExist) return null;
+    const isLoadNew = await LoadModel.isLoadNew(loadId);
+    if (!isLoadNew) {
+      throw new Error('It is allowed to delete loads only with status "NEW"');
+    }
+    const deletedLoad = await LoadModel.delete(loadId);
+    return deletedLoad;
+  }
 }
 
 module.exports = new ShipperService();

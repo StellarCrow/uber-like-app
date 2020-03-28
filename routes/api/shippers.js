@@ -51,15 +51,14 @@ router.post(
     validate(schemas.createLoad, 'body'),
     async (req, res) => {
       const shipperId = req.params.id;
-      const loadInfo = {
-        name: req.body.name,
-        description: req.body.description,
-        status: req.body.status,
-        dimensions: req.body.dimensions,
-        payload: req.body.payload,
-        deliveryAddress: req.body.deliveryAddress,
-        pickUpAddress: req.body.pickUpAddress,
-      };
+      const body = req.body;
+      const loadInfo = {};
+
+      for (const property in body) {
+        if (body[property]) {
+          loadInfo[property] = body[property];
+        }
+      }
 
       try {
         const newLoad = await ShipperService.createLoad(shipperId, loadInfo);
@@ -98,6 +97,25 @@ router.put(
           return res.status(500).json({error: err.message});
         }
         return res.status(400).json({error: err.message});
+      }
+    },
+);
+
+// delete load
+router.delete(
+    '/shippers/:id/loads/:sid',
+    validate(schemas.routeIds, 'params'),
+    checkPermission(role.SHIPPER),
+    async (req, res) => {
+      const loadId = req.params.sid;
+      try {
+        const deletedLoad = await ShipperService.deleteLoad(loadId);
+        if (!deletedLoad) {
+          return res.status(404).json({error: 'Load not found'});
+        }
+        return res.status(200).json({message: 'Load was successfully deleted'});
+      } catch (err) {
+        return res.status(500).json({error: err.message});
       }
     },
 );
