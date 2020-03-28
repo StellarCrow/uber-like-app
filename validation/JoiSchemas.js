@@ -49,6 +49,26 @@ const schemas = {
       zip: Joi.string().length(5).required(),
     }).required(),
   }),
+  updateLoad: Joi.object({
+    name: Joi.string(),
+    description: Joi.string(),
+    dimensions: Joi.object({
+      width: Joi.number().required(),
+      length: Joi.number().required(),
+      height: Joi.number().required(),
+    }),
+    payload: Joi.number(),
+    deliveryAddress: Joi.object({
+      city: Joi.string().required(),
+      street: Joi.string().required(),
+      zip: Joi.string().length(5).required(),
+    }),
+    pickUpAddress: Joi.object({
+      city: Joi.string().required(),
+      street: Joi.string().required(),
+      zip: Joi.string().length(5).required(),
+    }),
+  }),
 };
 
 module.exports = schemas;

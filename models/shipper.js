@@ -39,42 +39,6 @@ class ShipperModel {
       throw new ServerError(err.message);
     }
   }
-
-  /**
-   * Create new load.
-   * @param {string} id - shipper id.
-   * @param {string} loadInfo - new load info.
-   * @return {Promise} - Promise object represents new load instance.
-   * @throw {ServerError} - error while creating truck.
-   */
-  async createLoad(id, loadInfo) {
-    const {
-      name,
-      description,
-      status,
-      dimensions,
-      payload,
-      deliveryAddress,
-      pickUpAddress,
-    } = loadInfo;
-    try {
-      const newLoad = await Load.create({
-        created_by: id,
-        name,
-        description,
-        status,
-        dimensions,
-        payload,
-        deliveryAddress,
-        pickUpAddress,
-      });
-      const update = {$push: {loads: newLoad._id}};
-      await Shipper.updateOne({_id: id}, update);
-      return newLoad;
-    } catch (err) {
-      throw new ServerError(err.message);
-    }
-  }
 }
 
 module.exports = new ShipperModel();
