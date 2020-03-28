@@ -143,4 +143,23 @@ router.delete(
     },
 );
 
+router.get(
+    '/drivers/:id/loads',
+    validate(schemas.routeId, 'params'),
+    checkPermission(role.DRIVER),
+    async (req, res) => {
+      const driverId = req.params.id;
+      try {
+        const load = await DriverService.getLoad(driverId);
+        if (!load) {
+          return res
+              .status(404)
+              .json({error: `There is no load yet.`});
+        }
+        res.status(200).json({load: load});
+      } catch (err) {
+        res.status(500).json({error: err.message});
+      }
+    });
+
 module.exports = router;

@@ -78,6 +78,15 @@ class DriverService {
     const deletedTruck = await DriverModel.deleteTruck(driverId, truckId);
     return deletedTruck;
   }
+  /**
+   * Update truck info.
+   * @param {String} driverId - driver's id.
+   * @return {Promise} Promise object represents driver's load.
+   */
+  async getLoad(driverId) {
+    const load = await DriverModel.getLoad(driverId);
+    return load;
+  }
 }
 
 module.exports = new DriverService();

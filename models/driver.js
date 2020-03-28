@@ -163,6 +163,17 @@ class DriverModel {
       throw new ServerError(err.message);
     }
   }
+
+  /**
+   * Get load.
+   * @param {string} driverId - driver's id.
+   * @return {Promise} - Promise object represents load.
+   * @throw {ServerError} - db error.
+   */
+  async getLoad(driverId) {
+    const {load} = await Driver.findById({_id: driverId}).populate('load');
+    return load;
+  }
 }
 
 module.exports = new DriverModel();

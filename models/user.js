@@ -30,7 +30,7 @@ class UserModel {
       );
       return updatedUser;
     } catch (err) {
-      throw new ServerError(err.message);
+      throw new ServerError(err);
     }
   }
 
