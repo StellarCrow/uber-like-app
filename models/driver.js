@@ -1,5 +1,6 @@
 const Driver = require('./schemas/Driver');
 const Truck = require('./schemas/Truck');
+const LoadModel = require('./load');
 const ServerError = require('../errors/ServerError');
 const {truckStatus} = require('../utils/truckConstants');
 
@@ -171,8 +172,64 @@ class DriverModel {
    * @throw {ServerError} - db error.
    */
   async getLoad(driverId) {
-    const {load} = await Driver.findById({_id: driverId}).populate('load');
-    return load;
+    try {
+      const {load} = await Driver.findById({_id: driverId}).populate('load');
+      return load;
+    } catch (err) {
+      throw new ServerError(err.message);
+    }
+  }
+
+  /**
+   * Change load state.
+   * @param {string} driverId - driver's id.
+   * @param {string} state - new load state.
+   * @throw {ServerError} - db error.
+   */
+  async changeLoadState(driverId, state) {
+    const {load} = await Driver.findById(driverId).populate('load');
+    try {
+      await LoadModel.changeState(load._id, state);
+      return load;
+    } catch (err) {
+      throw new ServerError(err.message);
+    }
+  }
+  /**
+   * Change truck status.
+   * @param {string} driverId - driver's id.
+   * @param {string} status - new truck status.
+   * @throw {ServerError} - db error.
+   */
+  async changeTruckStatus(driverId, status) {
+    try {
+      const driver = await Driver.findById(driverId).populate(
+          'assigned_truck',
+      );
+      const truck = driver.assigned_truck;
+      await Truck.findOneAndUpdate({_id: truck._id}, {status: status});
+    } catch (err) {
+      throw new ServerError(err.message);
+    }
+  }
+
+  /**
+   * Change truck status.
+   * @param {string} driverId - driver's id.
+   * @param {string} status - new truck status.
+   * @return {object} deleted load
+   * @throw {ServerError} - db error.
+   */
+  async removeLoad(driverId) {
+    try {
+      const {load} = await Driver.findOneAndUpdate(
+          {_id: driverId},
+          {$unset: {load: ''}, has_load: false},
+      ).populate('load');
+      return load;
+    } catch (err) {
+      throw new ServerError(err.message);
+    }
   }
 }
 

@@ -81,6 +81,11 @@ class ShipperService {
       throw new Error('Load not found.');
     }
 
+    const isLoadNew = await LoadModel.isLoadNew(loadId);
+    if (!isLoadNew) {
+      throw new Error('It is allowed to post loads only with status "NEW"');
+    }
+
     await LoadModel.changeStatus(loadId, loadStatus.POSTED);
     await LoadModel.addLog(loadId, logMessage.POSTING_LOAD);
 
@@ -96,7 +101,7 @@ class ShipperService {
     await LoadModel.changeStatus(loadId, loadStatus.ASSIGNED);
     await LoadModel.addLog(loadId, logMessage.DRIVER_FOUND);
     await LoadModel.changeState(loadId, loadState.EN_ROUTE_TO_PICK_UP);
-    await LoadModel.addLog(loadId, logMessage.STATE_EN_ROUTE_TO_PICKUP);
+    await LoadModel.addLog(loadId, logMessage.EN_ROUTE_TO_PICKUP);
   }
 }
 

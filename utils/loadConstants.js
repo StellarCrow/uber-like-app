@@ -16,10 +16,10 @@ const logMessage = {
   POSTING_LOAD: 'Posting a load...\nLoad status: POSTED',
   DRIVER_NOT_FOUND: 'Driver was not found...\nLoad status: NEW',
   DRIVER_FOUND: 'Driver was found...\n Load status: ASSIGNED',
-  STATE_EN_ROUTE_TO_PICKUP: '...En route to Pick Up...',
-  STATE_ARRIVED_TO_PICKUP: '...Arrived to Pick Up...',
-  STATE_EN_ROUTE_TO_DELIVERY: '...En route to Delivery...',
-  STATE_ARRIVED_TO_DELIVERY: '...Arrived to Delivery...',
+  EN_ROUTE_TO_PICKUP: '...En route to Pick Up...',
+  ARRIVED_TO_PICKUP: '...Arrived to Pick Up...',
+  EN_ROUTE_TO_DELIVERY: '...En route to Delivery...',
+  ARRIVED_TO_DELIVERY: '...Arrived to Delivery...',
 };
 
 const getEnum = (object, propertyName) => {

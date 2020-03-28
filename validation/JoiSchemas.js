@@ -1,5 +1,6 @@
 const Joi = require('@hapi/joi');
 Joi.objectId = require('joi-objectid')(Joi);
+const {loadStateEnum}= require('../utils/loadConstants');
 
 const schemas = {
   registration: Joi.object({
@@ -68,6 +69,9 @@ const schemas = {
       street: Joi.string().required(),
       zip: Joi.string().length(5).required(),
     }),
+  }),
+  changeLoadStatus: Joi.object({
+    state: Joi.any().valid(...loadStateEnum).required(),
   }),
 };
 
