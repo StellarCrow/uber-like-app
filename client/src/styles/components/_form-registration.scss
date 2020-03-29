@@ -1,0 +1,14 @@
+.form {
+    padding: 4% 3%;
+    border: 1px solid $gray;
+    border-radius: 0.2em;
+    background-color: $primary-color;
+
+    &__input {
+        border: 2px solid $secondary-color;
+        border-radius: 1.5em;
+        padding: 0.8em 1em;
+        outline: none;
+
+    }
+}
