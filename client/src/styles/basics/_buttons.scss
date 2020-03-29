@@ -1,0 +1,24 @@
+%button {
+    background-color: $secondary-color;
+    font-family: $ff-headers;
+    text-transform: uppercase;
+    color: $text-color--dark;
+    padding: 1em 1.5em;
+    border-radius: 1.5em;
+    font-weight: $semi-bold;
+    letter-spacing: 0.1em;
+    border: none;
+    transition: 0.3s ease;
+    cursor: pointer;
+    &:focus {
+        outline: none;
+    }
+
+    &:hover {
+        color: $text-color--light;
+    }
+}
+
+.button {
+    @extend %button;
+}

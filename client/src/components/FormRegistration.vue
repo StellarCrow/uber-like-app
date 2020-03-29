@@ -40,15 +40,18 @@
         <div class="form__error" v-if="error">
             {{ error }}
         </div>
-        <button class="button-submit form__submit" type="submit">
-            Регистрация
-        </button>
+        <div class="form__field">
+            <button class="button form__button" type="submit">
+                Registrate
+            </button>
+        </div>
     </form>
 </template>
 
 <script>
 export default {
     name: "FormRegistration",
+    props: ["role"],
     data() {
         return {
             name: "",
@@ -56,10 +59,11 @@ export default {
             password: "",
             error: ""
         }
+    },
+    methods: {
+        async sendFormData() {}
     }
 }
 </script>
 
-<style lang="scss" scoped>
-@import url("../styles/components/_form-registration.scss");
-</style>
+<style lang="scss" scoped></style>
