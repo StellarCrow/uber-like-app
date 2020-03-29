@@ -12,9 +12,7 @@ class ShipperService {
   async getProfile(shipperId) {
     const shipper = await ShipperModel.getFullProfile(shipperId);
     if (!shipper) return null;
-    const shipperObject = shipper.toObject();
-    delete shipperObject.user.password;
-    return shipperObject;
+    return shipper;
   }
   /**
    * Delete shipper's profile.

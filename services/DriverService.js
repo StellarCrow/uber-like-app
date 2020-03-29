@@ -14,9 +14,7 @@ class DriverService {
   async getProfile(driverId) {
     const driver = await DriverModel.getFullProfile(driverId);
     if (!driver) return null;
-    const driverObject = driver.toObject();
-    delete driverObject.user.password;
-    return driverObject;
+    return driver;
   }
   /**
    * Create truck.

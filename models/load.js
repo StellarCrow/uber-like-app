@@ -189,19 +189,30 @@ class LoadModel {
       if (truckList.length === 0) return null;
 
       const load = await Load.findById(id);
-      let foundTruck = null;
       for (const truck of truckList) {
-        if (load.payload > truck.payload) continue;
-        if (load.dimensions.width > truck.dimensions.width) continue;
-        if (load.dimensions.height > truck.dimensions.height) continue;
-        if (load.dimensions.length > truck.dimensions.length) continue;
-        foundTruck = truck;
-        break;
+        const loadFits = this.isLoadFit(load, truck);
+        if (loadFits) {
+          return truck;
+        }
       }
-      return foundTruck;
+      return null;
     } catch (err) {
       throw new ServerError(err.message);
     }
+  }
+
+  /**
+   * Check if load payload and dimensions fit into truck.
+   * @param {object} load - load.
+   * @param {object} truck - truck.
+   * @return {true|false} true if load fits, false if not
+   */
+  isLoadFit(load, truck) {
+    if (load.payload > truck.payload) return false;
+    if (load.dimensions.width > truck.dimensions.width) return false;
+    if (load.dimensions.height > truck.dimensions.height) return false;
+    if (load.dimensions.length > truck.dimensions.length) return false;
+    return true;
   }
 
   /**

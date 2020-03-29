@@ -27,7 +27,7 @@ class UserModel {
           {_id: newUser._id},
           {role_id: userRole._id},
           {new: true},
-      );
+      ).select('-password');
       return updatedUser;
     } catch (err) {
       throw new ServerError(err);

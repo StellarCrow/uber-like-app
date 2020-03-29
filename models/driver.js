@@ -15,7 +15,7 @@ class DriverModel {
   async getFullProfile(id) {
     try {
       const driver = await Driver.findById(id)
-          .populate('user')
+          .populate('user', '-password')
           .exec();
       return driver;
     } catch (err) {

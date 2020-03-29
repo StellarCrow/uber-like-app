@@ -53,14 +53,7 @@ router.post(
     validate(schemas.createLoad, 'body'),
     async (req, res) => {
       const shipperId = req.params.id;
-      const body = req.body;
-      const loadInfo = {};
-
-      for (const property in body) {
-        if (body[property]) {
-          loadInfo[property] = body[property];
-        }
-      }
+      const loadInfo = req.body;
 
       try {
         const newLoad = await ShipperService.createLoad(shipperId, loadInfo);
