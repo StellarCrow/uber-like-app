@@ -19,12 +19,18 @@ const schemas = {
         .required(),
     password: Joi.string().required(),
   }),
+  passwordUpdate: Joi.object({
+    password: Joi.string().required(),
+  }),
   routeId: Joi.object({
     id: Joi.objectId().required(),
   }),
   routeIds: Joi.object({
     id: Joi.objectId().required(),
     sid: Joi.objectId().required(),
+  }),
+  createTruck: Joi.object({
+    name: Joi.string().required(),
   }),
   truckUpdate: Joi.object({
     name: Joi.string().required(),

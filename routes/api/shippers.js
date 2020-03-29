@@ -6,6 +6,7 @@ const validate = require('../middleware/requestValidator');
 const schemas = require('../../validation/JoiSchemas');
 const role = require('../../utils/roles');
 
+// get shipper profile
 router.get(
     '/shippers/:id',
     validate(schemas.routeId, 'params'),
@@ -23,6 +24,7 @@ router.get(
     },
 );
 
+// delete shipper profile
 router.delete(
     '/shippers/:id',
     validate(schemas.routeId, 'params'),

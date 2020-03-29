@@ -32,6 +32,7 @@ router.post(
     '/drivers/:id/trucks',
     validate(schemas.routeId, 'params'),
     checkPermission(role.DRIVER),
+    validate(schemas.createTruck, 'body'),
     async (req, res) => {
       const driverId = req.params.id;
       const truckInfo = {
@@ -143,6 +144,7 @@ router.delete(
     },
 );
 
+// get driver's load
 router.get(
     '/drivers/:id/loads',
     validate(schemas.routeId, 'params'),
