@@ -49,6 +49,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
     name: "FormRegistration",
     props: ["role"],
@@ -58,12 +60,31 @@ export default {
             email: "",
             password: "",
             error: ""
-        }
+        };
     },
     methods: {
-        async sendFormData() {}
+        ...mapActions(["register", "login"]),
+        async sendFormData() {
+            const payload = {
+                name: this.name,
+                email: this.email,
+                password: this.password,
+                role: this.role
+            };
+
+            try {
+                const res = await this.register(payload);
+                if (res.user) {
+                    this.$router.push("/about");
+                } else {
+                    this.error = res.error.response.data.error;
+                }
+            } catch (err) {
+                this.error = err.message;
+            }
+        }
     }
-}
+};
 </script>
 
 <style lang="scss" scoped></style>

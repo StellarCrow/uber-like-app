@@ -27,11 +27,27 @@
         outline: none;
         font-weight: $light;
         display: block;
+
+        &:focus {
+            border-color: $primary-color;
+        }
     }
 
     &__button {
         display: block;
         min-width: 40%;
         margin: 0 auto;
+    }
+
+    &__error {
+        text-align: center;
+        padding: 1em 0.5em;
+        background-color: $danger-color;
+        color: $text-color--light;
+        font-weight: $semi-bold;
+        max-width: 60%;
+        border-radius: 1.3em;
+        margin: 0 auto;
+        margin-bottom: 3%;
     }
 }
