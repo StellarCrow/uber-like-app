@@ -7,20 +7,22 @@
             <div class="profile__load"></div>
         </div>
 
-        <div class="profile__items"></div>
+        <div class="profile__items">
+            <ItemsList />
+        </div>
     </div>
 </template>
 
 <script>
 import ProfileDetails from "../components/ProfileDetails";
+import ItemsList from "../components/ItemsList";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
     name: "Profile",
-    components: { ProfileDetails },
+    components: { ProfileDetails, ItemsList },
     data() {
-        return {
-        };
+        return {};
     },
     computed: {
         ...mapGetters(["userId", "role"])

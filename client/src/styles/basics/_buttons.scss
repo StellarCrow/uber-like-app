@@ -32,3 +32,11 @@
         color: inherit;
     }
 }
+
+.button--assign {
+    background-color: $success-color;
+}
+
+.button--delete {
+    background-color: $danger-color;
+}

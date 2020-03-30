@@ -18,6 +18,7 @@
       align-items: center;
       justify-content: space-around;
       min-width: 100%;
+      box-sizing: border-box;
   
       & > * {
         margin-bottom: 3%;

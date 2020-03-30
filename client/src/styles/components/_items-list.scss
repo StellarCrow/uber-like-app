@@ -1,0 +1,17 @@
+.items {
+    padding: 5% 3%;
+
+    &__title {
+        @include title;
+    }
+
+    &__list {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    &__item {
+        margin-bottom: 5%;
+    }
+}

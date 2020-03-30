@@ -11,7 +11,7 @@ const state = {
 const getters = {
     driver: state => state.driver,
     trucks: state => state.trucks,
-    assignedTruck: state => state.truck,
+    assignedTruck: state => state.assignedTruck,
     assignedLoad: state => state.assignedLoad
 };
 
@@ -25,7 +25,7 @@ const actions = {
                 name: user.user.name,
                 trucksCount: user.trucks.length,
                 assignedTruck: user.assigned_truck ? 1 : 0,
-                assignedLoad: user.assigned_load ? 1 : 0,
+                assignedLoad: user.load ? 1 : 0,
                 hasLoad: user.has_load
             };
             commit("get_driver_profile_success", { user, driver });
@@ -44,8 +44,8 @@ const mutations = {
     get_driver_profile_success(state, { user, driver }) {
         state.status = "success";
         state.trucks = user.trucks;
-        state.assignedLoad = user.assigned_load || {};
-        state.assignedTruck = user.assigned_truck || {};
+        state.assignedLoad = user.load || null;
+        state.assignedTruck = user.assigned_truck || null;
         state.driver = driver;
     },
     get_driver_profile_failure(state) {

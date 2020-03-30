@@ -75,7 +75,7 @@ export default {
             try {
                 const res = await this.register(payload);
                 if (res.user) {
-                    this.$router.push("/about");
+                    this.$router.push("/login");
                 } else {
                     this.error = res.error.response.data.error;
                 }

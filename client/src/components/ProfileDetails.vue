@@ -15,9 +15,15 @@
                     class="profile__info statistic"
                     v-if="this.role === 'driver'"
                 >
-                    <li class="statistic__item">Trucks<span>{{this.trucksCount}}</span></li>
-                    <li class="statistic__item">Loads<span>{{this.load}}</span></li>
-                    <li class="statistic__item">Assigned<span>{{this.assignedTruck}}</span></li>
+                    <li class="statistic__item">
+                        Trucks<span>{{ this.trucksCount }}</span>
+                    </li>
+                    <li class="statistic__item">
+                        Loads<span>{{ this.load }}</span>
+                    </li>
+                    <li class="statistic__item">
+                        Assigned<span>{{ this.assignedTruck }}</span>
+                    </li>
                 </ul>
                 <button @click.prevent="logoutUser()" class="button">
                     Logout
@@ -37,7 +43,7 @@ export default {
             name: "",
             trucksCount: 0,
             load: 0,
-            assignedTruck: 0,
+            assignedTruck: 0
         };
     },
     computed: {
@@ -48,6 +54,7 @@ export default {
             this.name = this.driver.name;
             this.trucksCount = this.driver.trucksCount;
             this.load = this.driver.assignedLoad;
+            this.assignedTruck = this.driver.assignedTruck;
         }
     },
     methods: {
