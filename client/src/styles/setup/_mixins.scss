@@ -1,3 +1,10 @@
 @mixin transition {
     transition: 0.3s ease;
 }
+
+@mixin title {
+    font-size: 2.5em;
+    font-family: $ff-headers--secondary;
+    font-weight: $light;
+    margin-bottom: 0.5em;
+}

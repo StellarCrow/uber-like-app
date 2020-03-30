@@ -1,7 +1,7 @@
 <template>
     <section class="section login">
         <h2 class="section__title">Login</h2>
-        <FormLogin />
+        <FormLogin class="login__form" />
     </section>
 </template>
 
@@ -16,4 +16,6 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+@import "../styles/pages/_login.scss";
+</style>

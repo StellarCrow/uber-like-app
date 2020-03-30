@@ -5,12 +5,14 @@ import router from "../router/index";
 const state = {
     token: localStorage.getItem("token") || "",
     user: {},
+    role: "",
     status: ""
 };
 
 const getters = {
     isAuthenticated: state => !!state.token,
     authState: state => state.status,
+    role: state => state.role,
     user: state => state.user,
     userId: state => state.user._id
 };
@@ -63,6 +65,7 @@ const mutations = {
         state.token = token;
         state.user = user;
         state.status = "success";
+        state.role = user.role;
     },
     register_request(state) {
         state.status = "loading";
@@ -74,6 +77,7 @@ const mutations = {
         state.status = "";
         state.token = "";
         state.user = "";
+        state.role = "";
     }
 };
 

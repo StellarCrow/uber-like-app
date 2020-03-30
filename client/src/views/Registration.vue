@@ -1,7 +1,7 @@
 <template>
     <section class="section registration">
-        <h2 class="section__title">Registrate As {{ this.role }}</h2>
-        <FormRegistration :role="this.role" />
+        <h2 class="section__title">Registrate As A "{{ this.role }}"</h2>
+        <FormRegistration class="registration__form" :role="this.role" />
     </section>
 </template>
 
@@ -21,4 +21,6 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+@import "../styles/pages/_registration.scss";
+</style>
