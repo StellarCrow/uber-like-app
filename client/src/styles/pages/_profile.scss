@@ -1,0 +1,21 @@
+.profile {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: stretch;
+
+    &__column {
+        display: flex;
+        flex-flow: column;
+    }
+
+    &__load {
+        background-color: $secondary-color;
+    }
+
+    &__items {
+        background-color: $danger-color;
+        height: 100%;
+        width: 100%;
+    }
+}
+

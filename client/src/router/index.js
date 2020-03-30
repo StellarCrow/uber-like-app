@@ -38,6 +38,14 @@ const routes = [
         meta: {
             requiresGuest: true
         }
+    },
+    {
+        path: "/profile",
+        name: "Profile",
+        component: () => import("../views/Profile.vue"),
+        meta: {
+            requiresAuth: true
+        }
     }
 ];
 
@@ -65,7 +73,7 @@ router.beforeEach((to, from, next) => {
     } else if (to.matched.some(record => record.meta.requiresGuest)) {
         if (store.getters.isAuthenticated) {
             //Redirect to the profile page
-            next(`/users/${store.getters.user._id}`);
+            next(`/profile`);
         } else next();
     } else next();
 });
