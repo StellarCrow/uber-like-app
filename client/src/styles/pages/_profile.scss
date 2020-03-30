@@ -16,5 +16,17 @@
         height: 100%;
         width: 100%;
     }
+
+    &__settings-image {
+        max-width: 20%;
+        display: block;
+        margin: 0 auto;
+    }
+
+    &__optional {
+        background-color: $primary-color;
+        padding: 5% 3%;
+        height: 15%;
+    }
 }
 

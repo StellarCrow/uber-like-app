@@ -4,6 +4,20 @@
             <div class="profile__info">
                 <ProfileDetails />
             </div>
+            <div class="profile__optional">
+                <div class="feature">
+                    <div class="feature__name">Settings</div>
+                    <div class="feature__value">
+                        <router-link class="profile__link" to="/settings"
+                            ><img
+                                src="../assets/icons/settings.svg"
+                                class="profile__settings-image"
+                                alt="Settings"
+                        /></router-link>
+                    </div>
+                </div>
+                <div class="profile__weather"></div>
+            </div>
             <div class="profile__load"></div>
         </div>
 

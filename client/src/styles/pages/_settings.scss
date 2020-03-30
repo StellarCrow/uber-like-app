@@ -1,0 +1,10 @@
+.settings {
+    background: url("../assets/backgrounds/settings-bg.jpg") no-repeat center
+        top / cover;
+        text-align: center;
+
+        &__form {
+            max-width: 70%;
+            margin: 0 auto;
+        }
+}
