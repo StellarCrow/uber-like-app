@@ -13,15 +13,31 @@
 
 <script>
 import ProfileDetails from "../components/ProfileDetails";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
     name: "Profile",
     components: { ProfileDetails },
     data() {
         return {
-            name: "",
-            role: ""
         };
+    },
+    computed: {
+        ...mapGetters(["userId", "role"])
+    },
+    async mounted() {
+        try {
+            if (this.role === "driver") {
+                await this.getDriverProfile(this.userId);
+            } else {
+                console.log("shipper");
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    },
+    methods: {
+        ...mapActions(["getDriverProfile"])
     }
 };
 </script>

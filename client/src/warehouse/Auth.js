@@ -14,7 +14,7 @@ const getters = {
     authState: state => state.status,
     role: state => state.role,
     user: state => state.user,
-    userId: state => state.user._id
+    userId: state => state.user.role_id
 };
 
 const actions = {
@@ -27,7 +27,7 @@ const actions = {
                 let user = res.data.user;
                 localStorage.setItem("token", token);
                 //Set axios defaults
-                axios.defaults.headers.common["Authorization"] = token;
+                axios.defaults.headers.common["Authorization"] = "JWT " + token;
                 commit("auth_success", { token, user });
             }
             return { user: user };

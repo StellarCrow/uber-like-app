@@ -5,6 +5,6 @@ export default {
         return Api().post("/api/users/", credentials);
     },
     login(user) {
-        return Api().post("/api/login", user);
+        return Api().post("/api/users/login", user);
     }
 };

@@ -11,9 +11,13 @@
             <div class="profile__about">
                 <div class="profile__name">{{ this.name }}</div>
                 <div class="profile__role">{{ this.role }}</div>
-                <ul class="profile__info statistic">
-                    <li class="statistic__item">Trucks<span>10</span></li>
-                    <li class="statistic__item">Loads<span>10</span></li>
+                <ul
+                    class="profile__info statistic"
+                    v-if="this.role === 'driver'"
+                >
+                    <li class="statistic__item">Trucks<span>{{this.trucksCount}}</span></li>
+                    <li class="statistic__item">Loads<span>{{this.load}}</span></li>
+                    <li class="statistic__item">Assigned<span>{{this.assignedTruck}}</span></li>
                 </ul>
                 <button @click.prevent="logoutUser()" class="button">
                     Logout
@@ -30,14 +34,21 @@ export default {
     name: "ProfileDetails",
     data() {
         return {
-            name: ""
+            name: "",
+            trucksCount: 0,
+            load: 0,
+            assignedTruck: 0,
         };
     },
     computed: {
-        ...mapGetters(["role", "user"])
+        ...mapGetters(["role", "driver"])
     },
     mounted() {
-        this.name = this.user.name;
+        if (this.role === "driver") {
+            this.name = this.driver.name;
+            this.trucksCount = this.driver.trucksCount;
+            this.load = this.driver.assignedLoad;
+        }
     },
     methods: {
         ...mapActions(["logout"]),
