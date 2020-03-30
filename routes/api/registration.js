@@ -46,7 +46,7 @@ router.post(
  */
 
 router.post(
-    '/login',
+    '/users/login',
     validate(schemas.authorization, 'body'),
     async (req, res) => {
       const userInfo = {

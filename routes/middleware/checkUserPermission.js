@@ -1,6 +1,9 @@
-const checkPermission = () => {
+const checkPermission = (role) => {
   return async (req, res, next) => {
     if (!req.jwtUser) {
+      return res.status(403).json({error: 'Forbidden'});
+    }
+    if (role !== req.jwtUser.role) {
       return res.status(403).json({error: 'Forbidden'});
     }
     const userAuthorized = req.jwtUser.id;

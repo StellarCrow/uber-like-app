@@ -13,5 +13,7 @@
         "ecmaVersion": 2018
     },
     "rules": {
+        "require-jsdoc" : 0,
+        "linebreak-style": 0
     }
 }

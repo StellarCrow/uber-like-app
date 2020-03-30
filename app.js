@@ -14,10 +14,10 @@ mongoose.connect(MONGO_URI, {
 console.log(mongoose.connection.readyState);
 
 const checkAuthorization = require('./routes/middleware/auth');
-const checkRole = require('./routes/middleware/сheckRole');
 
 const registerRoute = require('./routes/api/registration');
 const driversRoute = require('./routes/api/drivers');
+const shippersRoute = require('./routes/api/shippers');
 const usersRoute = require('./routes/api/users');
 
 app.use(logger('dev'));
@@ -28,9 +28,8 @@ app.use('/api', registerRoute);
 
 app.use(checkAuthorization);
 app.use('/api', usersRoute);
-
-app.use(checkRole('driver'));
 app.use('/api', driversRoute);
+app.use('/api', shippersRoute);
 
 app.listen(PORT, () => {
   console.log(`Listening to requests on http://localhost:${PORT}`);
