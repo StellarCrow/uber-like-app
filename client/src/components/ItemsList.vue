@@ -2,7 +2,7 @@
     <section class="items">
         <div class="items__title">My {{ this.title }}</div>
         <ul class="items__list">
-            <li v-for="item in this.items" :key="item._id" class="items__list">
+            <li v-for="item in this.trucks" :key="item._id" class="items__list">
                 <TruckItem class="items__item" :truck="item" />
             </li>
         </ul>
@@ -10,25 +10,26 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapState } from "vuex";
 import TruckItem from "../components/TruckItem";
 
 export default {
     name: "ItemsList",
     data() {
         return {
-            title: "",
-            items: []
+            title: ""
         };
     },
     components: { TruckItem },
     computed: {
-        ...mapGetters(["role", "trucks"])
+        ...mapState({
+            trucks: state => state.Driver.trucks,
+            role: state => state.Auth.role
+        })
     },
     mounted() {
         if (this.role === "driver") {
             this.title = "Trucks";
-            this.items = this.trucks;
         }
     }
 };

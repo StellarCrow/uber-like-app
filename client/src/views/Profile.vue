@@ -16,7 +16,7 @@
 <script>
 import ProfileDetails from "../components/ProfileDetails";
 import ItemsList from "../components/ItemsList";
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapState, mapGetters } from "vuex";
 
 export default {
     name: "Profile",
@@ -25,7 +25,10 @@ export default {
         return {};
     },
     computed: {
-        ...mapGetters(["userId", "role"])
+        ...mapState({
+            role: state => state.Auth.role
+        }),
+        ...mapGetters(["userId"])
     },
     async mounted() {
         try {

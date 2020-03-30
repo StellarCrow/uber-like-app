@@ -30,11 +30,19 @@
             </div>
         </div>
         <div class="truck__buttons" v-if="!this.driverHasAssignedLoad">
-            <button class="button button--assign" v-if="!this.isAssigned">
+            <button
+                @click.prevent="assignTruckToDriver()"
+                class="button button--assign"
+                v-if="!this.isAssigned"
+            >
                 Assign
             </button>
             <button class="button" v-if="!this.isAssigned">Modify</button>
-            <button class="button button--delete" v-if="!this.isAssigned">
+            <button
+                @click="deleteTruckFromList()"
+                class="button button--delete"
+                v-if="!this.isAssigned"
+            >
                 Delete
             </button>
         </div>
@@ -43,7 +51,7 @@
 
 <script>
 import truckConstants from "../utils/truckConstants";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions, mapState } from "vuex";
 
 export default {
     name: "TruckItem",
@@ -59,7 +67,11 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(["assignedLoad", "assignedTruck"]),
+        ...mapGetters(["userId"]),
+        ...mapState({
+            assignedTruck: state => state.Driver.assignedTruck,
+            assignedLoad: state => state.Driver.assignedLoad,
+        }),
         addClass() {
             if (this.truck.status === "FREE") {
                 return "truck__status--free";
@@ -79,6 +91,33 @@ export default {
         this.isAssigned = this.truck._id === this.assignedTruck;
         this.driverHasAssignedTruck = !!this.assignedTruck;
         this.driverHasAssignedLoad = !!this.assignedLoad;
+    },
+    methods: {
+        ...mapActions(["assignTruck", "deleteTruck"]),
+        async assignTruckToDriver() {
+            try {
+                const payload = {
+                    driverId: this.userId,
+                    truckId: this.truck._id
+                };
+                const res = await this.assignTruck(payload);
+                console.log(res);
+            } catch (err) {
+                console.log(err);
+            }
+        },
+        async deleteTruckFromList() {
+            try {
+                const payload = {
+                    driverId: this.userId,
+                    truckId: this.truck._id
+                };
+                const res = await this.deleteTruck(payload);
+                console.log(res);
+            } catch (err) {
+                console.log(err);
+            }
+        }
     }
 };
 </script>

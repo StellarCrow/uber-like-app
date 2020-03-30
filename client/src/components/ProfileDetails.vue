@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default {
     name: "ProfileDetails",
@@ -47,7 +47,10 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(["role", "driver"])
+        ...mapState({
+            role: state => state.Auth.role,
+            driver: state => state.Driver.driver
+        })
     },
     mounted() {
         if (this.role === "driver") {
