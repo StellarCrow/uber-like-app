@@ -2,45 +2,23 @@ const ShipperModel = require('../models/shipper');
 const LoadModel = require('../models/load');
 const {logMessage, loadStatus, loadState} = require('../utils/loadConstants');
 
-/** Class representing business logic for shipper actions */
 class ShipperService {
-  /**
-   * Get shipper's profile.
-   * @param {string} shipperId - id of shipper, which info we need to extract.
-   * @return {Promise} Promise object represents shipper instance.
-   */
   async getProfile(shipperId) {
     const shipper = await ShipperModel.getFullProfile(shipperId);
     if (!shipper) return null;
     return shipper;
   }
-  /**
-   * Delete shipper's profile.
-   * @param {string} shipperId - id of shipper needed to delete.
-   * @return {Promise} Promise object represents deleted shipper instance.
-   */
+
   async deleteShipper(shipperId) {
     const deletedShipper = await ShipperModel.delete(shipperId);
     return deletedShipper;
   }
 
-  /**
-   * Create new load.
-   * @param {string} shipperId - id of shipper who creates load.
-   * @param {string} loadInfo - id of shipper needed to delete.
-   * @return {Promise} Promise object represents new load instance.
-   */
   async createLoad(shipperId, loadInfo) {
     const newLoad = await LoadModel.create(shipperId, loadInfo);
     return newLoad;
   }
 
-  /**
-   * Update load.
-   * @param {string} loadId - id of load to update.
-   * @param {object} infoToUpdate - load info to update.
-   * @return {Promise} Promise object represents load instance.
-   */
   async updateLoad(loadId, infoToUpdate) {
     const isLoadExist = await LoadModel.isLoadExist(loadId);
     if (!isLoadExist) return null;
@@ -52,11 +30,6 @@ class ShipperService {
     return updatedLoad;
   }
 
-  /**
-   * Delete load.
-   * @param {string} loadId - id of load needed to delete.
-   * @return {Promise} Promise object represents new load instance.
-   */
   async deleteLoad(loadId) {
     const isLoadExist = await LoadModel.isLoadExist(loadId);
     if (!isLoadExist) return null;
@@ -68,11 +41,6 @@ class ShipperService {
     return deletedLoad;
   }
 
-  /**
-   * Post load.
-   * @param {string} loadId - id of load needed to post.
-   * @return {Promise} Promise object represents new load instance.
-   */
   async postLoad(loadId) {
     const isLoadExist = await LoadModel.isLoadExist(loadId);
     if (!isLoadExist) {
@@ -102,21 +70,11 @@ class ShipperService {
     await LoadModel.addLog(loadId, logMessage.EN_ROUTE_TO_PICKUP);
   }
 
-  /**
-   * Get load.
-   * @param {string} loadId - id of load needed to return.
-   * @return {Promise} Promise object represents new load instance.
-   */
   async getLoad(loadId) {
     const load = await LoadModel.getLoad(loadId);
     return load;
   }
 
-  /**
-   * Get list of loads.
-   * @param {string} shipperId - shipper id, whose loads need to return.
-   * @return {Promise} Promise object represents new load instance.
-   */
   async getLoadsList(shipperId) {
     const loads = await ShipperModel.getLoadsList(shipperId);
     return loads;

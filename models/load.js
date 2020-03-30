@@ -6,15 +6,7 @@ const ServerError = require('../errors/ServerError');
 const {loadStatus} = require('../utils/loadConstants');
 const {truckStatus} = require('../utils/truckConstants');
 
-/** Class representing logic for interaction with Load model in database */
 class LoadModel {
-  /**
-   * Create new load.
-   * @param {string} shipperId - shipper id.
-   * @param {string} loadInfo - new load info.
-   * @return {Promise} - Promise object represents new load instance.
-   * @throw {ServerError} - error while creating truck.
-   */
   async create(shipperId, loadInfo) {
     const {
       name,
@@ -44,36 +36,17 @@ class LoadModel {
     }
   }
 
-  /**
-   * Check if load has status NEW.
-   * @param {string} loadId - load id.
-   * @return {true|false} - true if load has status NEW, false if not.
-   * @throw {ServerError} - error while creating truck.
-   */
   async isLoadNew(loadId) {
     const load = await Load.findOne({_id: loadId});
     return load.status === loadStatus.NEW;
   }
 
-  /**
-   * Check if load exists.
-   * @param {string} loadId - load id.
-   * @return {true|false} - true if load exists, false if not.
-   * @throw {ServerError} - error while creating truck.
-   */
   async isLoadExist(loadId) {
     const load = await Load.findOne({_id: loadId});
     if (!load) return false;
     return true;
   }
 
-  /**
-   * Update load.
-   * @param {string} id - load's id.
-   * @param {object} infoToUpdate - load info to update.
-   * @return {Promise} - Promise object represents updated load instance.
-   * @throw {ServerError} - error while creating truck.
-   */
   async updateLoad(id, infoToUpdate) {
     try {
       const updatedLoad = await Load.findOneAndUpdate({_id: id}, infoToUpdate, {
@@ -85,12 +58,6 @@ class LoadModel {
     }
   }
 
-  /**
-   * Delete load.
-   * @param {string} id - load id to delete.
-   * @return {Promise} - Promise object represents updated load instance.
-   * @throw {ServerError} - error while deleting load.
-   */
   async delete(id) {
     try {
       const deletedLoad = await Load.findOneAndRemove({_id: id});
@@ -104,13 +71,6 @@ class LoadModel {
     }
   }
 
-  /**
-   * Delete load.
-   * @param {string} id - load where to add new log.
-   * @param {string} message - message for log.
-   * @return {Promise} - Promise object represents updated load instance.
-   * @throw {ServerError} - error while deleting load.
-   */
   async addLog(id, message) {
     const update = {$push: {logs: {message}}};
     try {
@@ -120,12 +80,6 @@ class LoadModel {
     }
   }
 
-  /**
-   * Get load.
-   * @param {string} id - load id.
-   * @return {Promise} - Promise object represents load instance.
-   * @throw {ServerError} - error while deleting load.
-   */
   async getLoad(id) {
     try {
       const loadInstance = await Load.findById(id);
@@ -149,12 +103,6 @@ class LoadModel {
     }
   }
 
-  /**
-   * Change load status.
-   * @param {string} id - load.
-   * @param {string} status - new status for load.
-   * @throw {ServerError} - error while deleting load.
-   */
   async changeStatus(id, status) {
     try {
       await Load.findOneAndUpdate({_id: id}, {status: status});
@@ -163,12 +111,6 @@ class LoadModel {
     }
   }
 
-  /**
-   * Change load state.
-   * @param {string} id - load.
-   * @param {string} state - new state for load.
-   * @throw {ServerError} - error while deleting load.
-   */
   async changeState(id, state) {
     try {
       await Load.findOneAndUpdate({_id: id}, {state: state});
@@ -177,12 +119,6 @@ class LoadModel {
     }
   }
 
-  /**
-   * Find truck for load.
-   * @param {string} id - load.
-   * @return {object} found truck
-   * @throw {ServerError} - error while deleting load.
-   */
   async findTruck(id) {
     try {
       const truckList = await Truck.find({status: truckStatus.IN_SERVICE});
@@ -201,26 +137,18 @@ class LoadModel {
     }
   }
 
-  /**
-   * Check if load payload and dimensions fit into truck.
-   * @param {object} load - load.
-   * @param {object} truck - truck.
-   * @return {true|false} true if load fits, false if not
-   */
   isLoadFit(load, truck) {
-    if (load.payload > truck.payload) return false;
-    if (load.dimensions.width > truck.dimensions.width) return false;
-    if (load.dimensions.height > truck.dimensions.height) return false;
-    if (load.dimensions.length > truck.dimensions.length) return false;
-    return true;
+    const isValid =
+      load.payload < truck.payload &&
+      load.dimensions.width < truck.dimensions.width &&
+      load.dimensions.height < truck.dimensions.height &&
+      load.dimensions.length < truck.dimensions.length;
+    if (isValid) {
+      return true;
+    }
+    return false;
   }
 
-  /**
-   * Assign load to driver.
-   * @param {string} loadId - load.
-   * @param {string} driverId - driver.
-   * @throw {ServerError} - error while deleting load.
-   */
   async assignToDriver(loadId, driverId) {
     try {
       await Load.findOneAndUpdate({_id: loadId}, {assigned_to: driverId});

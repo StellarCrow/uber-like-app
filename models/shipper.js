@@ -3,14 +3,7 @@ const Load = require('./schemas/Load');
 const User = require('./schemas/User');
 const ServerError = require('../errors/ServerError');
 
-/** Class representing logic for interaction with Shipper model in database */
 class ShipperModel {
-  /**
-   * Get full shipper profile info.
-   * @param {string} id - shipper id.
-   * @return {Promise} - Promise object represents shipper instance.
-   * @throw {ServerError} - error while creating truck.
-   */
   async getFullProfile(id) {
     try {
       const shipper = await Shipper.findById(id)
@@ -22,12 +15,6 @@ class ShipperModel {
     }
   }
 
-  /**
-   * Get list of loads.
-   * @param {string} id - shipper id.
-   * @return {Promise} - Promise object represents load instance.
-   * @throw {ServerError} - error while deleting load.
-   */
   async getLoadsList(id) {
     try {
       const {loads} = await Shipper.findById(id).populate('loads');
@@ -37,12 +24,6 @@ class ShipperModel {
     }
   }
 
-  /**
-   * Delete shipper profile.
-   * @param {string} id - shipper id.
-   * @return {Promise} - Promise object represents deleted shipper instance.
-   * @throw {ServerError} - error while deleting shipper.
-   */
   async delete(id) {
     try {
       const shipper = await Shipper.findOneAndRemove({_id: id});
