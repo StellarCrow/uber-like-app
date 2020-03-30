@@ -1,0 +1,51 @@
+.card {
+    border: 1px solid $gray;
+    padding: 8% 5%;
+    display: flex;
+
+    &__container {
+        margin: auto;
+        text-align: center;
+    }
+
+    &__role {
+        text-transform: uppercase;
+        letter-spacing: 0.5em;
+        font-family: $ff-headers;
+        font-weight: $bold;
+        font-size: 1.1em;
+        margin-bottom: 5%;
+        color: $gray--dark;
+    }
+
+    &__title {
+        font-family: $ff-headers--secondary;
+        font-size: 2.2em;
+        margin-bottom: 5%;
+    }
+
+    &__description {
+        color: $gray--dark;
+        margin-bottom: 30%;
+    }
+
+    &__button {
+        max-width: 50%;
+        margin: 0 auto;
+    }
+
+    &:hover {
+        background-color: $primary-color;
+        transition: 0.3s ease;
+        color: $text-color--light;
+
+        .card__role {
+            color: $secondary-color;
+        }
+
+        .card__description, 
+        .card__button {
+            color: inherit
+        }
+    }
+}

@@ -1,0 +1,55 @@
+.home {
+    &__header {
+        height: 100vh;
+        background: url("../assets/backgrounds/home-bg.jpg") no-repeat center
+            bottom / cover;
+        display: flex;
+    }
+
+    &__name {
+        margin: auto;
+        padding-left: 3%;
+    }
+
+    &__title {
+        text-transform: uppercase;
+        font-size: 3em;
+        color: $text-color--light;
+        font-family: $ff-headers;
+        font-weight: $bold;
+        letter-spacing: 0.5em;
+    }
+}
+
+.role {
+    &__choice {
+        display: flex;
+        justify-content: center;
+        flex-flow: row nowrap;
+        max-width: 80%;
+        margin: 0 auto;
+        margin-bottom: 5%;
+    }
+
+    &__card {
+        flex-basis: 0 1 50%;
+        max-width: 40%;
+    }
+
+    &__login {
+        margin: 0 auto;
+        max-width: 40%;
+        text-align: center;
+        font-size: 1.3em;
+    }
+
+    &__link {
+        @include transition;
+        text-decoration: none;
+        color: $primary-color;
+        font-weight: $semi-bold;
+        &:hover {
+            color: $secondary-color;
+        }
+    }
+}
