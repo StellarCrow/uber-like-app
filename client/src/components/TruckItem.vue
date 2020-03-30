@@ -4,7 +4,7 @@
             <div class="truck__item feature">
                 <div class="feature__name">Name</div>
                 <div class="feature__value truck__name">
-                    {{ this.name }}
+                    {{ this.truck.name }}
                 </div>
             </div>
             <div class="truck__item feature">
@@ -29,7 +29,7 @@
                 </div>
             </div>
         </div>
-        <div class="truck__buttons" v-if="!this.driverHasAssignedLoad">
+        <div class="truck__buttons" v-if="!this.assignedLoad">
             <button
                 @click.prevent="assignTruckToDriver()"
                 class="button button--assign"
@@ -57,20 +57,13 @@ export default {
     name: "TruckItem",
     props: ["truck"],
     data() {
-        return {
-            name: "",
-            status: "",
-            type: "",
-            driverHasAssignedTruck: false,
-            driverHasAssignedLoad: false,
-            isAssigned: false
-        };
+        return {};
     },
     computed: {
         ...mapGetters(["userId"]),
         ...mapState({
             assignedTruck: state => state.Driver.assignedTruck,
-            assignedLoad: state => state.Driver.assignedLoad,
+            assignedLoad: state => state.Driver.assignedLoad
         }),
         addClass() {
             if (this.truck.status === "FREE") {
@@ -80,18 +73,20 @@ export default {
             } else if (this.truck.status === "IS") {
                 return "truck__status--is";
             } else return "";
+        },
+        status() {
+            const truckStatus = truckConstants.truckStatus;
+            return truckStatus[this.truck.status];
+        },
+        type() {
+            const truckTypes = truckConstants.type;
+            return truckTypes[this.truck.type].name;
+        },
+        isAssigned() {
+            return this.truck._id === this.assignedTruck;
         }
     },
-    mounted() {
-        const type = truckConstants.type;
-        const truckStatus = truckConstants.truckStatus;
-        this.name = this.truck.name;
-        this.status = truckStatus[this.truck.status];
-        this.type = type[this.truck.type].name;
-        this.isAssigned = this.truck._id === this.assignedTruck;
-        this.driverHasAssignedTruck = !!this.assignedTruck;
-        this.driverHasAssignedLoad = !!this.assignedLoad;
-    },
+    mounted() {},
     methods: {
         ...mapActions(["assignTruck", "deleteTruck"]),
         async assignTruckToDriver() {

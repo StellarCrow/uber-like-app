@@ -8,9 +8,7 @@ const state = {
     status: ""
 };
 
-const getters = {
-
-};
+const getters = {};
 
 const actions = {
     async getDriverProfile({ commit }, id) {
@@ -40,9 +38,7 @@ const actions = {
             const truckId = payload.truckId;
             let res = await DriverService.assignTruck(driverId, truckId);
             const assignedTruck = res.data.truck;
-            console.log(assignedTruck);
-
-            commit("assign_truck_success", { assignedTruck });
+            commit("assign_truck_success", truckId);
             return { truck: assignedTruck };
         } catch (err) {
             commit("assign_truck_failure");
@@ -84,7 +80,7 @@ const mutations = {
     assign_truck_request(state) {
         state.status = "loading";
     },
-    assign_truck_success(state, { truckId }) {
+    assign_truck_success(state, truckId) {
         state.assignedTruck = truckId;
         state.status = "success";
     },
@@ -98,8 +94,16 @@ const mutations = {
         state.status = "success";
         const index = state.trucks.findIndex(truck => truck._id === truckId);
         state.trucks.splice(index, 1);
+        state.driver.trucksCount--;
     },
     delete_truck_failure(state) {
+        state.status = "";
+    },
+    clean_driver(state) {
+        state.driver = {};
+        state.trucks = [];
+        state.assignedTruck = null;
+        state.assignedLoad = null;
         state.status = "";
     }
 };

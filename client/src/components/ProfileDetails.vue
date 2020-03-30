@@ -22,7 +22,7 @@
                         Loads<span>{{ this.load }}</span>
                     </li>
                     <li class="statistic__item">
-                        Assigned<span>{{ this.assignedTruck }}</span>
+                        Assigned Truck<span>{{ this.assignedTruck }}</span>
                     </li>
                 </ul>
                 <button @click.prevent="logoutUser()" class="button">
@@ -40,24 +40,27 @@ export default {
     name: "ProfileDetails",
     data() {
         return {
-            name: "",
-            trucksCount: 0,
-            load: 0,
-            assignedTruck: 0
+            name: ""
         };
     },
     computed: {
         ...mapState({
             role: state => state.Auth.role,
             driver: state => state.Driver.driver
-        })
+        }),
+        trucksCount() {
+            return this.driver.trucksCount;
+        },
+        load() {
+            return this.driver.assignedLoad;
+        },
+        assignedTruck() {
+            return this.driver.assignedTruck;
+        }
     },
     mounted() {
         if (this.role === "driver") {
             this.name = this.driver.name;
-            this.trucksCount = this.driver.trucksCount;
-            this.load = this.driver.assignedLoad;
-            this.assignedTruck = this.driver.assignedTruck;
         }
     },
     methods: {
