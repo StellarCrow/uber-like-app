@@ -53,84 +53,83 @@ img {
     }
 
     &__subtitle {
-      color: $gray;
+        color: $gray;
     }
 }
 
 .form {
-  padding: 4% 3%;
-  border-radius: 0.2em;
+    padding: 4% 3%;
+    border-radius: 0.2em;
 
-  &__group {
-      display: flex;
-      justify-content: space-evenly;
-  }
+    &__group {
+        display: flex;
+        justify-content: space-evenly;
+    }
 
-  &__field {
-      width: 80%;
-      margin: 0 auto;
-      margin-bottom: 3%;
-      font-weight: $regular;
-      display: flex;
-      flex-flow: column nowrap;
-      max-width: 80%;
-  }
+    &__field {
+        width: 80%;
+        margin: 0 auto;
+        margin-bottom: 3%;
+        font-weight: $regular;
+        display: flex;
+        flex-flow: column nowrap;
+        max-width: 80%;
+    }
 
-  &__label {
-      display: block;
-      font-family: $ff-headers;
-      text-align: left;
-      margin-bottom: 0.8em;
-  }
+    &__label {
+        display: block;
+        font-family: $ff-headers;
+        text-align: left;
+        margin-bottom: 0.8em;
+    }
 
-  &__input {
-      border: 2px solid $secondary-color;
-      border-radius: 1.5em;
-      padding: 0.8em 1em;
-      outline: none;
-      font-weight: $light;
-      display: block;
+    &__input {
+        border: 2px solid $secondary-color;
+        border-radius: 1.5em;
+        padding: 0.8em 1em;
+        outline: none;
+        font-weight: $light;
+        display: block;
 
-      &:focus {
-          border-color: $primary-color;
-      }
-  }
+        &:focus {
+            border-color: $primary-color;
+        }
+    }
 
-  &__select {
-      padding: 1em 1.5em;
-      border: 2px solid $secondary-color;
-      border-radius: 1.5em;
-      outline: 0;
-  }
+    &__select {
+        padding: 1em 1.5em;
+        border: 2px solid $secondary-color;
+        border-radius: 1.5em;
+        outline: 0;
+    }
 
-  &__button {
-      display: block;
-      min-width: 40%;
-      margin: 0 auto;
-  }
+    &__button {
+        display: block;
+        min-width: 40%;
+        margin: 0 auto;
+    }
 
-  &__error,
-  &__message {
-      text-align: center;
-      padding: 1em 0.5em;
-      background-color: $danger-color;
-      color: $text-color--light;
-      font-weight: $semi-bold;
-      max-width: 60%;
-      border-radius: 1.3em;
-      margin: 0 auto;
-      margin-bottom: 3%;
-  }
+    &__error,
+    &__message {
+        text-align: center;
+        padding: 1em 0.5em;
+        background-color: $danger-color;
+        color: $text-color--light;
+        font-weight: $semi-bold;
+        max-width: 60%;
+        border-radius: 1.3em;
+        margin: 0 auto;
+        margin-bottom: 3%;
+    }
 
-  &__message {
-      background-color: $success-color;
-  }
+    &__message {
+        background-color: $success-color;
+    }
 
-  &__image-preview {
-     max-width: 70%;
-  }
+    &__image-preview {
+        max-width: 70%;
+    }
 }
-
 
 .feature {
     &__name {

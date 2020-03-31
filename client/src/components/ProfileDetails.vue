@@ -39,8 +39,7 @@ import { mapState, mapActions } from "vuex";
 export default {
     name: "ProfileDetails",
     data() {
-        return {
-        };
+        return {};
     },
     computed: {
         ...mapState({

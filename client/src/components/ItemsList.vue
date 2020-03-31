@@ -10,7 +10,7 @@
         </div>
         <ul class="items__list">
             <li v-for="item in this.trucks" :key="item._id" class="items__list">
-                <TruckItem class="items__item" :truck="item" v-if="isDriver"/>
+                <TruckItem class="items__item" :truck="item" v-if="isDriver" />
             </li>
         </ul>
     </section>
@@ -34,13 +34,13 @@ export default {
             role: state => state.Auth.role
         }),
         isDriver() {
-            return this.role === "driver"
+            return this.role === "driver";
         }
     },
     mounted() {
         if (this.isDriver) {
             this.title = "Trucks";
-        } else this.title = "Loads"
+        } else this.title = "Loads";
     }
 };
 </script>

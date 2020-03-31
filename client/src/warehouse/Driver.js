@@ -74,6 +74,25 @@ const actions = {
             commit("add_truck_failure");
             return { error: err };
         }
+    },
+    async updateTruck({ commit }, payload) {
+        try {
+            commit("update_truck_request");
+            const driverId = payload.driverId;
+            const truckId = payload.truckId;
+            const body = { name: payload.name };
+            const res = await DriverService.updateTruck(
+                driverId,
+                truckId,
+                body
+            );
+            const truck = res.data.truck;
+            commit("update_truck_success", truck);
+            return { truck: truck };
+        } catch (err) {
+            commit("update_truck_failure");
+            return { error: err };
+        }
     }
 };
 
@@ -134,6 +153,21 @@ const mutations = {
         state.driver.trucksCount++;
     },
     add_truck_failure(state) {
+        state.status = "";
+    },
+    update_truck_request(state) {
+        state.status = "loading";
+    },
+    update_truck_success(state, updatedTruck) {
+        const truckIndex = state.trucks.findIndex(
+            truck => truck._id === updatedTruck._id
+        );
+        if (truckIndex > -1) {
+            state.trucks[truckIndex] = updatedTruck;
+        }
+        state.status = "success";
+    },
+    update_truck_failure(state) {
         state.status = "";
     }
 };

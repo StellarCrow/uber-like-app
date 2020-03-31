@@ -12,5 +12,8 @@ export default {
     },
     createTruck(driverId, body) {
         return Api().post(`/api/drivers/${driverId}/trucks/`, body);
+    },
+    updateTruck(driverId, truckId, body) {
+        return Api().put(`/api/drivers/${driverId}/trucks/${truckId}`, body);
     }
 };

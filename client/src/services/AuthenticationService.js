@@ -8,6 +8,6 @@ export default {
         return Api().post("/api/users/login", user);
     },
     updatePassword(id, password) {
-        return Api().patch(`/api/users/${id}`, {password: password});
+        return Api().patch(`/api/users/${id}`, { password: password });
     }
 };
