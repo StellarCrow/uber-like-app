@@ -53,7 +53,6 @@ const actions = {
             const truckId = payload.truckId;
             let res = await DriverService.deleteTruck(driverId, truckId);
             const success = res.data.message;
-            console.log(success);
 
             commit("delete_truck_success", { truckId });
             return { truck: success };
@@ -108,6 +107,7 @@ const mutations = {
         );
         state.trucks[newAssignedTruckIndex].status = "IS";
         state.assignedTruck = truckId;
+        state.driver.assignedTruck = 1;
         state.status = "success";
     },
     assign_truck_failure(state) {

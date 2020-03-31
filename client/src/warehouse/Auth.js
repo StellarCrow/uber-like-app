@@ -52,6 +52,23 @@ const actions = {
         delete axios.defaults.headers.common["Authorization"];
         router.push("/");
         return;
+    },
+
+    async updatePassword({ commit }, payload) {
+        try {
+            const userId = payload.id;
+            const password = payload.password;
+            commit("update_password_request");
+            let res = await AuthenticationService.updatePassword(
+                userId,
+                password
+            );
+            const message = res.data.message;
+            commit("update_password_success");
+            return { message: message };
+        } catch (err) {
+            return { error: err };
+        }
     }
 };
 
@@ -76,6 +93,12 @@ const mutations = {
         state.token = "";
         state.user = "";
         state.role = "";
+    },
+    update_password_request(state) {
+        state.status = "loading";
+    },
+    update_password_success(state) {
+        state.status = "success";
     }
 };
 

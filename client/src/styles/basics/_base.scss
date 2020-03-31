@@ -109,7 +109,8 @@ img {
       margin: 0 auto;
   }
 
-  &__error {
+  &__error,
+  &__message {
       text-align: center;
       padding: 1em 0.5em;
       background-color: $danger-color;
@@ -119,6 +120,10 @@ img {
       border-radius: 1.3em;
       margin: 0 auto;
       margin-bottom: 3%;
+  }
+
+  &__message {
+      background-color: $success-color;
   }
 
   &__image-preview {

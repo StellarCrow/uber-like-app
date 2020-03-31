@@ -1,6 +1,6 @@
 <template>
     <div>
-        <form class="form" @submit="changePassword()">
+        <form class="form" @submit.prevent="changePassword()">
             <div class="form__field">
                 <label for="change_password" class="form__label"
                     >Change Password</label
@@ -13,11 +13,17 @@
                     v-model="password"
                     required
                 />
+                <div class="form__error" v-if="error">
+                    {{ error }}
+                </div>
+                <div class="form__message" v-if="message">
+                    {{ message }}
+                </div>
             </div>
             <button class="button" type="submit">Change Password</button>
         </form>
 
-        <form class="form" @submit="uploadImage()">
+        <form class="form" @submit.prevent="uploadImage()">
             <div class="form__group">
                 <div class="form__field">
                     <label for="file" class="form__label"
@@ -48,6 +54,8 @@
 </template>
 
 <script>
+import { mapActions, mapState } from "vuex";
+
 export default {
     name: "FormSettings",
     data() {
@@ -57,10 +65,35 @@ export default {
             errorDialog: false,
             errorText: "",
             imageFile: null,
-            maxSize: 5120
+            maxSize: 5120,
+            message: "",
+            error: ""
         };
     },
+    computed: {
+        ...mapState({
+            id: state => state.Auth.user._id
+        })
+    },
     methods: {
+        ...mapActions(["updatePassword"]),
+        async changePassword() {
+            try {
+                const payload = {
+                    id: this.id,
+                    password: this.password
+                };
+                const res = await this.updatePassword(payload);
+
+                if (res.message) {
+                    this.message = res.message;
+                } else {
+                    this.error = res.error.response.data.error;
+                }
+            } catch (err) {
+                this.error = err.message;
+            }
+        },
         onFileChange(file) {
             const { maxSize } = this;
             let imageFile = file[0];
