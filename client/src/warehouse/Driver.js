@@ -38,7 +38,8 @@ const actions = {
             const truckId = payload.truckId;
             let res = await DriverService.assignTruck(driverId, truckId);
             const assignedTruck = res.data.truck;
-            commit("assign_truck_success", truckId);
+
+            commit("assign_truck_success", { truckId });
             return { truck: assignedTruck };
         } catch (err) {
             commit("assign_truck_failure");
@@ -80,7 +81,13 @@ const mutations = {
     assign_truck_request(state) {
         state.status = "loading";
     },
-    assign_truck_success(state, truckId) {
+    assign_truck_success(state, { truckId }) {
+        const oldAssignedTruckIndex = state.trucks.findIndex(truck => truck._id === state.assignedTruck);
+        if(oldAssignedTruckIndex) {
+            state.trucks[oldAssignedTruckIndex].status = "FREE";
+        }
+        const newAssignedTruckIndex = state.trucks.findIndex(truck => truck._id === truckId);
+        state.trucks[newAssignedTruckIndex].status = "IS";
         state.assignedTruck = truckId;
         state.status = "success";
     },

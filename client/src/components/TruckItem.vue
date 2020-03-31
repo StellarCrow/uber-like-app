@@ -95,8 +95,7 @@ export default {
                     driverId: this.userId,
                     truckId: this.truck._id
                 };
-                const res = await this.assignTruck(payload);
-                console.log(res);
+                await this.assignTruck(payload);
             } catch (err) {
                 console.log(err);
             }
