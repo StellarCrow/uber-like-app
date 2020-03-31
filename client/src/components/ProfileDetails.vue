@@ -25,6 +25,20 @@
                         Assigned Truck<span>{{ this.assignedTruck }}</span>
                     </li>
                 </ul>
+                <ul
+                    class="profile__info statistic"
+                    v-else-if="this.role === 'shipper'"
+                >
+                    <li class="statistic__item">
+                        Loads<span>{{ loadsCount }}</span>
+                    </li>
+                    <li class="statistic__item">
+                        Assigned<span>{{ shippedLoads }}</span>
+                    </li>
+                    <li class="statistic__item">
+                        Shipped<span>{{ assignedLoads }}</span>
+                    </li>
+                </ul>
                 <button @click.prevent="logoutUser()" class="button">
                     Logout
                 </button>
@@ -34,7 +48,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapGetters } from "vuex";
 
 export default {
     name: "ProfileDetails",
@@ -42,13 +56,18 @@ export default {
         return {};
     },
     computed: {
+        ...mapGetters(["shippedLoads", "assignedLoads"]),
         ...mapState({
             role: state => state.Auth.role,
             driver: state => state.Driver.driver,
+            shipper: state => state.Shipper.shipper,
             name: state => state.Auth.user.name
         }),
         trucksCount() {
             return this.driver.trucksCount;
+        },
+        loadsCount() {
+            return this.shipper.loadsCount;
         },
         load() {
             return this.driver.assignedLoad;

@@ -49,14 +49,14 @@ export default {
             if (this.role === "driver") {
                 await this.getDriverProfile(this.userId);
             } else {
-                console.log("shipper");
+                await this.getShipperProfile(this.userId);
             }
         } catch (err) {
             console.log(err);
         }
     },
     methods: {
-        ...mapActions(["getDriverProfile"])
+        ...mapActions(["getDriverProfile", "getShipperProfile"])
     }
 };
 </script>

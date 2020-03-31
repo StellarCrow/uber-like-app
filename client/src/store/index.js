@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
 import Auth from "../warehouse/Auth";
 import Driver from "../warehouse/Driver";
+import Shipper from "../warehouse/Shipper";
 
 Vue.use(Vuex);
 
@@ -11,5 +12,5 @@ export default new Vuex.Store({
     state: {},
     mutations: {},
     actions: {},
-    modules: { Auth, Driver }
+    modules: { Auth, Driver, Shipper }
 });
