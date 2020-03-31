@@ -1,9 +1,16 @@
 <template>
     <section class="items">
-        <div class="items__title">My {{ this.title }}</div>
+        <div class="items__group">
+            <div class="items__title">My {{ this.title }}</div>
+            <router-link to="/create" class="items__link">
+                <button class="button button-transparent items__button">
+                    Add new
+                </button>
+            </router-link>
+        </div>
         <ul class="items__list">
             <li v-for="item in this.trucks" :key="item._id" class="items__list">
-                <TruckItem class="items__item" :truck="item" />
+                <TruckItem class="items__item" :truck="item" v-if="isDriver"/>
             </li>
         </ul>
     </section>
@@ -25,12 +32,15 @@ export default {
         ...mapState({
             trucks: state => state.Driver.trucks,
             role: state => state.Auth.role
-        })
+        }),
+        isDriver() {
+            return this.role === "driver"
+        }
     },
     mounted() {
-        if (this.role === "driver") {
+        if (this.isDriver) {
             this.title = "Trucks";
-        }
+        } else this.title = "Loads"
     }
 };
 </script>

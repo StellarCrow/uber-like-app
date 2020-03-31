@@ -23,16 +23,19 @@
     @extend %button;
 }
 
-
-
-.button--role {
+.button-transparent {
     background-color: transparent;
-    border: 4px solid $secondary-color;
-    transition: none;
+    border: 4px solid $success-color;
 
     &:hover {
         color: inherit;
     }
+}
+
+.button--role {
+    @extend .button-transparent;
+    border: 4px solid $secondary-color;
+    transition: none;
 }
 
 .button--assign {

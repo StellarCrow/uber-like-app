@@ -3,6 +3,8 @@
 
     &__title {
         @include title;
+        margin: 0;
+        margin-right: 3%;
     }
 
     &__list {
@@ -13,5 +15,20 @@
 
     &__item {
         margin-bottom: 5%;
+    }
+
+    &__group {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-bottom: 5%;
+    }
+
+    &__button {
+        font-size: 0.8em;
+    }
+
+    &__link {
+        color: inherit
     }
 }

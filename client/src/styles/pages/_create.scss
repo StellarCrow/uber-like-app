@@ -1,0 +1,10 @@
+.create {
+    background: url('../assets/backgrounds/create-bg.jpg') no-repeat center top / cover;
+    text-align: center;
+
+    &__form {
+        max-width: 70%;
+        margin: 0 auto;
+        display: block;
+    }
+}

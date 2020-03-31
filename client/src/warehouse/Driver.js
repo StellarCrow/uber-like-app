@@ -61,6 +61,20 @@ const actions = {
             commit("delete_truck_failure");
             return { error: err };
         }
+    },
+    async addNewTruck({ commit }, payload) {
+        try {
+            commit("add_truck_request");
+            const driverId = payload.driverId;
+            const body = { name: payload.name, type: payload.type };
+            const res = await DriverService.createTruck(driverId, body);
+            const truck = res.data.truck;
+            commit("add_truck_success", { truck });
+            return { truck: truck };
+        } catch (err) {
+            commit("add_truck_failure");
+            return { error: err };
+        }
     }
 };
 
@@ -82,11 +96,16 @@ const mutations = {
         state.status = "loading";
     },
     assign_truck_success(state, { truckId }) {
-        const oldAssignedTruckIndex = state.trucks.findIndex(truck => truck._id === state.assignedTruck);
-        if(oldAssignedTruckIndex) {
+        const oldAssignedTruckIndex = state.trucks.findIndex(
+            truck => truck._id === state.assignedTruck
+        );
+
+        if (oldAssignedTruckIndex > -1) {
             state.trucks[oldAssignedTruckIndex].status = "FREE";
         }
-        const newAssignedTruckIndex = state.trucks.findIndex(truck => truck._id === truckId);
+        const newAssignedTruckIndex = state.trucks.findIndex(
+            truck => truck._id === truckId
+        );
         state.trucks[newAssignedTruckIndex].status = "IS";
         state.assignedTruck = truckId;
         state.status = "success";
@@ -106,11 +125,15 @@ const mutations = {
     delete_truck_failure(state) {
         state.status = "";
     },
-    clean_driver(state) {
-        state.driver = {};
-        state.trucks = [];
-        state.assignedTruck = null;
-        state.assignedLoad = null;
+    add_truck_request(state) {
+        state.status = "loading";
+    },
+    add_truck_success(state, { truck }) {
+        state.status = "success";
+        state.trucks.push(truck);
+        state.driver.trucksCount++;
+    },
+    add_truck_failure(state) {
         state.status = "";
     }
 };

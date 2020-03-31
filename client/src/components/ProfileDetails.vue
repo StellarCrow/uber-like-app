@@ -40,13 +40,13 @@ export default {
     name: "ProfileDetails",
     data() {
         return {
-            name: ""
         };
     },
     computed: {
         ...mapState({
             role: state => state.Auth.role,
-            driver: state => state.Driver.driver
+            driver: state => state.Driver.driver,
+            name: state => state.Auth.user.name
         }),
         trucksCount() {
             return this.driver.trucksCount;
@@ -56,11 +56,6 @@ export default {
         },
         assignedTruck() {
             return this.driver.assignedTruck;
-        }
-    },
-    mounted() {
-        if (this.role === "driver") {
-            this.name = this.driver.name;
         }
     },
     methods: {

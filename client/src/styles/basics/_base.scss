@@ -96,6 +96,13 @@ img {
       }
   }
 
+  &__select {
+      padding: 1em 1.5em;
+      border: 2px solid $secondary-color;
+      border-radius: 1.5em;
+      outline: 0;
+  }
+
   &__button {
       display: block;
       min-width: 40%;

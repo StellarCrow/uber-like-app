@@ -9,5 +9,8 @@ export default {
     },
     deleteTruck(driverId, truckId) {
         return Api().delete(`/api/drivers/${driverId}/trucks/${truckId}`);
+    },
+    createTruck(driverId, body) {
+        return Api().post(`/api/drivers/${driverId}/trucks/`, body);
     }
 };
