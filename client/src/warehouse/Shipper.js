@@ -33,6 +33,18 @@ const actions = {
             commit("get_shipper_profile_failure");
             return { error: err };
         }
+    },
+    async addNewLoad({ commit }, { payload, shipperId }) {
+        try {
+            commit("add_load_request");
+            const res = await ShipperService.createLoad(shipperId, payload);
+            const load = res.data.load;
+            commit("add_load_success", { load });
+            return { load: load };
+        } catch (err) {
+            commit("add_load_failure");
+            return { error: err };
+        }
     }
 };
 
@@ -46,6 +58,17 @@ const mutations = {
         state.shipper = shipper;
     },
     get_shipper_profile_failure(state) {
+        state.status = "";
+    },
+    add_load_request(state) {
+        state.status = "loading";
+    },
+    add_load_success(state, { load }) {
+        state.loads.push(load);
+        state.shipper.loadsCount++;
+        state.status = "success";
+    },
+    add_load_failure(state) {
         state.status = "";
     }
 };
