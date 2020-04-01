@@ -38,6 +38,10 @@
     transition: none;
 }
 
+.button--primary {
+    background-color: $primary-color;
+}
+
 .button--assign {
     background-color: $success-color;
 }

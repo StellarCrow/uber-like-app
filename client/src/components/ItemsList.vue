@@ -8,9 +8,14 @@
                 </button>
             </router-link>
         </div>
-        <ul class="items__list">
+        <ul class="items__list" v-if="isDriver">
             <li v-for="item in this.trucks" :key="item._id" class="items__list">
-                <TruckItem class="items__item" :truck="item" v-if="isDriver" />
+                <TruckItem class="items__item" :truck="item" />
+            </li>
+        </ul>
+        <ul class="items__list" v-else>
+            <li v-for="item in this.loads" :key="item._id" class="items__list">
+                <LoadItem class="items__item" :load="item" />
             </li>
         </ul>
     </section>
@@ -19,6 +24,7 @@
 <script>
 import { mapState } from "vuex";
 import TruckItem from "../components/TruckItem";
+import LoadItem from "../components/LoadItem";
 
 export default {
     name: "ItemsList",
@@ -27,10 +33,11 @@ export default {
             title: ""
         };
     },
-    components: { TruckItem },
+    components: { TruckItem, LoadItem },
     computed: {
         ...mapState({
             trucks: state => state.Driver.trucks,
+            loads: state => state.Shipper.loads,
             role: state => state.Auth.role
         }),
         isDriver() {

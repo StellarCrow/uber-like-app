@@ -36,6 +36,10 @@ img {
     object-fit: cover;
 }
 
+textarea {
+    resize: none;
+}
+
 .section {
     padding: 8% 0;
     &__header {
@@ -141,5 +145,67 @@ img {
         color: $gray;
         letter-spacing: 0.4em;
         margin-bottom: 0.5em;
+    }
+}
+
+
+
+.detail {
+    display: table-row;
+
+    &__input {
+        background-color: transparent;
+        border: none;
+        border-bottom: 1px solid $secondary-color;
+        font-family: $ff-text;
+        font-weight: $light;
+        padding: 0.3em 0;
+        outline: none;
+        font-size: 0.8em;
+
+        &:disabled {
+            border-bottom: none;
+        }
+
+        &:focus {
+            border-bottom: 1px solid $primary-color;
+        }
+    }
+
+    &__textarea {
+        background-color: transparent;
+        border: 1px solid $secondary-color;
+        outline: none;
+        font-weight: $light;
+        font-family: $ff-text;
+        font-size: 0.8em;
+
+        &:focus {
+            border-color: $primary-color;
+        }
+    }
+
+    &__name {
+        padding-right: 0.5em;
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    &__value {
+        display: table-cell;
+        padding-bottom: 1.5em;
+        &--horizontal {
+            display: flex;
+            justify-content: space-between;
+            flex-direction: row;
+            align-items: center;
+        }
+    }
+
+    &__feature {
+        margin-right: 5%;
+        &:last-child {
+            margin-right: 0;
+        }
     }
 }

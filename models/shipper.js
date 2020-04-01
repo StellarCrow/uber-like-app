@@ -7,7 +7,7 @@ class ShipperModel {
   async getFullProfile(id) {
     try {
       const shipper = await Shipper.findById(id)
-          .populate('user', '-password')
+          .populate('user', '-password').populate('loads')
           .exec();
       return shipper;
     } catch (err) {

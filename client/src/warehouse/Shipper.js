@@ -45,6 +45,22 @@ const actions = {
             commit("add_load_failure");
             return { error: err };
         }
+    },
+    async updateLoad({ commit }, { shipperId, loadId, payload }) {
+        try {
+            commit("update_load_request");
+            const res = await ShipperService.updateLoad(
+                shipperId,
+                loadId,
+                payload
+            );
+            const load = res.data.load;
+            commit("update_load_success", load);
+            return { load: load };
+        } catch (err) {
+            commit("update_load_failure");
+            return { error: err };
+        }
     }
 };
 
@@ -69,6 +85,21 @@ const mutations = {
         state.status = "success";
     },
     add_load_failure(state) {
+        state.status = "";
+    },
+    update_load_request(state) {
+        state.status = "loading";
+    },
+    update_load_success(state, updatedLoad) {
+        const loadIndex = state.loads.findIndex(
+            load => load._id === updatedLoad._id
+        );
+        if (loadIndex > -1) {
+            state.loads[loadIndex] = updatedLoad;
+        }
+        state.status = "success";
+    },
+    update_load_failure(state) {
         state.status = "";
     }
 };

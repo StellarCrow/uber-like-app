@@ -6,5 +6,8 @@ export default {
     },
     createLoad(shipperId, body) {
         return Api().post(`/api/shippers/${shipperId}/loads/`, body);
+    },
+    updateLoad(shipperId, loadId, body) {
+        return Api().put(`/api/shippers/${shipperId}/loads/${loadId}`, body);
     }
 };
