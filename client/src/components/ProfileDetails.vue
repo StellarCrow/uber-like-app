@@ -33,10 +33,10 @@
                         Loads<span>{{ loadsCount }}</span>
                     </li>
                     <li class="statistic__item">
-                        Assigned<span>{{ shippedLoads }}</span>
+                        Assigned<span>{{ assignedLoads }}</span>
                     </li>
                     <li class="statistic__item">
-                        Shipped<span>{{ assignedLoads }}</span>
+                        Shipped<span>{{ shippedLoads }}</span>
                     </li>
                 </ul>
                 <button @click.prevent="logoutUser()" class="button">

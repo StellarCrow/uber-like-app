@@ -30,11 +30,11 @@
                     </div>
                 </div>
             </div>
-            <div class="truck__buttons" v-if="!this.assignedLoad">
+            <div class="truck__buttons">
                 <button
                     @click.prevent="assignTruckToDriver()"
                     class="button button--assign"
-                    v-if="!this.isAssigned"
+                    v-if="!this.isAssigned && !this.assignedLoad"
                 >
                     Assign
                 </button>
@@ -47,7 +47,7 @@
                 <button
                     @click="deleteTruckFromList()"
                     class="button button--delete"
-                    v-if="!this.isAssigned"
+                    v-if="!this.isAssigned && !this.assignedLoad"
                 >
                     Delete
                 </button>
@@ -63,7 +63,7 @@
                             type="text"
                             v-model="name"
                             placeholder="Truck name"
-                            :disabled="this.isAssigned"
+                            :disabled="this.isAssigned || this.assignedLoad"
                             maxlength="30"
                             required
                         />
@@ -106,7 +106,7 @@
             <div class="truck__update">
                 <button
                     class="button"
-                    v-if="!this.isAssigned"
+                    v-if="!this.isAssigned && !this.assignedLoad"
                     @click="updateTruckInfo()"
                 >
                     Update info

@@ -1,4 +1,12 @@
 .load {
+    &__message {
+        text-align: center;
+        font-family: $ff-headers;
+        color: $gray;
+        font-weight: $light;
+        font-size: 1.3em;
+    }
+
     &__body {
         display: flex;
         justify-content: space-between;
@@ -78,12 +86,17 @@
     &__buttons {
         font-size: 0.5em;
         align-items: center;
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        flex-flow: row wrap;
 
         & > .button {
             margin-right: 0.5em;
 
             &:last-child {
                 margin-right: 0;
+                margin-bottom: 0;
             }
         }
     }

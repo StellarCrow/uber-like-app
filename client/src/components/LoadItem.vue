@@ -1,5 +1,6 @@
 <template>
     <div class="load">
+        <div class="load__message">{{ postMessage }}</div>
         <div class="load__body">
             <div class="load__info">
                 <div class="load__item feature">
@@ -14,7 +15,7 @@
                         {{ status }}
                     </div>
                 </div>
-                <div class="load__item feature" v-if="!!state">
+                <div class="load__item feature" v-if="state">
                     <div class="feature__name">State</div>
                     <div class="feature__value load__name">
                         {{ state }}
@@ -23,7 +24,7 @@
             </div>
             <div class="load__buttons">
                 <button
-                    @click.prevent="postLoad()"
+                    @click.prevent="postNewLoad()"
                     class="button button--assign"
                     v-if="isStatusNew"
                 >
@@ -77,6 +78,7 @@
                             rows="3"
                             v-model="description"
                             :disabled="!isStatusNew"
+                            maxlength="300"
                             required
                         ></textarea>
                     </div>
@@ -110,6 +112,7 @@
                                     max="1000"
                                     v-model="dimensions.width"
                                     required
+                                    :disabled="!isStatusNew"
                                 />
                             </div>
                         </div>
@@ -125,6 +128,7 @@
                                     max="1000"
                                     v-model="dimensions.length"
                                     required
+                                    :disabled="!isStatusNew"
                                 />
                             </div>
                         </div>
@@ -140,6 +144,7 @@
                                     max="1000"
                                     v-model="dimensions.height"
                                     required
+                                    :disabled="!isStatusNew"
                                 />
                             </div>
                         </div>
@@ -159,6 +164,7 @@
                                     maxlength="100"
                                     v-model="deliveryAddress.city"
                                     required
+                                    :disabled="!isStatusNew"
                                 />
                             </div>
                         </div>
@@ -173,6 +179,7 @@
                                     maxlength="100"
                                     v-model="deliveryAddress.street"
                                     required
+                                    :disabled="!isStatusNew"
                                 />
                             </div>
                         </div>
@@ -188,6 +195,7 @@
                                     max="99999"
                                     v-model="deliveryAddress.zip"
                                     required
+                                    :disabled="!isStatusNew"
                                 />
                             </div>
                         </div>
@@ -207,6 +215,7 @@
                                     maxlength="100"
                                     v-model="pickUpAddress.city"
                                     required
+                                    :disabled="!isStatusNew"
                                 />
                             </div>
                         </div>
@@ -221,6 +230,7 @@
                                     maxlength="100"
                                     v-model="pickUpAddress.street"
                                     required
+                                    :disabled="!isStatusNew"
                                 />
                             </div>
                         </div>
@@ -236,6 +246,7 @@
                                     max="99999"
                                     v-model="pickUpAddress.zip"
                                     required
+                                    :disabled="!isStatusNew"
                                 />
                             </div>
                         </div>
@@ -286,7 +297,8 @@ export default {
             },
             showDetails: false,
             showLogs: false,
-            updatedMessage: ""
+            updatedMessage: "",
+            postMessage: ""
         };
     },
     computed: {
@@ -300,7 +312,6 @@ export default {
         isStatusNew() {
             return this.status === "NEW";
         },
-
         addClass() {
             const loadStatus = loadConstants.loadStatus;
             switch (this.load.status) {
@@ -326,7 +337,7 @@ export default {
         this.pickUpAddress = this.load.pickUpAddress;
     },
     methods: {
-        ...mapActions(["updateLoad", "deleteLoad"]),
+        ...mapActions(["updateLoad", "deleteLoad", "postLoad"]),
         async updateLoadInfo() {
             const payload = {
                 name: this.name.trim(),
@@ -339,7 +350,11 @@ export default {
             const shipperId = this.userId;
             const loadId = this.load._id;
             try {
-                const res = await this.updateLoad({shipperId, loadId, payload});
+                const res = await this.updateLoad({
+                    shipperId,
+                    loadId,
+                    payload
+                });
                 if (res.load) {
                     this.updatedMessage = "Updated";
                 } else {
@@ -358,6 +373,27 @@ export default {
                 await this.deleteLoad(payload);
             } catch (err) {
                 console.log(err);
+            }
+        },
+        async postNewLoad() {
+            try {
+                const payload = {
+                    shipperId: this.userId,
+                    loadId: this.load._id
+                };
+                const res = await this.postLoad(payload);
+                if (!res.load.response) {
+                    this.postMessage = res.load.message;
+                } else {
+                    const driverNotFound = res.load.response.data.error;
+                    this.postMessage = driverNotFound;
+                }
+            } catch (err) {
+                this.postMessage = err.message;
+            } finally {
+                setTimeout(() => {
+                    this.postMessage = "";
+                }, 3000);
             }
         }
     }

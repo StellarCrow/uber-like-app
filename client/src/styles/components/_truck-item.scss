@@ -74,12 +74,16 @@
     &__buttons {
         font-size: 0.5em;
         align-items: center;
+        display: flex;
+        justify-content: center;
+        flex-flow: row wrap;
 
         & > .button {
             margin-right: 0.5em;
 
             &:last-child {
                 margin-right: 0;
+                margin-bottom: 0;
             }
         }
     }

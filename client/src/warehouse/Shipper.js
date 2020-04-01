@@ -1,4 +1,5 @@
 import ShipperService from "../services/ShipperService";
+import loadConstants from "../utils/loadConstants";
 
 const state = {
     shipper: {},
@@ -77,6 +78,20 @@ const actions = {
             return { error: err };
         }
     },
+    async postLoad({ commit }, payload) {
+        try {
+            commit("post_load_request");
+            const shipperId = payload.shipperId;
+            const loadId = payload.loadId;
+            let res = await ShipperService.postLoad(shipperId, loadId);
+            const load = res.data;
+            commit("post_load_success", { loadId });
+            return { load };
+        } catch (err) {
+            commit("post_load_failure");
+            return { load: err };
+        }
+    }
 };
 
 const mutations = {
@@ -129,6 +144,18 @@ const mutations = {
     delete_load_failure(state) {
         state.status = "";
     },
+    post_load_request(state) {
+        state.status = "loading";
+    },
+    post_load_success(state, { loadId }) {
+        const index = state.loads.findIndex(load => load._id === loadId);
+        state.loads[index].status = loadConstants.loadStatus.ASSIGNED;
+        state.loads[index].state = loadConstants.loadState.EN_ROUTE_TO_PICK_UP;
+        state.status = "success";
+    },
+    post_load_failure(state) {
+        state.status = "";
+    }
 };
 
 export default {

@@ -12,5 +12,8 @@ export default {
     },
     deleteLoad(shipperId, loadId) {
         return Api().delete(`/api/shippers/${shipperId}/loads/${loadId}`);
+    },
+    postLoad(shipperId, loadId) {
+        return Api().post(`/api/shippers/${shipperId}/loads/${loadId}`);
     }
 };

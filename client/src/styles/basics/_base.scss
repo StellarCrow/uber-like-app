@@ -179,6 +179,7 @@ textarea {
         font-weight: $light;
         font-family: $ff-text;
         font-size: 0.8em;
+        width: 100%;
 
         &:focus {
             border-color: $primary-color;
