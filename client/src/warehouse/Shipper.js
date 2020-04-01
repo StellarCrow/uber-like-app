@@ -61,7 +61,22 @@ const actions = {
             commit("update_load_failure");
             return { error: err };
         }
-    }
+    },
+    async deleteLoad({ commit }, payload) {
+        try {
+            commit("delete_load_request");
+            const shipperId = payload.shipperId;
+            const loadId = payload.loadId;
+            let res = await ShipperService.deleteLoad(shipperId, loadId);
+            const success = res.data.message;
+
+            commit("delete_load_success", { loadId });
+            return { load: success };
+        } catch (err) {
+            commit("delete_load_failure");
+            return { error: err };
+        }
+    },
 };
 
 const mutations = {
@@ -101,7 +116,19 @@ const mutations = {
     },
     update_load_failure(state) {
         state.status = "";
-    }
+    },
+    delete_load_request(state) {
+        state.status = "loading";
+    },
+    delete_load_success(state, { loadId }) {
+        const index = state.loads.findIndex(load => load._id === loadId);
+        state.loads.splice(index, 1);
+        state.shipper.loadsCount--;
+        state.status = "success";
+    },
+    delete_load_failure(state) {
+        state.status = "";
+    },
 };
 
 export default {

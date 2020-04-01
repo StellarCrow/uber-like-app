@@ -326,7 +326,7 @@ export default {
         this.pickUpAddress = this.load.pickUpAddress;
     },
     methods: {
-        ...mapActions(["updateLoad"]),
+        ...mapActions(["updateLoad", "deleteLoad"]),
         async updateLoadInfo() {
             const payload = {
                 name: this.name.trim(),
@@ -347,6 +347,17 @@ export default {
                 }
             } catch (err) {
                 this.updatedMessage = err.message;
+            }
+        },
+        async deleteLoadFromList() {
+            try {
+                const payload = {
+                    shipperId: this.userId,
+                    loadId: this.load._id
+                };
+                await this.deleteLoad(payload);
+            } catch (err) {
+                console.log(err);
             }
         }
     }

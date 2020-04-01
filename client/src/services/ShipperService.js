@@ -9,5 +9,8 @@ export default {
     },
     updateLoad(shipperId, loadId, body) {
         return Api().put(`/api/shippers/${shipperId}/loads/${loadId}`, body);
+    },
+    deleteLoad(shipperId, loadId) {
+        return Api().delete(`/api/shippers/${shipperId}/loads/${loadId}`);
     }
 };
