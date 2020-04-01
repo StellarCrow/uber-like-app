@@ -93,6 +93,18 @@ const actions = {
             commit("update_truck_failure");
             return { error: err };
         }
+    },
+    async getAssignedLoad({commit}, id) {
+        try {
+            commit("get_assigned_load_request");
+            let res = await DriverService.getLoad(id);
+            const load = res.data.load;
+            commit("get_assigned_load_success", { load });
+            return load;
+        } catch (err) {
+            commit("get_assigned_load_failure");
+            return { error: err };
+        }
     }
 };
 
@@ -168,6 +180,16 @@ const mutations = {
         state.status = "success";
     },
     update_truck_failure(state) {
+        state.status = "";
+    },
+    get_assigned_load_request(state) {
+        state.status = "loading";
+    },
+    get_assigned_load_success(state, {load}){
+        state.assignedLoad = load;
+        state.status = "success";
+    },
+    get_assigned_load_failure(state) {
         state.status = "";
     },
     clean_driver(state) {

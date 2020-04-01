@@ -15,5 +15,8 @@ export default {
     },
     updateTruck(driverId, truckId, body) {
         return Api().put(`/api/drivers/${driverId}/trucks/${truckId}`, body);
+    },
+    getLoad(driverId) {
+        return Api().get(`/api/drivers/${driverId}/loads`);
     }
 };
