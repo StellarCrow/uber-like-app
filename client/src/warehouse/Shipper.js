@@ -1,5 +1,6 @@
 import ShipperService from "../services/ShipperService";
 import loadConstants from "../utils/loadConstants";
+import Vue from "vue";
 
 const state = {
     shipper: {},
@@ -91,6 +92,19 @@ const actions = {
             commit("post_load_failure");
             return { load: err };
         }
+    },
+    async deleteShipperAccount({ commit },id) {
+        try {
+            commit("delete_account_request");
+            let res = await ShipperService.deleteAccount(id);
+            const user = res.data;
+            commit("delete_account_success");
+            commit("logout", null, { root: true });
+            return { user };
+        } catch (err) {
+            commit("delete_account_failure");
+            return { error: err };
+        }
     }
 };
 
@@ -150,10 +164,30 @@ const mutations = {
     post_load_success(state, { loadId }) {
         const index = state.loads.findIndex(load => load._id === loadId);
         state.loads[index].status = loadConstants.loadStatus.ASSIGNED;
-        state.loads[index].state = loadConstants.loadState.EN_ROUTE_TO_PICK_UP;
+        Vue.set(
+            state.loads[index],
+            "state",
+            loadConstants.loadState.EN_ROUTE_TO_PICK_UP
+        );
         state.status = "success";
     },
     post_load_failure(state) {
+        state.status = "";
+    },
+    delete_account_request(state) {
+        state.status = "loading";
+    },
+    delete_account_success(state) {
+        state.status = "success";
+        state.shipper = {};
+        state.loads = [];
+    },
+    delete_account_failure(state) {
+        state.status = "";
+    },
+    clean_shipper(state) {
+        state.shipper = {};
+        state.loads = [];
         state.status = "";
     }
 };

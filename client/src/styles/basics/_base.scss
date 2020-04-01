@@ -164,11 +164,11 @@ textarea {
         font-size: 0.8em;
 
         &:disabled {
-            border-bottom: none;
+            border-color: $gray;
         }
 
         &:focus {
-            border-bottom: 1px solid $primary-color;
+            border-color: $primary-color;
         }
     }
 

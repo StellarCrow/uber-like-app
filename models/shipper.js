@@ -28,7 +28,7 @@ class ShipperModel {
     try {
       const shipper = await Shipper.findOneAndRemove({_id: id});
       if (!shipper) return null;
-      await Load.remove({shipper: id});
+      // await Load.remove({shipper: id});
       await User.remove({role_id: id});
       return shipper;
     } catch (err) {

@@ -50,6 +50,9 @@
             </div>
             <button class="button" type="submit">Upload Image</button>
         </form>
+        <form class="form" @submit="deleteAccount()" v-if="isShipper">
+            <button @click="deleteAccount()" class="button button--delete" type="submit">Delete account</button>
+        </form>
     </div>
 </template>
 
@@ -72,11 +75,16 @@ export default {
     },
     computed: {
         ...mapState({
-            id: state => state.Auth.user._id
-        })
+            id: state => state.Auth.user._id,
+            role: state => state.Auth.role,
+            roleId: state => state.Auth.user.role_id
+        }),
+        isShipper() {
+            return this.role === "shipper";
+        }
     },
     methods: {
-        ...mapActions(["updatePassword"]),
+        ...mapActions(["updatePassword", "deleteShipperAccount"]),
         async changePassword() {
             try {
                 const payload = {
@@ -87,6 +95,18 @@ export default {
 
                 if (res.message) {
                     this.message = res.message;
+                } else {
+                    this.error = res.error.response.data.error;
+                }
+            } catch (err) {
+                this.error = err.message;
+            }
+        },
+        async deleteAccount() {
+            try {
+                const res = await this.deleteShipperAccount(this.roleId);
+                if (res.user) {
+                    this.$router.push('/');
                 } else {
                     this.error = res.error.response.data.error;
                 }

@@ -169,6 +169,13 @@ const mutations = {
     },
     update_truck_failure(state) {
         state.status = "";
+    },
+    clean_driver(state) {
+        state.driver = {};
+        state.trucks = [];
+        state.assignedTruck = null;
+        state.assignedLoad = null;
+        state.status = "";
     }
 };
 

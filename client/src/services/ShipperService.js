@@ -15,5 +15,8 @@ export default {
     },
     postLoad(shipperId, loadId) {
         return Api().post(`/api/shippers/${shipperId}/loads/${loadId}`);
+    },
+    deleteAccount(id) {
+        return Api().delete(`/api/shippers/${id}`);
     }
 };

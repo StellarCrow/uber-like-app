@@ -48,7 +48,8 @@ const actions = {
     async logout({ commit }) {
         await localStorage.removeItem("token");
         commit("logout");
-        // commit("clean_driver", null, rootState);
+        commit("clean_shipper", null, { root: true });
+        commit("clean_driver", null, { root: true });
         delete axios.defaults.headers.common["Authorization"];
         router.push("/");
         return;
