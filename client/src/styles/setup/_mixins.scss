@@ -8,3 +8,8 @@
     font-weight: $light;
     margin-bottom: 0.5em;
 }
+
+@mixin clean-list {
+    margin: 0;
+    padding: 0;
+}

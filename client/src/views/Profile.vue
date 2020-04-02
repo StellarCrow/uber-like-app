@@ -58,7 +58,9 @@ export default {
         try {
             if (this.role === "driver") {
                 await this.getDriverProfile(this.userId);
-                await this.getAssignedLoad(this.userId);
+                if (this.load) {
+                    await this.getAssignedLoad(this.userId);
+                }
             } else {
                 await this.getShipperProfile(this.userId);
             }

@@ -267,7 +267,9 @@
                 <div class="load__message">{{ updatedMessage }}</div>
             </div>
         </div>
-        <div class="load__logs" v-if="showLogs"></div>
+        <div class="load__logs" v-if="showLogs">
+            <LogsList :logs="load.logs" />
+        </div>
     </div>
 </template>
 
@@ -275,11 +277,12 @@
 import loadConstants from "../utils/loadConstants";
 import { mapActions, mapGetters, mapState } from "vuex";
 import SelectLoadState from "./SelectLoadState";
+import LogsList from "./LogsList";
 
 export default {
     name: "LoadItem",
     props: ["load"],
-    components: { SelectLoadState },
+    components: { SelectLoadState, LogsList },
     data() {
         return {
             name: "",

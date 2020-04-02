@@ -80,24 +80,10 @@ class LoadModel {
     }
   }
 
-  async getLoad(id) {
+  async getLogs(id) {
     try {
-      const loadInstance = await Load.findById(id);
-      const load = loadInstance.toObject();
-      const isAssignedTo = Object.prototype.hasOwnProperty.call(
-          load,
-          'assigned_to',
-      );
-      if (isAssignedTo) {
-        const driver = await Driver.findById(load.assigned_to).populate('user');
-        const driverInfo = {
-          name: driver.user.name,
-          _id: driver.user._id,
-          role_id: driver._id,
-        };
-        load.assigned_to = driverInfo;
-      }
-      return load;
+      const logs = await Load.findById(id).select('logs -_id');
+      return logs;
     } catch (err) {
       throw new ServerError(err.message);
     }

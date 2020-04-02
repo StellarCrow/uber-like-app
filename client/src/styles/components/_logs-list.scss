@@ -1,0 +1,31 @@
+.logs-list {
+    @include clean-list;
+    list-style-type: none;
+}
+
+.log {
+    display: flex;
+    max-width: 100%;
+
+    &__number,
+    &__time,
+    &__message {
+        display: table-cell;
+        padding-bottom: 5%;
+        padding-right: 5%;
+    }
+
+    &__date {
+        color: $primary-color;
+    }
+
+    &__number {
+        font-weight: $bold;
+        text-align: right;
+    }
+
+    &__message {
+        text-align: right;
+        font-weight: $light;
+    }
+}

@@ -17,7 +17,12 @@
         border: 4px solid $secondary-color;
     }
 
-    &__details {
+    &__logs {
+        background-color: rgba($color: $primary-color, $alpha: 0.2);
+        padding: 1.5em 1.5em;
+    }
+
+    &__details{
         padding: 1.5em 1.5em;
         background-color: rgba($color: $secondary-color, $alpha: 0.2);
         border-radius: 0.3em;
