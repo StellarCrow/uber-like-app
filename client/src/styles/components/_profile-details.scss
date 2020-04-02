@@ -81,16 +81,20 @@
     }
   }
   
-//   //--------MOBILE-------------------
-//   @media (max-width: $bp-small) {
-//     .profile {
-//       & > &-container {
-//         flex-flow: column nowrap;
-//       }
+  //--------MOBILE-------------------
+  @media (max-width: $bp-small) {
+    .profile {
+      &__button {
+        font-size: 0.8em;
+      }
+    }
+    //   & > &-container {
+    //     flex-flow: column nowrap;
+    //   }
   
-//       &__about {
-//         width: 100%;
-//       }
-//     }
-//   }
+    //   &__about {
+    //     width: 100%;
+    //   }
+    // }
+  }
   

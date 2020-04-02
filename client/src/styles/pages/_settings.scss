@@ -2,9 +2,18 @@
     background: url("../assets/backgrounds/settings-bg.jpg") no-repeat center
         top / cover;
         text-align: center;
+        min-height: 100vh;
 
         &__form {
             max-width: 70%;
             margin: 0 auto;
         }
+}
+
+@media (max-width: $bp-small) {
+    .settings {
+        &__form {
+            max-width: 90%;
+        }
+    }
 }

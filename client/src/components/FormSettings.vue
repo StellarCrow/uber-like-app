@@ -1,6 +1,7 @@
 <template>
     <div>
         <form class="form" @submit.prevent="changePassword()">
+            <div class="form__header">Change Password</div>
             <div class="form__field">
                 <label for="change_password" class="form__label"
                     >Change Password</label
@@ -24,7 +25,8 @@
         </form>
 
         <form class="form" @submit.prevent="uploadImage()">
-            <div class="form__group">
+             <div class="form__header">Change avatar</div>
+            <div class="form__group form__group--uploadImage">
                 <div class="form__field">
                     <label for="file" class="form__label"
                         >Choose new profile image</label
@@ -51,6 +53,7 @@
             <button class="button" type="submit">Upload Image</button>
         </form>
         <form class="form" @submit="deleteAccount()" v-if="isShipper">
+             <div class="form__header">Delete account</div>
             <button
                 @click="deleteAccount()"
                 class="button button--delete"

@@ -20,6 +20,7 @@
 
     &__details-list {
         min-width: 80%;
+        display: table;
     }
 
     &__update {
@@ -93,6 +94,34 @@
         padding: 0.3em 0;
         color: $success-color;
         font-size: 1.3em;
+    }
+}
+
+@media (max-width: $bp-small) {
+    .truck {
+        &__body {
+            flex-direction: column;
+        }
+        &__description {
+            flex-flow: row wrap;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        &__item {
+            margin-right: 10%;
+            margin-bottom: 10%;
+    
+            &:first-child {
+                margin-right: 10%;
+                font-size: 1.4em;
+            }
+    
+            &:last-child {
+                margin-right: 0;
+            }
+        }
     }
 }
 

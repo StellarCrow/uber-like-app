@@ -43,3 +43,19 @@
         align-items: center;
     }
 }
+
+@media (max-width: $bp-small) {
+    .profile {
+        &__row {
+            flex-flow: column nowrap;
+        }
+
+        &__title {
+            font-size: 1.3em;
+        }
+
+        &__settings-image {
+            max-width: 12%;
+        }
+    }
+}

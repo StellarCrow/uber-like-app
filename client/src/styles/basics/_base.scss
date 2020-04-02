@@ -53,6 +53,10 @@ textarea {
         max-width: 60%;
         text-align: center;
         margin-bottom: 6%;
+
+        @media(max-width: $bp-small) {
+            max-width: 90%;
+         }
     }
 
     &__title {
@@ -60,6 +64,10 @@ textarea {
         font-family: $ff-headers--secondary;
         font-weight: $light;
         margin-bottom: 0.5em;
+
+        @media(max-width: $bp-small) {
+            font-size: 1.8em;
+         }
     }
 
     &__subtitle {
@@ -83,6 +91,13 @@ textarea {
     &__group {
         display: flex;
         justify-content: space-evenly;
+
+        @media(max-width: $bp-small) {
+            &--uploadImage {
+                flex-flow: column nowrap;
+            }
+         }
+        
     }
 
     &__field {
@@ -159,6 +174,9 @@ textarea {
 
     &__image-preview {
         max-width: 70%;
+        @media(max-width: $bp-small) {
+            max-width: 100%;
+         }
     }
 }
 
@@ -225,7 +243,7 @@ textarea {
         &--horizontal {
             display: flex;
             justify-content: space-between;
-            flex-direction: row;
+            flex-flow: row wrap;
             align-items: center;
         }
     }

@@ -32,3 +32,15 @@
         color: inherit
     }
 }
+
+@media (max-width: $bp-small) {
+    .items {
+        &__title {
+            font-size: 1.5em;
+        }
+
+        &__button {
+            font-size: 0.6em;
+        }
+    }
+}

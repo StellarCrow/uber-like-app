@@ -1,10 +1,19 @@
 .login {
     background: url('../assets/backgrounds/login-bg.jpg') no-repeat center top / cover;
     text-align: center;
+    min-height: 100vh;
 
     &__form {
         max-width: 70%;
         margin: 0 auto;
         display: block;
+    }
+}
+
+@media (max-width: $bp-small) {
+    .login {
+        &__form {
+            max-width: 90%;
+        }
     }
 }

@@ -43,9 +43,26 @@
             color: $secondary-color;
         }
 
-        .card__description, 
+        .card__description,
         .card__button {
-            color: inherit
+            color: inherit;
+        }
+    }
+}
+
+//------------MOBILE-----------------
+
+@media (max-width: $bp-small) {
+    .card {
+        &__title {
+            @media (max-width: $bp-small) {
+                font-size: 1.7em;
+            }
+        }
+
+        &__button {
+            font-size: 0.8em;
+            max-width: 70%;
         }
     }
 }
