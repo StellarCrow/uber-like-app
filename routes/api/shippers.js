@@ -139,17 +139,17 @@ router.post(
 
 // get shipping info
 router.get(
-    '/shippers/:id/loads/:sid',
+    '/shippers/:id/loads/:sid/logs',
     validate(schemas.routeIds, 'params'),
     checkPermission(role.SHIPPER),
     async (req, res) => {
       const loadId = req.params.sid;
       try {
-        const load = await ShipperService.getLoad(loadId);
-        if (!load) {
+        const logs = await ShipperService.getShippingInfo(loadId);
+        if (!logs) {
           return res.status(404).json({error: 'Load not found'});
         }
-        return res.status(200).json({load: load});
+        return res.status(200).json({logs: logs});
       } catch (err) {
         return res.status(500).json({error: err.message});
       }

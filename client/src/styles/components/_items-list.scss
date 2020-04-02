@@ -1,0 +1,46 @@
+.items {
+    padding: 5% 3%;
+
+    &__title {
+        @include title;
+        margin: 0;
+        margin-right: 3%;
+    }
+
+    &__list {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    &__list-item {
+        margin-bottom: 5%;
+    }
+
+    &__group {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-bottom: 5%;
+    }
+
+    &__button {
+        font-size: 0.8em;
+    }
+
+    &__link {
+        color: inherit
+    }
+}
+
+@media (max-width: $bp-small) {
+    .items {
+        &__title {
+            font-size: 1.5em;
+        }
+
+        &__button {
+            font-size: 0.6em;
+        }
+    }
+}

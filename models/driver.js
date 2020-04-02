@@ -8,7 +8,7 @@ class DriverModel {
   async getFullProfile(id) {
     try {
       const driver = await Driver.findById(id)
-          .populate('user', '-password')
+          .populate('user', '-password').populate('trucks')
           .exec();
       return driver;
     } catch (err) {

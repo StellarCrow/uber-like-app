@@ -1,6 +1,7 @@
 const Joi = require('@hapi/joi');
 Joi.objectId = require('joi-objectid')(Joi);
 const {loadStateEnum}= require('../utils/loadConstants');
+const {truckTypesEnum}= require('../utils/truckConstants');
 
 const schemas = {
   registration: Joi.object({
@@ -31,6 +32,7 @@ const schemas = {
   }),
   createTruck: Joi.object({
     name: Joi.string().required(),
+    type: Joi.any().valid(...truckTypesEnum).required(),
   }),
   truckUpdate: Joi.object({
     name: Joi.string().required(),

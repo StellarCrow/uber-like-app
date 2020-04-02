@@ -1,0 +1,61 @@
+.profile {
+    &__row {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: stretch;
+    }
+
+    &__column {
+        display: flex;
+        flex-flow: column;
+    }
+
+    &__title {
+        @include title;
+    }
+
+    &__load {
+        background-color: rgba($color: $secondary-color, $alpha: 0.3);
+        padding: 3% 2%;
+        box-sizing: content-box;
+        min-width: 60%;
+    }
+
+    &__items {
+        min-height: 100vh;
+        max-height: 100vh;
+        width: 100%;
+        overflow-y: scroll;
+    }
+
+    &__settings-image {
+        max-width: 20%;
+        display: block;
+        margin: 0 auto;
+    }
+
+    &__optional {
+        background-color: $primary-color;
+        padding: 5% 3%;
+        height: 100%;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+}
+
+@media (max-width: $bp-small) {
+    .profile {
+        &__row {
+            flex-flow: column nowrap;
+        }
+
+        &__title {
+            font-size: 1.3em;
+        }
+
+        &__settings-image {
+            max-width: 12%;
+        }
+    }
+}

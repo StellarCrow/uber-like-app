@@ -82,7 +82,7 @@ router.patch(
               .status(404)
               .json({error: `Truck width id ${truckId} does not exist!`});
         }
-        return res.status(200).json({assignedTruck: assigned});
+        return res.status(200).json({truck: assigned});
       } catch (err) {
         if (err.name === 'ServerError') {
           return res.status(500).json({error: err.message});
@@ -134,7 +134,7 @@ router.delete(
               .status(404)
               .json({error: `Truck width id ${truckId} does not exist!`});
         }
-        res.status(200).json({message: 'Truck was successfully deleted'});
+        res.status(200).json({message: 'Successfully deleted'});
       } catch (err) {
         if (err.name === 'ServerError') {
           res.status(500).json({error: err.message});

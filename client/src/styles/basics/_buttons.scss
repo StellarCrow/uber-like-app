@@ -1,0 +1,51 @@
+%button {
+    background-color: $secondary-color;
+    font-family: $ff-headers;
+    text-transform: uppercase;
+    color: $text-color--dark;
+    padding: 1em 1.5em;
+    border-radius: 1.5em;
+    font-weight: $bold;
+    letter-spacing: 0.1em;
+    border: none;
+    transition: 0.3s ease;
+    cursor: pointer;
+    &:focus {
+        outline: none;
+    }
+
+    &:hover {
+        color: $text-color--light;
+    }
+}
+
+.button {
+    @extend %button;
+}
+
+.button-transparent {
+    background-color: transparent;
+    border: 4px solid $success-color;
+
+    &:hover {
+        color: inherit;
+    }
+}
+
+.button--role {
+    @extend .button-transparent;
+    border: 4px solid $secondary-color;
+    transition: none;
+}
+
+.button--primary {
+    background-color: $primary-color;
+}
+
+.button--assign {
+    background-color: $success-color;
+}
+
+.button--delete {
+    background-color: $danger-color;
+}

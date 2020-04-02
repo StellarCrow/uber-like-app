@@ -1,0 +1,257 @@
+@import "./buttons";
+
+body {
+    font-size: $base-font-size;
+    font-family: $ff-text;
+
+    @media (min-width: $bp-medium) {
+        font-size: $base-font-size * 1.2;
+    }
+
+    @media (min-width: $bp-large) {
+        font-size: $base-font-size * 1.3;
+    }
+
+    @media (min-width: $bp-xlarge) {
+        font-size: $base-font-size * 1.4;
+    }
+
+    @media (min-width: $bp-xxlarge) {
+        font-size: $base-font-size * 1.6;
+    }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+textarea {
+    resize: none;
+}
+
+.select {
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.section {
+    padding: 8% 0;
+    &__header {
+        margin: 0 auto;
+        max-width: 60%;
+        text-align: center;
+        margin-bottom: 6%;
+
+        @media(max-width: $bp-small) {
+            max-width: 90%;
+         }
+    }
+
+    &__title {
+        font-size: 2.5em;
+        font-family: $ff-headers--secondary;
+        font-weight: $light;
+        margin-bottom: 0.5em;
+
+        @media(max-width: $bp-small) {
+            font-size: 1.8em;
+         }
+    }
+
+    &__subtitle {
+        color: $gray;
+    }
+}
+
+.form {
+    padding: 4% 3%;
+    border-radius: 0.2em;
+
+    &__header {
+        text-transform: uppercase;
+        font-weight: $bold;
+        font-family: $ff-headers;
+        letter-spacing: 0.3em;
+        font-size: 1.3em;
+        padding: 1em 0;
+    }
+
+    &__group {
+        display: flex;
+        justify-content: space-evenly;
+
+        @media(max-width: $bp-small) {
+            &--uploadImage {
+                flex-flow: column nowrap;
+            }
+         }
+        
+    }
+
+    &__field {
+        margin: 0 auto;
+        margin-bottom: 3%;
+        font-weight: $regular;
+        display: flex;
+        flex-flow: column nowrap;
+        max-width: 80%;
+    }
+
+    &__label {
+        display: block;
+        font-family: $ff-headers;
+        text-align: left;
+        margin-bottom: 0.8em;
+    }
+
+    &__input {
+        border: 2px solid $secondary-color;
+        border-radius: 1.5em;
+        padding: 0.8em 1em;
+        outline: none;
+        font-weight: $light;
+        display: block;
+
+        &:focus {
+            border-color: $primary-color;
+        }
+
+        &--number {
+            border-radius: 0.5em;
+        }
+    }
+
+    &__textarea {
+        border: 2px solid $secondary-color;
+        border-radius: 0.3em;
+        padding: 0.4em 0.5em;
+        font-weight: $light;
+        font-family: $ff-text;
+        outline: none;
+    }
+
+    &__select {
+        padding: 1em 1.5em;
+        border: 2px solid $secondary-color;
+        border-radius: 1.5em;
+        outline: 0;
+    }
+
+    &__button {
+        display: block;
+        min-width: 40%;
+        margin: 0 auto;
+    }
+
+    &__error,
+    &__message {
+        text-align: center;
+        padding: 1em 0.5em;
+        background-color: $danger-color;
+        color: $text-color--light;
+        font-weight: $semi-bold;
+        max-width: 60%;
+        border-radius: 1.3em;
+        margin: 0 auto;
+        margin-bottom: 3%;
+    }
+
+    &__message {
+        background-color: $success-color;
+    }
+
+    &__image-preview {
+        max-width: 70%;
+        @media(max-width: $bp-small) {
+            max-width: 100%;
+         }
+    }
+}
+
+.feature {
+    &__name {
+        font-size: 0.5em;
+        font-family: $ff-headers;
+        text-transform: uppercase;
+        font-weight: $bold;
+        text-align: center;
+        color: $gray;
+        letter-spacing: 0.4em;
+        margin-bottom: 0.5em;
+    }
+}
+
+
+
+.detail {
+    display: table-row;
+
+    &__input {
+        background-color: transparent;
+        border: none;
+        border-bottom: 1px solid $secondary-color;
+        font-family: $ff-text;
+        font-weight: $light;
+        padding: 0.3em 0;
+        outline: none;
+        font-size: 0.8em;
+
+        &:disabled {
+            border-color: $gray;
+        }
+
+        &:focus {
+            border-color: $primary-color;
+        }
+    }
+
+    &__textarea {
+        background-color: transparent;
+        border: 1px solid $secondary-color;
+        outline: none;
+        font-weight: $light;
+        font-family: $ff-text;
+        font-size: 0.8em;
+        width: 100%;
+
+        &:focus {
+            border-color: $primary-color;
+        }
+    }
+
+    &__name {
+        padding-right: 0.5em;
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    &__value {
+        display: table-cell;
+        padding-bottom: 1.5em;
+        &--horizontal {
+            display: flex;
+            justify-content: space-between;
+            flex-flow: row wrap;
+            align-items: center;
+        }
+    }
+
+    &__feature {
+        margin-right: 5%;
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+}

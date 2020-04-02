@@ -70,9 +70,9 @@ class ShipperService {
     await LoadModel.addLog(loadId, logMessage.EN_ROUTE_TO_PICKUP);
   }
 
-  async getLoad(loadId) {
-    const load = await LoadModel.getLoad(loadId);
-    return load;
+  async getShippingInfo(loadId) {
+    const logs = await LoadModel.getLogs(loadId);
+    return logs;
   }
 
   async getLoadsList(shipperId) {

@@ -1,0 +1,76 @@
+@import url("https://fonts.googleapis.com/css2?family=Arvo&family=Montserrat:wght@200;300;400;600;800;900&family=Open+Sans:wght@300;400;700&display=swap");
+
+//----------BREAKPOINTS-------------
+
+$bp-xxsmall: 20em; // 320px
+$bp-xsmall: 26.2645em; //425px
+$bp-small: 48em; // 768px
+$bp-medium: 64em; // 1024px
+$bp-large: 85.375em; // 1366px
+$bp-xlarge: 120em; // 1920px
+$bp-xxlarge: 160em; // 2560px
+
+// ---------MEDIA QUERIES-----------
+
+$mq-xxsmall: "(min-width: #{$bp-xxsmall})";
+$mq-xsmall: "(min-width: #{$bp-xsmall})";
+$mq-small: "(min-width: #{$bp-small})";
+$mq-medium: "(min-width: #{$bp-medium})";
+$mq-large: "(min-width: #{$bp-large})";
+$mq-xlarge: "(min-width: #{$bp-xlarge})";
+$mq-xxlarge: "(min-width: #{$bp-xxlarge})";
+$mq-retina: "(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)";
+
+//----------FONT-FAMILY-------------
+
+$ff-primary: "Poiret One", cursive;
+$ff-secondary: "Comfortaa", cursive;
+$ff-tertiary: "Roboto Condensed", sans-serif;
+
+//----------FONT-WEIGHT-------------
+
+$extra-light: 200;
+$light: 300;
+$regular: 400;
+$medium: 500;
+$semi-bold: 600;
+$bold: 700;
+$extra-bold: 800;
+
+//----------FONT-FAMILY-------------
+
+$ff-headers: "Montserrat", sans-serif;
+$ff-headers--secondary: "Arvo", serif;
+$ff-text: "Open Sans", sans-serif;
+
+//-------------FONT-SIZE----------------
+
+$base-font-size: 16px;
+
+//-------------COLORS------------------
+$primary-color: #8f75be;
+$secondary-color: #ffcc2e;
+
+$danger-color: #f9593a;
+$warning-color: #c50e45;
+$success-color: #0ebac5;
+
+$text-color--dark: rgb(82, 82, 82);
+$text-color--light: rgb(255, 255, 255);
+
+$gray--light: #f8f8f8;
+$gray: #b3b3b3;
+$gray--dark: #727272;
+
+$disabled-color: rgb(196, 196, 196);
+
+$the-menu-bg-color: rgb(245, 245, 245);
+
+// ----------FOOTER COLORS-------------
+
+$footer-heading-color: $primary-color;
+$menu-text-color: rgb(219, 219, 219);
+$socials-color: $text-color--dark;
+
+//-----------TOP MENU CONTENT PADDING ------------
+$content-padding-top: 4.3em;
