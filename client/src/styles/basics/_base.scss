@@ -40,6 +40,12 @@ textarea {
     resize: none;
 }
 
+.select {
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
 .section {
     padding: 8% 0;
     &__header {

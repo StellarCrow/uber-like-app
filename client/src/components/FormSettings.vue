@@ -51,7 +51,13 @@
             <button class="button" type="submit">Upload Image</button>
         </form>
         <form class="form" @submit="deleteAccount()" v-if="isShipper">
-            <button @click="deleteAccount()" class="button button--delete" type="submit">Delete account</button>
+            <button
+                @click="deleteAccount()"
+                class="button button--delete"
+                type="submit"
+            >
+                Delete account
+            </button>
         </form>
     </div>
 </template>
@@ -106,7 +112,7 @@ export default {
             try {
                 const res = await this.deleteShipperAccount(this.roleId);
                 if (res.user) {
-                    this.$router.push('/');
+                    this.$router.push("/");
                 } else {
                     this.error = res.error.response.data.error;
                 }

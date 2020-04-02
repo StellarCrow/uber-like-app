@@ -18,5 +18,8 @@ export default {
     },
     getLoad(driverId) {
         return Api().get(`/api/drivers/${driverId}/loads`);
+    },
+    changeLoadState(driverId, body) {
+        return Api().patch(`/api/drivers/${driverId}/loads`, body);
     }
 };

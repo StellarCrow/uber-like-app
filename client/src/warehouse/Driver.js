@@ -94,7 +94,7 @@ const actions = {
             return { error: err };
         }
     },
-    async getAssignedLoad({commit}, id) {
+    async getAssignedLoad({ commit }, id) {
         try {
             commit("get_assigned_load_request");
             let res = await DriverService.getLoad(id);
@@ -103,6 +103,21 @@ const actions = {
             return load;
         } catch (err) {
             commit("get_assigned_load_failure");
+            return { error: err };
+        }
+    },
+    async changeLoadState({ commit }, { driverId, state }) {
+        try {
+            console.log(driverId);
+
+            commit("change_load_state_request");
+            const body = { state: state };
+            let res = await DriverService.changeLoadState(driverId, body);
+            const message = res.data.message;
+            commit("change_load_state_success", state);
+            return message;
+        } catch (err) {
+            commit("change_load_state_failure");
             return { error: err };
         }
     }
@@ -185,11 +200,21 @@ const mutations = {
     get_assigned_load_request(state) {
         state.status = "loading";
     },
-    get_assigned_load_success(state, {load}){
+    get_assigned_load_success(state, { load }) {
         state.assignedLoad = load;
         state.status = "success";
     },
     get_assigned_load_failure(state) {
+        state.status = "";
+    },
+    change_load_state_request(state) {
+        state.status = "loading";
+    },
+    change_load_state_success(state, loadState) {
+        state.assignedLoad.state = loadState;
+        state.status = "success";
+    },
+    change_load_state_failure(state) {
         state.status = "";
     },
     clean_driver(state) {

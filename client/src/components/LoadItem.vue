@@ -17,8 +17,11 @@
                 </div>
                 <div class="load__item feature" v-if="state">
                     <div class="feature__name">State</div>
-                    <div class="feature__value load__name">
+                    <div class="feature__value load__name" v-if="isShipper">
                         {{ state }}
+                    </div>
+                    <div class="feature__value load__name" v-else>
+                        <SelectLoadState :load="load" />
                     </div>
                 </div>
             </div>
@@ -33,7 +36,7 @@
                 <button
                     class="button button--primary"
                     @click.prevent="showLogs = !showLogs"
-                    v-if="!showDetails"
+                    v-if="!showDetails && isShipper"
                 >
                     Show logs
                 </button>
@@ -270,11 +273,13 @@
 
 <script>
 import loadConstants from "../utils/loadConstants";
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
+import SelectLoadState from "./SelectLoadState";
 
 export default {
     name: "LoadItem",
     props: ["load"],
+    components: { SelectLoadState },
     data() {
         return {
             name: "",
@@ -302,6 +307,9 @@ export default {
         };
     },
     computed: {
+        ...mapState({
+            role: state => state.Auth.role,
+        }),
         ...mapGetters(["userId"]),
         status() {
             return this.load.status;
@@ -311,6 +319,9 @@ export default {
         },
         isStatusNew() {
             return this.status === "NEW";
+        },
+        isShipper() {
+            return this.role === "shipper";
         },
         addClass() {
             const loadStatus = loadConstants.loadStatus;
