@@ -34,7 +34,7 @@
                 <button
                     @click.prevent="assignTruckToDriver()"
                     class="button button--assign"
-                    v-if="!this.isAssigned && !this.assignedLoad"
+                    v-if="notAssignedWithoutLoad"
                 >
                     Assign
                 </button>
@@ -47,7 +47,7 @@
                 <button
                     @click="deleteTruckFromList()"
                     class="button button--delete"
-                    v-if="!this.isAssigned && !this.assignedLoad"
+                    v-if="notAssignedWithoutLoad"
                 >
                     Delete
                 </button>
@@ -106,7 +106,7 @@
             <div class="truck__update">
                 <button
                     class="button"
-                    v-if="!this.isAssigned && !this.assignedLoad"
+                    v-if="notAssignedWithoutLoad"
                     @click="updateTruckInfo()"
                 >
                     Update info
@@ -156,6 +156,9 @@ export default {
         },
         isAssigned() {
             return this.truck._id === this.assignedTruck;
+        },
+        notAssignedWithoutLoad() {
+            return !this.isAssigned && !this.assignedLoad;
         }
     },
     mounted() {

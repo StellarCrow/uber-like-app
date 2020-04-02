@@ -13,7 +13,7 @@
                 <div class="profile__role">{{ this.role }}</div>
                 <ul
                     class="profile__info statistic"
-                    v-if="this.role === 'driver'"
+                    v-if="this.role === this.roles.DRIVER"
                 >
                     <li class="statistic__item">
                         Trucks<span>{{ this.trucksCount }}</span>
@@ -52,11 +52,14 @@
 
 <script>
 import { mapState, mapActions, mapGetters } from "vuex";
+import { role as roles } from "../utils/constants";
 
 export default {
     name: "ProfileDetails",
     data() {
-        return {};
+        return {
+            roles: roles
+        };
     },
     computed: {
         ...mapGetters(["shippedLoads", "assignedLoads"]),

@@ -8,10 +8,10 @@
             <div class="log__number">{{ ++index }}</div>
             <div class="log__time">
                 <div class="log__date">
-                    {{ log.time.split("T")[0] }}
+                    {{ log.logDate }}
                 </div>
                 <div class="log__hours">
-                    {{ log.time.split("T")[1].split(".")[0] }}
+                    {{ log.logHours }}
                 </div>
             </div>
             <div class="log__message">{{ log.message }}</div>
@@ -22,7 +22,13 @@
 <script>
 export default {
     name: "LogsList",
-    props: ["logs"]
+    props: ["logs"],
+    mounted() {
+        for(const log of this.logs) {
+            log.logDate = log.time.split("T")[0];
+            log.logHours = log.time.split("T")[1].split(".")[0];
+        }
+    }
 };
 </script>
 

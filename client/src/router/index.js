@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import store from "../store/index";
+import { role } from "../utils/constants";
 
 Vue.use(VueRouter);
 
@@ -81,7 +82,14 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (to.name === "Registration") {
+        const paramRole = to.params.role;
+        if (paramRole === role.DRIVER || paramRole === role.SHIPPER) {
+            next();
+        } else {
+            next("/");
+        }
+    } else if (to.matched.some(record => record.meta.requiresAuth)) {
         if (!store.getters.isAuthenticated) {
             //Redirect to the Homepage
             next("/");
