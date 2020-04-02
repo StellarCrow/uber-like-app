@@ -10,12 +10,12 @@
         </div>
         <ul class="items__list" v-if="isDriver">
             <li v-for="item in this.trucks" :key="item._id" class="items__list">
-                <TruckItem class="items__item" :truck="item" />
+                <TruckItem class="items__list-item" :truck="item" />
             </li>
         </ul>
         <ul class="items__list" v-else>
             <li v-for="item in this.loads" :key="item._id" class="items__list">
-                <LoadItem class="items__item" :load="item" />
+                <LoadItem class="items__list-item" :load="item" />
             </li>
         </ul>
     </section>

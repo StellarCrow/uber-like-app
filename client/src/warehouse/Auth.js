@@ -18,11 +18,11 @@ const getters = {
 const actions = {
     async login({ commit }, user) {
         try {
-            let res = await AuthenticationService.login(user);
+            const res = await AuthenticationService.login(user);
             commit(mutation.AUTH_REQUEST);
             if (res.data.user) {
                 const token = res.data.token;
-                let user = res.data.user;
+                const user = res.data.user;
                 localStorage.setItem("token", token);
                 //Set axios defaults
                 axios.defaults.headers.common["Authorization"] = "JWT " + token;
@@ -37,7 +37,7 @@ const actions = {
     async register({ commit }, userData) {
         try {
             commit(mutation.REGISTER_REQUEST);
-            let res = await AuthenticationService.register(userData);
+            const res = await AuthenticationService.register(userData);
             const user = res.data.user;
             commit(mutation.REGISTER_SUCCESS);
             return { user: user };
@@ -61,7 +61,7 @@ const actions = {
             const userId = payload.id;
             const password = payload.password;
             commit(mutation.UPDATE_PASSWORD_REQUEST);
-            let res = await AuthenticationService.updatePassword(
+            const res = await AuthenticationService.updatePassword(
                 userId,
                 password
             );

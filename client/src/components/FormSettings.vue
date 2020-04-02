@@ -125,11 +125,11 @@ export default {
         },
         onFileChange(file) {
             const { maxSize } = this;
-            let imageFile = file[0];
+            const imageFile = file[0];
 
             // check if user actually selected a file
             if (file.length > 0) {
-                let size = imageFile.size / maxSize / 1024;
+                const size = imageFile.size / maxSize / 1024;
 
                 if (size > 1) {
                     // check whether the size is greater than the size limit
@@ -138,7 +138,7 @@ export default {
                         "Your file is too big! Please select an image under 5MB";
                 } else {
                     // turn file into image URL
-                    let imageURL = URL.createObjectURL(imageFile);
+                    const imageURL = URL.createObjectURL(imageFile);
                     this.errorText = "";
                     this.imageFile = imageFile;
                     this.image = imageURL;

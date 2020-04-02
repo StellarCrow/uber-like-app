@@ -15,7 +15,7 @@ const actions = {
     async getDriverProfile({ commit }, id) {
         try {
             commit(mutation.GET_DRIVER_PROFILE_REQUEST);
-            let res = await DriverService.getFullProfile(id);
+            const res = await DriverService.getFullProfile(id);
             const user = res.data.driver;
             const driver = {
                 name: user.user.name,

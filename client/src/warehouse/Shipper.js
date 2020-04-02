@@ -24,7 +24,7 @@ const actions = {
     async getShipperProfile({ commit }, id) {
         try {
             commit(mutation.GET_SHIPPER_PROFILE_REQUEST);
-            let res = await ShipperService.getFullProfile(id);
+            const res = await ShipperService.getFullProfile(id);
             const user = res.data.shipper;
             const shipper = {
                 name: user.user.name,
@@ -70,7 +70,7 @@ const actions = {
             commit(mutation.DELETE_LOAD_REQUEST);
             const shipperId = payload.shipperId;
             const loadId = payload.loadId;
-            let res = await ShipperService.deleteLoad(shipperId, loadId);
+            const res = await ShipperService.deleteLoad(shipperId, loadId);
             const success = res.data.message;
 
             commit(mutation.DELETE_LOAD_SUCCESS, { loadId });
@@ -85,7 +85,7 @@ const actions = {
             commit(mutation.POST_LOAD_REQUEST);
             const shipperId = payload.shipperId;
             const loadId = payload.loadId;
-            let res = await ShipperService.postLoad(shipperId, loadId);
+            const res = await ShipperService.postLoad(shipperId, loadId);
             const load = res.data;
             commit(mutation.POST_LOAD_SUCCESS, { loadId });
             return { load };
@@ -97,7 +97,7 @@ const actions = {
     async deleteShipperAccount({ commit }, id) {
         try {
             commit(mutation.DELETE_ACCOUNT_REQUEST);
-            let res = await ShipperService.deleteAccount(id);
+            const res = await ShipperService.deleteAccount(id);
             const user = res.data;
             commit(mutation.DELETE_ACCOUNT_SUCCESS);
             commit(mutation.LOGOUT, null, { root: true });
