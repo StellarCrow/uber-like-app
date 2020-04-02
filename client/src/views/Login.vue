@@ -1,7 +1,7 @@
 <template>
-    <section class="section login">
-        <h2 class="section__title">Login</h2>
-        <FormLogin class="login__form" />
+    <section class="page login">
+        <h2 class="page__title">Login</h2>
+        <FormLogin class="page__form" />
     </section>
 </template>
 

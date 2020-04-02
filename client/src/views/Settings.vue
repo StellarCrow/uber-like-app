@@ -1,7 +1,7 @@
 <template>
-    <section class="section settings">
-        <h2 class="section__title">Settings</h2>
-        <FormSettings class="settings__form" />
+    <section class="page settings">
+        <h2 class="page__title">Settings</h2>
+        <FormSettings class="page__form" />
     </section>
 </template>
 

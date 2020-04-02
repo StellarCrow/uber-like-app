@@ -1,7 +1,7 @@
 <template>
-    <section class="section registration">
-        <h2 class="section__title">Registrate As A "{{ this.role }}"</h2>
-        <FormRegistration class="registration__form" :role="this.role" />
+    <section class="page registration">
+        <h2 class="page__title">Registrate As A "{{ this.role }}"</h2>
+        <FormRegistration class="page__form" :role="this.role" />
     </section>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
     <div class="select-load">
-        <select class="select select-load__select" v-model="state">
+        <select class="select select-load__select" v-model="loadState">
             <option
                 v-for="(state, index) in this.states"
                 :value="state"
@@ -29,7 +29,26 @@ export default {
     computed: {
         ...mapState({
             driverId: state => state.Auth.user.role_id
-        })
+        }),
+        loadState: {
+            get() {
+                return this.state;
+            },
+            async set(value) {
+                this.state = value;
+                const payload = {
+                    driverId: this.driverId,
+                    state: this.state
+                };
+                const message = await this.changeLoadState(payload);
+                if (message) {
+                    this.message = "Updated state";
+                    setTimeout(() => {
+                        this.message = "";
+                    }, 2000);
+                }
+            }
+        }
     },
     mounted() {
         this.state = this.load.state;
@@ -40,21 +59,6 @@ export default {
     },
     methods: {
         ...mapActions(["changeLoadState"])
-    },
-    watch: {
-        state: async function() {
-            const payload = {
-                driverId: this.driverId,
-                state: this.state
-            };
-            const message = await this.changeLoadState(payload);
-            if (message) {
-                this.message = "Updated state";
-                setTimeout(() => {
-                    this.message = "";
-                }, 2000);
-            }
-        }
     }
 };
 </script>

@@ -1,19 +1,4 @@
 .registration {
-    background: url('../assets/backgrounds/register-bg.jpg') no-repeat center top / cover;
-    text-align: center;
-    min-height: 100vh;
-
-    &__form {
-        max-width: 70%;
-        margin: 0 auto;
-        display: block;
-    }
-}
-
-@media (max-width: $bp-small) {
-    .registration {
-        &__form {
-            max-width: 90%;
-        }
-    }
+    background: url("../assets/backgrounds/register-bg.jpg") no-repeat center
+        top / cover;
 }

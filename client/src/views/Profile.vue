@@ -28,7 +28,7 @@
         <div class="profile__row">
             <div class="profile__load" v-if="load">
                 <div class="profile__title">Assigned Load</div>
-                <LoadItem :load="load" />
+                <LoadItem :load="this.load" />
             </div>
             <div class="profile__chat"></div>
         </div>

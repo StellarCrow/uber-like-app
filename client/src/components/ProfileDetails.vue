@@ -39,7 +39,10 @@
                         Shipped<span>{{ shippedLoads }}</span>
                     </li>
                 </ul>
-                <button @click.prevent="logoutUser()" class="profile__button button">
+                <button
+                    @click.prevent="logoutUser()"
+                    class="profile__button button"
+                >
                     Logout
                 </button>
             </div>

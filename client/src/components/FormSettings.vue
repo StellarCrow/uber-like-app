@@ -25,7 +25,7 @@
         </form>
 
         <form class="form" @submit.prevent="uploadImage()">
-             <div class="form__header">Change avatar</div>
+            <div class="form__header">Change avatar</div>
             <div class="form__group form__group--uploadImage">
                 <div class="form__field">
                     <label for="file" class="form__label"
@@ -53,7 +53,7 @@
             <button class="button" type="submit">Upload Image</button>
         </form>
         <form class="form" @submit="deleteAccount()" v-if="isShipper">
-             <div class="form__header">Delete account</div>
+            <div class="form__header">Delete account</div>
             <button
                 @click="deleteAccount()"
                 class="button button--delete"
