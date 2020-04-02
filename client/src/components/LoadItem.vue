@@ -311,7 +311,7 @@ export default {
     },
     computed: {
         ...mapState({
-            role: state => state.Auth.role,
+            role: state => state.Auth.role
         }),
         ...mapGetters(["userId"]),
         status() {

@@ -1,4 +1,5 @@
 import DriverService from "../services/DriverService";
+import mutation from "../utils/mutations";
 
 const state = {
     driver: {},
@@ -13,7 +14,7 @@ const getters = {};
 const actions = {
     async getDriverProfile({ commit }, id) {
         try {
-            commit("get_driver_profile_request");
+            commit(mutation.GET_DRIVER_PROFILE_REQUEST);
             let res = await DriverService.getFullProfile(id);
             const user = res.data.driver;
             const driver = {
@@ -23,61 +24,61 @@ const actions = {
                 assignedLoad: user.load ? 1 : 0,
                 hasLoad: user.has_load
             };
-            commit("get_driver_profile_success", { user, driver });
+            commit(mutation.GET_DRIVER_PROFILE_SUCCESS, { user, driver });
             return { user: user };
         } catch (err) {
-            commit("get_driver_profile_failure");
+            commit(mutation.GET_DRIVER_PROFILE_FAILURE);
             return { error: err };
         }
     },
 
     async assignTruck({ commit }, payload) {
         try {
-            commit("assign_truck_request");
+            commit(mutation.ASSIGN_TRUCK_REQUEST);
             const driverId = payload.driverId;
             const truckId = payload.truckId;
-            let res = await DriverService.assignTruck(driverId, truckId);
+            const res = await DriverService.assignTruck(driverId, truckId);
             const assignedTruck = res.data.truck;
 
-            commit("assign_truck_success", { truckId });
+            commit(mutation.ASSIGN_TRUCK_SUCCESS, { truckId });
             return { truck: assignedTruck };
         } catch (err) {
-            commit("assign_truck_failure");
+            commit(mutation.ASSIGN_TRUCK_FAILURE);
             return { error: err };
         }
     },
     async deleteTruck({ commit }, payload) {
         try {
-            commit("delete_truck_request");
+            commit(mutation.DELETE_TRUCK_REQUEST);
             const driverId = payload.driverId;
             const truckId = payload.truckId;
-            let res = await DriverService.deleteTruck(driverId, truckId);
+            const res = await DriverService.deleteTruck(driverId, truckId);
             const success = res.data.message;
 
-            commit("delete_truck_success", { truckId });
+            commit(mutation.DELETE_TRUCK_SUCCESS, { truckId });
             return { truck: success };
         } catch (err) {
-            commit("delete_truck_failure");
+            commit(mutation.DELETE_TRUCK_FAILURE);
             return { error: err };
         }
     },
     async addNewTruck({ commit }, payload) {
         try {
-            commit("add_truck_request");
+            commit(mutation.ADD_TRUCK_REQUEST);
             const driverId = payload.driverId;
             const body = { name: payload.name, type: payload.type };
             const res = await DriverService.createTruck(driverId, body);
             const truck = res.data.truck;
-            commit("add_truck_success", { truck });
+            commit(mutation.ADD_TRUCK_SUCCESS, { truck });
             return { truck: truck };
         } catch (err) {
-            commit("add_truck_failure");
+            commit(mutation.ADD_TRUCK_FAILURE);
             return { error: err };
         }
     },
     async updateTruck({ commit }, payload) {
         try {
-            commit("update_truck_request");
+            commit(mutation.UPDATE_TRUCK_REQUEST);
             const driverId = payload.driverId;
             const truckId = payload.truckId;
             const body = { name: payload.name };
@@ -87,37 +88,35 @@ const actions = {
                 body
             );
             const truck = res.data.truck;
-            commit("update_truck_success", truck);
+            commit(mutation.UPDATE_TRUCK_SUCCESS, truck);
             return { truck: truck };
         } catch (err) {
-            commit("update_truck_failure");
+            commit(mutation.UPDATE_TRUCK_FAILURE);
             return { error: err };
         }
     },
     async getAssignedLoad({ commit }, id) {
         try {
-            commit("get_assigned_load_request");
-            let res = await DriverService.getLoad(id);
+            commit(mutation.GET_ASSIGNED_LOAD_REQUEST);
+            const res = await DriverService.getLoad(id);
             const load = res.data.load;
-            commit("get_assigned_load_success", { load });
+            commit(mutation.GET_ASSIGNED_LOAD_SUCCESS, { load });
             return load;
         } catch (err) {
-            commit("get_assigned_load_failure");
+            commit(mutation.GET_ASSIGNED_LOAD_FAILURE);
             return { error: err };
         }
     },
     async changeLoadState({ commit }, { driverId, state }) {
         try {
-            console.log(driverId);
-
-            commit("change_load_state_request");
+            commit(mutation.CHANGE_LOAD_STATE_REQUEST);
             const body = { state: state };
-            let res = await DriverService.changeLoadState(driverId, body);
+            const res = await DriverService.changeLoadState(driverId, body);
             const message = res.data.message;
-            commit("change_load_state_success", state);
+            commit(mutation.CHANGE_LOAD_STATE_SUCCESS, state);
             return message;
         } catch (err) {
-            commit("change_load_state_failure");
+            commit(mutation.CHANGE_LOAD_STATE_FAILURE);
             return { error: err };
         }
     }

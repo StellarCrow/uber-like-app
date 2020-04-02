@@ -1,6 +1,7 @@
 import ShipperService from "../services/ShipperService";
 import loadConstants from "../utils/loadConstants";
 import Vue from "vue";
+import mutation from "../utils/mutations";
 
 const state = {
     shipper: {},
@@ -22,87 +23,87 @@ const getters = {
 const actions = {
     async getShipperProfile({ commit }, id) {
         try {
-            commit("get_shipper_profile_request");
+            commit(mutation.GET_SHIPPER_PROFILE_REQUEST);
             let res = await ShipperService.getFullProfile(id);
             const user = res.data.shipper;
             const shipper = {
                 name: user.user.name,
                 loadsCount: user.loads.length
             };
-            commit("get_shipper_profile_success", { user, shipper });
+            commit(mutation.GET_SHIPPER__PROFILE_SUCCESS, { user, shipper });
             return { user: user };
         } catch (err) {
-            commit("get_shipper_profile_failure");
+            commit(mutation.GET_SHIPPER__PROFILE_FAILURE);
             return { error: err };
         }
     },
     async addNewLoad({ commit }, { payload, shipperId }) {
         try {
-            commit("add_load_request");
+            commit(mutation.ADD_LOAD_REQUEST);
             const res = await ShipperService.createLoad(shipperId, payload);
             const load = res.data.load;
-            commit("add_load_success", { load });
+            commit(mutation.ADD_LOAD_SUCCESS, { load });
             return { load: load };
         } catch (err) {
-            commit("add_load_failure");
+            commit(mutation.ADD_LOAD_FAILURE);
             return { error: err };
         }
     },
     async updateLoad({ commit }, { shipperId, loadId, payload }) {
         try {
-            commit("update_load_request");
+            commit(mutation.UPDATE_LOAD_REQUEST);
             const res = await ShipperService.updateLoad(
                 shipperId,
                 loadId,
                 payload
             );
             const load = res.data.load;
-            commit("update_load_success", load);
+            commit(mutation.UPDATE_LOAD_SUCCESS, load);
             return { load: load };
         } catch (err) {
-            commit("update_load_failure");
+            commit(mutation.UPDATE_LOAD_FAILURE);
             return { error: err };
         }
     },
     async deleteLoad({ commit }, payload) {
         try {
-            commit("delete_load_request");
+            commit(mutation.DELETE_LOAD_REQUEST);
             const shipperId = payload.shipperId;
             const loadId = payload.loadId;
             let res = await ShipperService.deleteLoad(shipperId, loadId);
             const success = res.data.message;
 
-            commit("delete_load_success", { loadId });
+            commit(mutation.DELETE_LOAD_SUCCESS, { loadId });
             return { load: success };
         } catch (err) {
-            commit("delete_load_failure");
+            commit(mutation.DELETE_LOAD_FAILURE);
             return { error: err };
         }
     },
     async postLoad({ commit }, payload) {
         try {
-            commit("post_load_request");
+            commit(mutation.POST_LOAD_REQUEST);
             const shipperId = payload.shipperId;
             const loadId = payload.loadId;
             let res = await ShipperService.postLoad(shipperId, loadId);
             const load = res.data;
-            commit("post_load_success", { loadId });
+            commit(mutation.POST_LOAD_SUCCESS, { loadId });
             return { load };
         } catch (err) {
-            commit("post_load_failure");
+            commit(mutation.POST_LOAD_FAILURE);
             return { load: err };
         }
     },
-    async deleteShipperAccount({ commit },id) {
+    async deleteShipperAccount({ commit }, id) {
         try {
-            commit("delete_account_request");
+            commit(mutation.DELETE_ACCOUNT_REQUEST);
             let res = await ShipperService.deleteAccount(id);
             const user = res.data;
-            commit("delete_account_success");
-            commit("logout", null, { root: true });
+            commit(mutation.DELETE_ACCOUNT_SUCCESS);
+            commit(mutation.LOGOUT, null, { root: true });
             return { user };
         } catch (err) {
-            commit("delete_account_failure");
+            commit(mutation.DELETE_ACCOUNT_FAILURE);
             return { error: err };
         }
     }

@@ -8,10 +8,10 @@
             <div class="log__number">{{ ++index }}</div>
             <div class="log__time">
                 <div class="log__date">
-                    {{ log.time.split('T')[0] }}
+                    {{ log.time.split("T")[0] }}
                 </div>
                 <div class="log__hours">
-                    {{ log.time.split('T')[1].split('.')[0] }}
+                    {{ log.time.split("T")[1].split(".")[0] }}
                 </div>
             </div>
             <div class="log__message">{{ log.message }}</div>

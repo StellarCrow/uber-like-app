@@ -71,13 +71,21 @@ textarea {
     padding: 4% 3%;
     border-radius: 0.2em;
 
+    &__header {
+        text-transform: uppercase;
+        font-weight: $bold;
+        font-family: $ff-headers;
+        letter-spacing: 0.3em;
+        font-size: 1.3em;
+        padding: 1em 0;
+    }
+
     &__group {
         display: flex;
         justify-content: space-evenly;
     }
 
     &__field {
-        width: 80%;
         margin: 0 auto;
         margin-bottom: 3%;
         font-weight: $regular;
@@ -104,6 +112,19 @@ textarea {
         &:focus {
             border-color: $primary-color;
         }
+
+        &--number {
+            border-radius: 0.5em;
+        }
+    }
+
+    &__textarea {
+        border: 2px solid $secondary-color;
+        border-radius: 0.3em;
+        padding: 0.4em 0.5em;
+        font-weight: $light;
+        font-family: $ff-text;
+        outline: none;
     }
 
     &__select {

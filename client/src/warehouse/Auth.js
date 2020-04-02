@@ -1,6 +1,7 @@
 import AuthenticationService from "../services/AuthenticationService";
 import axios from "axios";
 import router from "../router/index";
+import mutation from "../utils/mutations";
 
 const state = {
     token: localStorage.getItem("token") || "",
@@ -18,14 +19,14 @@ const actions = {
     async login({ commit }, user) {
         try {
             let res = await AuthenticationService.login(user);
-            commit("auth_request");
+            commit(mutation.AUTH_REQUEST);
             if (res.data.user) {
                 const token = res.data.token;
                 let user = res.data.user;
                 localStorage.setItem("token", token);
                 //Set axios defaults
                 axios.defaults.headers.common["Authorization"] = "JWT " + token;
-                commit("auth_success", { token, user });
+                commit(mutation.AUTH_SUCCESS, { token, user });
             }
             return { user: user };
         } catch (err) {
@@ -35,10 +36,10 @@ const actions = {
     //Registration
     async register({ commit }, userData) {
         try {
-            commit("register_request");
+            commit(mutation.REGISTER_REQUEST);
             let res = await AuthenticationService.register(userData);
             const user = res.data.user;
-            commit("register_success");
+            commit(mutation.REGISTER_SUCCESS);
             return { user: user };
         } catch (err) {
             return { error: err };
@@ -47,9 +48,9 @@ const actions = {
     //Logout the user
     async logout({ commit }) {
         await localStorage.removeItem("token");
-        commit("logout");
-        commit("clean_shipper", null, { root: true });
-        commit("clean_driver", null, { root: true });
+        commit(mutation.LOGOUT);
+        commit(mutation.CLEAN_SHIPPER, null, { root: true });
+        commit(mutation.CLEAN_DRIVER, null, { root: true });
         delete axios.defaults.headers.common["Authorization"];
         router.push("/");
         return;
@@ -59,13 +60,13 @@ const actions = {
         try {
             const userId = payload.id;
             const password = payload.password;
-            commit("update_password_request");
+            commit(mutation.UPDATE_PASSWORD_REQUEST);
             let res = await AuthenticationService.updatePassword(
                 userId,
                 password
             );
             const message = res.data.message;
-            commit("update_password_success");
+            commit(mutation.UPDATE_PASSWORD_SUCCESS);
             return { message: message };
         } catch (err) {
             return { error: err };

@@ -1,5 +1,6 @@
 <template>
     <form class="form" @submit.prevent="addLoad()">
+        <div class="form__header">Main info</div>
         <div class="form__field">
             <label for="name" class="form__label">Load Name</label>
             <input
@@ -19,6 +20,7 @@
             <textarea
                 class="form__textarea"
                 id="description"
+                placeholder="Description..."
                 cols="30"
                 rows="10"
                 v-model="description"
@@ -30,8 +32,9 @@
             <div class="form__field">
                 <label class="form__label" for="width">Width</label>
                 <input
-                    class="form__input"
+                    class="form__input form__input--number"
                     type="number"
+                    placeholder="100"
                     min="1"
                     max="1000"
                     id="width"
@@ -42,8 +45,9 @@
             <div class="form__field">
                 <label class="form__label" for="length">Length</label>
                 <input
-                    class="form__input"
+                    class="form__input form__input--number"
                     type="number"
+                    placeholder="150"
                     min="1"
                     max="1000"
                     id="length"
@@ -54,8 +58,9 @@
             <div class="form__field">
                 <label class="form__label" for="height">Height</label>
                 <input
-                    class="form__input"
+                    class="form__input form__input--number"
                     type="number"
+                    placeholder="50"
                     min="1"
                     max="1000"
                     id="height"
@@ -67,8 +72,9 @@
         <div class="form__field">
             <label class="form__label" for="payload">Payload</label>
             <input
-                class="form__input"
+                class="form__input form__input--number"
                 type="number"
+                placeholder="10"
                 min="1"
                 max="1000"
                 id="payload"
@@ -83,6 +89,7 @@
                 <input
                     class="form__input"
                     type="text"
+                    placeholder="City"
                     maxlength="100"
                     id="delivery_city"
                     v-model="deliveryAddress.city"
@@ -94,6 +101,7 @@
                 <input
                     class="form__input"
                     type="text"
+                    placeholder="Street 21"
                     maxlength="100"
                     id="delivery_street"
                     v-model="deliveryAddress.street"
@@ -103,8 +111,9 @@
             <div class="form__field">
                 <label class="form__label" for="delivery_zip">Zip code</label>
                 <input
-                    class="form__input"
+                    class="form__input form__input--number"
                     type="number"
+                    placeholder="12145"
                     min="1"
                     max="99999"
                     pattern="/[0-9]{5}/"
@@ -121,6 +130,7 @@
                 <input
                     class="form__input"
                     type="text"
+                    placeholder="City"
                     maxlength="100"
                     id="pickup_city"
                     v-model="pickUpAddress.city"
@@ -132,6 +142,7 @@
                 <input
                     class="form__input"
                     type="text"
+                    placeholder="Street 89"
                     maxlength="100"
                     id="pickup_street"
                     v-model="pickUpAddress.street"
@@ -141,8 +152,9 @@
             <div class="form__field">
                 <label class="form__label" for="pickup_zip">Zip code</label>
                 <input
-                    class="form__input"
+                    class="form__input form__input--number"
                     type="number"
+                    placeholder="76493"
                     min="1"
                     max="99999"
                     pattern="/[0-9]{5}/"
