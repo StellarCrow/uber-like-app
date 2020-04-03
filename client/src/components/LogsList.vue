@@ -24,7 +24,7 @@ export default {
     name: "LogsList",
     props: ["logs"],
     mounted() {
-        for(const log of this.logs) {
+        for (const log of this.logs) {
             log.logDate = log.time.split("T")[0];
             log.logHours = log.time.split("T")[1].split(".")[0];
         }

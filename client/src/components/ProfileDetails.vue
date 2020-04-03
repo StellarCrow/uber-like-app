@@ -2,11 +2,7 @@
     <section class="profile">
         <div class="profile__container">
             <div class="profile__avatar avatar">
-                <img
-                    alt="user-avatar"
-                    src="../assets/defaults/avatar.svg"
-                    class="avatar__img"
-                />
+                <img alt="user-avatar" :src="avatarSrc" class="avatar__img" />
             </div>
             <div class="profile__about">
                 <div class="profile__name">{{ this.name }}</div>
@@ -58,11 +54,12 @@ export default {
     name: "ProfileDetails",
     data() {
         return {
-            roles: roles
+            roles: roles,
+            publicPath: process.env.BASE_URL
         };
     },
     computed: {
-        ...mapGetters(["shippedLoads", "assignedLoads"]),
+        ...mapGetters(["shippedLoads", "assignedLoads", "avatar"]),
         ...mapState({
             role: state => state.Auth.role,
             driver: state => state.Driver.driver,
@@ -80,6 +77,13 @@ export default {
         },
         assignedTruck() {
             return this.driver.assignedTruck;
+        },
+        avatarSrc() {
+            if (this.avatar) {
+                return this.avatar;
+            } else {
+                return `${this.publicPath}defaults/avatar.svg`;
+            }
         }
     },
     methods: {

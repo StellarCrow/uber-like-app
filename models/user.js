@@ -45,9 +45,26 @@ class UserModel {
     }
   }
 
+  async findById(id) {
+    try {
+      const user = User.findById(id).select('-_id');
+      return user;
+    } catch (err) {
+      throw new ServerError(err.message);
+    }
+  }
+
   async updatePassword(id, password) {
     try {
       await User.findOneAndUpdate({_id: id}, {password: password}, {new: true});
+    } catch (err) {
+      throw new ServerError(err.message);
+    }
+  }
+
+  async updateAvatar(id, imagePath) {
+    try {
+      await User.findByIdAndUpdate(id, {avatar: imagePath});
     } catch (err) {
       throw new ServerError(err.message);
     }

@@ -2,6 +2,7 @@ const UserModel = require('../models/user');
 const CryptographyService = require('./CryptographyService');
 const jwt = require('jsonwebtoken');
 const secret = require('config').jwt_secret;
+const AWS = require('../utils/awsStorage');
 
 class UserService {
   async registrate(user) {
@@ -48,6 +49,17 @@ class UserService {
   async changePassword(id, password) {
     const hashedPassword = await CryptographyService.hashPassword(password);
     await UserModel.updatePassword(id, hashedPassword);
+  }
+
+  async updateAvatar(id, image) {
+    const user = await UserModel.findById(id);
+    if (!user) {
+      throw new Error('User not found!');
+    }
+    const imageData = await AWS.upload(image, id);
+    const imageLocation = imageData.Location;
+    await UserModel.updateAvatar(id, imageLocation);
+    return imageLocation;
   }
 }
 

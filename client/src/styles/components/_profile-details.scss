@@ -74,7 +74,9 @@
     text-align: center;
   
     &__img {
-      width: 30%;
+      width: 10em;
+      height: 10em;
+      object-fit: cover;
       margin: 0 auto;
       border-radius: 50%;
       background-color: #ffffff;

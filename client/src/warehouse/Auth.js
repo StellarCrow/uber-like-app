@@ -12,7 +12,8 @@ const state = {
 
 const getters = {
     isAuthenticated: state => !!state.token,
-    userId: state => state.user.role_id
+    userId: state => state.user.role_id,
+    avatar: state => state.user.avatar
 };
 
 const actions = {
@@ -71,6 +72,22 @@ const actions = {
         } catch (err) {
             return { error: err };
         }
+    },
+    async updateAvatar({ commit }, payload) {
+        try {
+            commit(mutation.UPDATE_AVATAR_REQUEST);
+            const id = payload.userId;
+            const image = payload.imageFile;
+            const res = await AuthenticationService.updateAvatar(id, image);
+            if (res.data.image) {
+                const image = res.data.image;
+                commit(mutation.UPDATE_AVATAR_SUCCESS, image);
+                return res.data;
+            }
+        } catch (err) {
+            commit(mutation.UPDATE_AVATAR_FAILURE);
+            return { error: err };
+        }
     }
 };
 
@@ -101,6 +118,16 @@ const mutations = {
     },
     update_password_success(state) {
         state.status = "success";
+    },
+    update_avatar_request(state) {
+        state.status = "loading";
+    },
+    update_avatar_success(state, avatar) {
+        state.user.avatar = avatar;
+        state.status = "success";
+    },
+    update_avatar_failure(state) {
+        state.status = "";
     }
 };
 

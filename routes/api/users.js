@@ -1,5 +1,7 @@
 const express = require('express');
 const router = new express.Router();
+const multer = require('multer');
+const upload = multer();
 const UserService = require('../../services/UserService');
 const validate = require('../middleware/requestValidator');
 const schemas = require('../../validation/JoiSchemas');
@@ -21,5 +23,19 @@ router.patch(
       }
     },
 );
+
+// update avatar
+router.post('/users/:id/avatar', upload.single('image'), async (req, res) => {
+  const id = req.params.id;
+  console.log('In server');
+
+  try {
+    const image = req.file;
+    const imagePath = await UserService.updateAvatar(id, image);
+    return res.status(200).json({image: imagePath});
+  } catch (err) {
+    res.status(500).json({error: err.message});
+  }
+});
 
 module.exports = router;
