@@ -24,7 +24,11 @@
             <button class="button" type="submit">Change Password</button>
         </form>
 
-        <form class="form" @submit.prevent="uploadImage()">
+        <form
+            class="form"
+            enctype="multipart/form-data"
+            @submit.prevent="uploadImage()"
+        >
             <div class="form__header">Change avatar</div>
             <div class="form__group form__group--uploadImage">
                 <div class="form__field">
@@ -34,7 +38,8 @@
                     <input
                         type="file"
                         id="file"
-                        accept=".jpg, .jpeg"
+                        accept=".jpg, .jpeg, .png"
+                        name="image"
                         required
                         @change="onFileChange($event.target.files)"
                     />
@@ -51,6 +56,9 @@
                 </div>
             </div>
             <button class="button" type="submit">Upload Image</button>
+            <div class="form__message" v-if="messageAvatar">
+                {{ messageAvatar }}
+            </div>
         </form>
         <form class="form" @submit="deleteAccount()" v-if="isShipper">
             <div class="form__header">Delete account</div>
@@ -79,6 +87,7 @@ export default {
             imageFile: null,
             maxSize: 5120,
             message: "",
+            messageAvatar: "",
             error: ""
         };
     },
@@ -93,7 +102,11 @@ export default {
         }
     },
     methods: {
-        ...mapActions(["updatePassword", "deleteShipperAccount"]),
+        ...mapActions([
+            "updatePassword",
+            "deleteShipperAccount",
+            "updateAvatar"
+        ]),
         async changePassword() {
             try {
                 const payload = {
@@ -142,6 +155,26 @@ export default {
                     this.errorText = "";
                     this.imageFile = imageFile;
                     this.image = imageURL;
+                }
+            }
+        },
+        async uploadImage() {
+            if (this.imageFile) {
+                const data = new FormData();
+                data.append("image", this.imageFile);
+                const payload = {
+                    imageFile: data,
+                    userId: this.id
+                };
+                try {
+                    const res = await this.updateAvatar(payload);
+                    if (res.image) {
+                        this.messageAvatar = "Avatar updated";
+                    } else {
+                        this.messageAvatar = res.error.response.data.error;
+                    }
+                } catch (err) {
+                    this.messageAvatar = err.message;
                 }
             }
         }

@@ -1,4 +1,5 @@
 import AuthenticationService from "../services/AuthenticationService";
+import UserService from "../services/UserService";
 import axios from "axios";
 import router from "../router/index";
 import mutation from "../utils/mutations";
@@ -12,7 +13,8 @@ const state = {
 
 const getters = {
     isAuthenticated: state => !!state.token,
-    userId: state => state.user.role_id
+    userId: state => state.user.role_id,
+    avatar: state => state.user.avatar
 };
 
 const actions = {
@@ -61,14 +63,27 @@ const actions = {
             const userId = payload.id;
             const password = payload.password;
             commit(mutation.UPDATE_PASSWORD_REQUEST);
-            const res = await AuthenticationService.updatePassword(
-                userId,
-                password
-            );
+            const res = await UserService.updatePassword(userId, password);
             const message = res.data.message;
             commit(mutation.UPDATE_PASSWORD_SUCCESS);
             return { message: message };
         } catch (err) {
+            return { error: err };
+        }
+    },
+    async updateAvatar({ commit }, payload) {
+        try {
+            commit(mutation.UPDATE_AVATAR_REQUEST);
+            const id = payload.userId;
+            const image = payload.imageFile;
+            const res = await UserService.updateAvatar(id, image);
+            if (res.data.image) {
+                const image = res.data.image;
+                commit(mutation.UPDATE_AVATAR_SUCCESS, image);
+                return res.data;
+            }
+        } catch (err) {
+            commit(mutation.UPDATE_AVATAR_FAILURE);
             return { error: err };
         }
     }
@@ -101,6 +116,16 @@ const mutations = {
     },
     update_password_success(state) {
         state.status = "success";
+    },
+    update_avatar_request(state) {
+        state.status = "loading";
+    },
+    update_avatar_success(state, avatar) {
+        state.user.avatar = avatar;
+        state.status = "success";
+    },
+    update_avatar_failure(state) {
+        state.status = "";
     }
 };
 
