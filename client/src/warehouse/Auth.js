@@ -1,4 +1,5 @@
 import AuthenticationService from "../services/AuthenticationService";
+import UserService from "../services/UserService";
 import axios from "axios";
 import router from "../router/index";
 import mutation from "../utils/mutations";
@@ -62,10 +63,7 @@ const actions = {
             const userId = payload.id;
             const password = payload.password;
             commit(mutation.UPDATE_PASSWORD_REQUEST);
-            const res = await AuthenticationService.updatePassword(
-                userId,
-                password
-            );
+            const res = await UserService.updatePassword(userId, password);
             const message = res.data.message;
             commit(mutation.UPDATE_PASSWORD_SUCCESS);
             return { message: message };
@@ -78,7 +76,7 @@ const actions = {
             commit(mutation.UPDATE_AVATAR_REQUEST);
             const id = payload.userId;
             const image = payload.imageFile;
-            const res = await AuthenticationService.updateAvatar(id, image);
+            const res = await UserService.updateAvatar(id, image);
             if (res.data.image) {
                 const image = res.data.image;
                 commit(mutation.UPDATE_AVATAR_SUCCESS, image);

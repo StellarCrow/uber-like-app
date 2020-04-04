@@ -38,7 +38,7 @@
                     <input
                         type="file"
                         id="file"
-                        accept=".jpg, .jpeg"
+                        accept=".jpg, .jpeg, .png"
                         name="image"
                         required
                         @change="onFileChange($event.target.files)"
@@ -160,7 +160,7 @@ export default {
         },
         async uploadImage() {
             if (this.imageFile) {
-                let data = new FormData();
+                const data = new FormData();
                 data.append("image", this.imageFile);
                 const payload = {
                     imageFile: data,

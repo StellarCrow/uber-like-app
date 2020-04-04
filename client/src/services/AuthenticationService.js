@@ -6,11 +6,5 @@ export default {
     },
     login(user) {
         return Api().post("/api/users/login", user);
-    },
-    updatePassword(id, password) {
-        return Api().patch(`/api/users/${id}`, { password: password });
-    },
-    updateAvatar(id, image) {
-        return Api().post(`/api/users/${id}/avatar`, image);
     }
 };

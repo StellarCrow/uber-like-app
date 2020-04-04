@@ -27,7 +27,6 @@ router.patch(
 // update avatar
 router.post('/users/:id/avatar', upload.single('image'), async (req, res) => {
   const id = req.params.id;
-  console.log('In server');
 
   try {
     const image = req.file;

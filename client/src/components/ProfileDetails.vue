@@ -48,7 +48,7 @@
 
 <script>
 import { mapState, mapActions, mapGetters } from "vuex";
-import { role as roles } from "../utils/constants";
+import { role as roles, defaultAvatar } from "../utils/constants";
 
 export default {
     name: "ProfileDetails",
@@ -82,7 +82,7 @@ export default {
             if (this.avatar) {
                 return this.avatar;
             } else {
-                return `${this.publicPath}defaults/avatar.svg`;
+                return `${this.publicPath}${defaultAvatar}`;
             }
         }
     },
