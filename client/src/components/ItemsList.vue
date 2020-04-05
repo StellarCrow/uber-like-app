@@ -61,10 +61,13 @@ export default {
             return this.role === "shipper";
         }
     },
-    mounted() {
+    async mounted() {
         if (this.isDriver) {
             this.title = "Trucks";
-        } else this.title = "Loads";
+        } else {
+            this.title = "Loads";
+            await this.sendRequestForLoads();
+        }
     },
     methods: {
         ...mapActions(["getLoadsList"]),
