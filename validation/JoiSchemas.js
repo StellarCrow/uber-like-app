@@ -84,8 +84,8 @@ const schemas = {
     state: Joi.any().valid(...loadStateEnum).required(),
   }),
   loadsQuery: Joi.object({
-    filter: Joi.any().valid(...loadStatusEnum),
-    page: Joi.number(),
+    filter: Joi.any().valid(...loadStatusEnum, ''),
+    page: Joi.number().allow('').optional(),
   }),
 };
 

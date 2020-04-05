@@ -53,15 +53,17 @@ export default {
             },
             async set(value) {
                 this.status = value;
-                try {
-                    const payload = {
-                        shipperId: this.shipperId,
-                        status: this.status
-                    };
-                    await this.getLoadsList(payload);
-                } catch (err) {
-                    console.log(err);
-                }
+                this.$router.push({ query: { filter: this.status } });
+                // try {
+                //     const payload = {
+                //         shipperId: this.shipperId,
+                //         status: this.status,
+                //         page: this.page
+                //     };
+                //     await this.getLoadsList(payload);
+                // } catch (err) {
+                //     console.log(err);
+                // }
             }
         }
     },

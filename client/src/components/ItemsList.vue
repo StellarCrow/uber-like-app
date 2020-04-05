@@ -14,33 +14,45 @@
                 <TruckItem class="items__list-item" :truck="item" />
             </li>
         </ul>
-        <ul class="items__list" v-else>
-            <li v-for="item in this.loads" :key="item._id" class="items__list">
-                <LoadItem class="items__list-item" :load="item" />
-            </li>
-        </ul>
+        <Pagination :pager="pager" v-else>
+            <ul class="items__list">
+                <li
+                    v-for="item in this.loads"
+                    :key="item._id"
+                    class="items__list"
+                >
+                    <LoadItem class="items__list-item" :load="item" />
+                </li>
+            </ul>
+        </Pagination>
     </section>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import TruckItem from "../components/TruckItem";
 import LoadItem from "../components/LoadItem";
 import FilterLoads from "../components/FilterLoads";
+import Pagination from "../components/Pagination";
 
 export default {
     name: "ItemsList",
     data() {
         return {
-            title: ""
+            title: "",
+            filter: "",
+            page: ""
         };
     },
-    components: { TruckItem, LoadItem, FilterLoads },
+    components: { TruckItem, LoadItem, FilterLoads, Pagination },
     computed: {
         ...mapState({
             trucks: state => state.Driver.trucks,
             loads: state => state.Shipper.loads,
-            role: state => state.Auth.role
+            role: state => state.Auth.role,
+            shipperId: state => state.Auth.user.role_id,
+            pager: state => state.Shipper.pagination,
+            filterStatus: state => state.Shipper.filter
         }),
         isDriver() {
             return this.role === "driver";
@@ -53,6 +65,30 @@ export default {
         if (this.isDriver) {
             this.title = "Trucks";
         } else this.title = "Loads";
+    },
+    methods: {
+        ...mapActions(["getLoadsList"]),
+        async sendRequestForLoads() {
+            try {
+                const payload = {
+                    shipperId: this.shipperId,
+                    status: this.filter,
+                    page: this.page
+                };
+                await this.getLoadsList(payload);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+    },
+    watch: {
+        "$route.query": {
+            async handler(query) {
+                this.filter = query.filter || "";
+                this.page = query.page || 1;
+                this.sendRequestForLoads();
+            }
+        }
     }
 };
 </script>

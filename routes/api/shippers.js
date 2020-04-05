@@ -173,7 +173,9 @@ router.get(
             statusFilter,
             page,
         );
-        return res.status(200).json({loads, pagination: paginateInfo});
+        return res
+            .status(200)
+            .json({meta: {pagination: paginateInfo, filter: statusFilter}, loads});
       } catch (err) {
         return res.status(500).json({error: err.message});
       }

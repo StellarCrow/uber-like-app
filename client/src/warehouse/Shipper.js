@@ -6,6 +6,8 @@ import mutation from "../utils/mutations";
 const state = {
     shipper: {},
     loads: [],
+    pagination: {},
+    filter: "",
     status: ""
 };
 
@@ -80,14 +82,17 @@ const actions = {
             return { error: err };
         }
     },
-    async getLoadsList({commit}, payload) {
+    async getLoadsList({ commit }, payload) {
         try {
             commit(mutation.GET_LOADS_REQUEST);
             const shipperId = payload.shipperId;
             const status = payload.status;
-            const res = await ShipperService.getLoads(shipperId, status);
+            const page = payload.page;
+            const res = await ShipperService.getLoads(shipperId, status, page);
             const loads = res.data.loads;
-            commit(mutation.GET_LOADS_SUCCESS, loads);
+            const pagination = res.data.meta.pagination;
+            const filter = res.data.meta.filter;
+            commit(mutation.GET_LOADS_SUCCESS, { loads, pagination, filter });
             return res;
         } catch (err) {
             commit(mutation.GET_LOADS_FAILURE);
@@ -176,8 +181,10 @@ const mutations = {
     get_loads_request(state) {
         state.status = "loading";
     },
-    get_loads_success(state, loads) {
+    get_loads_success(state, { loads, pagination, filter }) {
         state.loads = loads;
+        state.pagination = pagination;
+        state.filter = filter;
         state.status = "success";
     },
     get_loads_failure(state) {
@@ -214,6 +221,8 @@ const mutations = {
         state.shipper = {};
         state.loads = [];
         state.status = "";
+        state.pagination = {};
+        state.filter = "";
     }
 };
 
