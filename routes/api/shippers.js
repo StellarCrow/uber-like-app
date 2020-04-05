@@ -165,10 +165,15 @@ router.get(
     async (req, res) => {
       const shipperId = req.params.id;
       const statusFilter = req.query.filter || '';
+      const page = parseInt(req.query.page) || 1;
 
       try {
-        const loads = await ShipperService.getLoadsList(shipperId, statusFilter);
-        return res.status(200).json({loads: loads});
+        const {loads, paginateInfo} = await ShipperService.getLoadsList(
+            shipperId,
+            statusFilter,
+            page,
+        );
+        return res.status(200).json({loads, pagination: paginateInfo});
       } catch (err) {
         return res.status(500).json({error: err.message});
       }

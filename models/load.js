@@ -150,6 +150,15 @@ class LoadModel {
       throw new ServerError(err.message);
     }
   }
+
+  async getLoadsCount(query) {
+    try {
+      const count = Load.countDocuments(query);
+      return count;
+    } catch (err) {
+      throw new ServerError(err.message);
+    }
+  }
 }
 
 module.exports = new LoadModel();

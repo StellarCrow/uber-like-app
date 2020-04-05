@@ -85,6 +85,7 @@ const schemas = {
   }),
   loadsQuery: Joi.object({
     filter: Joi.any().valid(...loadStatusEnum),
+    page: Joi.number(),
   }),
 };
 

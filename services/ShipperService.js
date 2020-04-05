@@ -1,6 +1,12 @@
 const ShipperModel = require('../models/shipper');
 const LoadModel = require('../models/load');
-const {logMessage, loadStatus, loadState} = require('../utils/loadConstants');
+const paginate = require('jw-paginate');
+const {
+  logMessage,
+  loadStatus,
+  loadState,
+  loadsPerPage,
+} = require('../utils/loadConstants');
 
 class ShipperService {
   async getProfile(shipperId) {
@@ -75,9 +81,24 @@ class ShipperService {
     return logs;
   }
 
-  async getLoadsList(shipperId, statusFilter) {
-    const loads = await ShipperModel.getLoadsList(shipperId, statusFilter);
-    return loads;
+  async getLoadsList(shipperId, statusFilter, page) {
+    const query = {created_by: shipperId, status: {$regex: statusFilter}};
+    const loadsCount = await LoadModel.getLoadsCount(query);
+    const paginateInfo = this.paginateLoads(loadsCount, page);
+    const loads = await ShipperModel.getLoadsList(shipperId, statusFilter, paginateInfo);
+    return {loads, paginateInfo};
+  }
+
+  paginateLoads(itemsCount, currentPage) {
+    const pageSize = loadsPerPage;
+    const maxPages = 5;
+    const paginationInfo = paginate(
+        itemsCount,
+        currentPage,
+        pageSize,
+        maxPages,
+    );
+    return paginationInfo;
   }
 }
 
