@@ -75,8 +75,8 @@ class ShipperService {
     return logs;
   }
 
-  async getLoadsList(shipperId) {
-    const loads = await ShipperModel.getLoadsList(shipperId);
+  async getLoadsList(shipperId, statusFilter) {
+    const loads = await ShipperModel.getLoadsList(shipperId, statusFilter);
     return loads;
   }
 }

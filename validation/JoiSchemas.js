@@ -1,6 +1,6 @@
 const Joi = require('@hapi/joi');
 Joi.objectId = require('joi-objectid')(Joi);
-const {loadStateEnum}= require('../utils/loadConstants');
+const {loadStateEnum, loadStatusEnum}= require('../utils/loadConstants');
 const {truckTypesEnum}= require('../utils/truckConstants');
 
 const schemas = {
@@ -25,10 +25,12 @@ const schemas = {
   }),
   routeId: Joi.object({
     id: Joi.objectId().required(),
+    query: Joi.string(),
   }),
   routeIds: Joi.object({
     id: Joi.objectId().required(),
     sid: Joi.objectId().required(),
+    query: Joi.string(),
   }),
   createTruck: Joi.object({
     name: Joi.string().required(),
@@ -80,6 +82,9 @@ const schemas = {
   }),
   changeLoadStatus: Joi.object({
     state: Joi.any().valid(...loadStateEnum).required(),
+  }),
+  loadsQuery: Joi.object({
+    filter: Joi.any().valid(...loadStatusEnum),
   }),
 };
 

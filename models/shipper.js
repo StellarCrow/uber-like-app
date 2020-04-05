@@ -15,9 +15,13 @@ class ShipperModel {
     }
   }
 
-  async getLoadsList(id) {
+  async getLoadsList(id, status) {
     try {
-      const {loads} = await Shipper.findById(id).populate('loads');
+      const options = {
+        created_by: id,
+        status: {$regex: status},
+      };
+      const loads = await Load.find(options);
       return loads;
     } catch (err) {
       throw new ServerError(err.message);

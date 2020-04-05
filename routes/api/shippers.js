@@ -158,13 +158,16 @@ router.get(
 
 // get list of loads
 router.get(
-    '/shippers/:id/loads/',
+    '/shippers/:id/loads/(:query)?',
     validate(schemas.routeId, 'params'),
+    validate(schemas.loadsQuery, 'query'),
     checkPermission(role.SHIPPER),
     async (req, res) => {
       const shipperId = req.params.id;
+      const statusFilter = req.query.filter || '';
+
       try {
-        const loads = await ShipperService.getLoadsList(shipperId);
+        const loads = await ShipperService.getLoadsList(shipperId, statusFilter);
         return res.status(200).json({loads: loads});
       } catch (err) {
         return res.status(500).json({error: err.message});
