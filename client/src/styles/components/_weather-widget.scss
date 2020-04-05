@@ -1,0 +1,20 @@
+.weather {
+    &__body {
+        text-align: center;
+    }
+
+    &__city {
+        text-transform: uppercase;
+        font-weight: $bold;
+        font-family: $ff-headers;
+        letter-spacing: 0.1em;
+        font-size: 0.6em;
+        color: $text-color--dark;
+    }
+
+    &__temp {
+        font-size: 0.8em;
+        color: $secondary-color;
+        margin-left: 5%;
+    }
+}

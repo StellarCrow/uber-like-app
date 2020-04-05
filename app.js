@@ -19,6 +19,7 @@ const registerRoute = require('./routes/api/registration');
 const driversRoute = require('./routes/api/drivers');
 const shippersRoute = require('./routes/api/shippers');
 const usersRoute = require('./routes/api/users');
+const weatherRoute = require('./routes/api/weather');
 
 app.use(logger('dev'));
 app.use(cors());
@@ -26,6 +27,7 @@ app.use(express.json());
 
 app.use('/api', registerRoute);
 
+app.use('/api', weatherRoute);
 app.use(checkAuthorization);
 app.use('/api', usersRoute);
 app.use('/api', driversRoute);
