@@ -80,6 +80,20 @@ const actions = {
             return { error: err };
         }
     },
+    async getLoadsList({commit}, payload) {
+        try {
+            commit(mutation.GET_LOADS_REQUEST);
+            const shipperId = payload.shipperId;
+            const status = payload.status;
+            const res = await ShipperService.getLoads(shipperId, status);
+            const loads = res.data.loads;
+            commit(mutation.GET_LOADS_SUCCESS, loads);
+            return res;
+        } catch (err) {
+            commit(mutation.GET_LOADS_FAILURE);
+            return { error: err };
+        }
+    },
     async postLoad({ commit }, payload) {
         try {
             commit(mutation.POST_LOAD_REQUEST);
@@ -157,6 +171,16 @@ const mutations = {
         state.status = "success";
     },
     delete_load_failure(state) {
+        state.status = "";
+    },
+    get_loads_request(state) {
+        state.status = "loading";
+    },
+    get_loads_success(state, loads) {
+        state.loads = loads;
+        state.status = "success";
+    },
+    get_loads_failure(state) {
         state.status = "";
     },
     post_load_request(state) {

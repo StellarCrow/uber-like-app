@@ -8,6 +8,7 @@
                 </button>
             </router-link>
         </div>
+        <FilterLoads class="items__filter" v-if="isShipper" />
         <ul class="items__list" v-if="isDriver">
             <li v-for="item in this.trucks" :key="item._id" class="items__list">
                 <TruckItem class="items__list-item" :truck="item" />
@@ -25,6 +26,7 @@
 import { mapState } from "vuex";
 import TruckItem from "../components/TruckItem";
 import LoadItem from "../components/LoadItem";
+import FilterLoads from "../components/FilterLoads";
 
 export default {
     name: "ItemsList",
@@ -33,7 +35,7 @@ export default {
             title: ""
         };
     },
-    components: { TruckItem, LoadItem },
+    components: { TruckItem, LoadItem, FilterLoads },
     computed: {
         ...mapState({
             trucks: state => state.Driver.trucks,
@@ -42,6 +44,9 @@ export default {
         }),
         isDriver() {
             return this.role === "driver";
+        },
+        isShipper() {
+            return this.role === "shipper";
         }
     },
     mounted() {
