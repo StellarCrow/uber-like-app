@@ -12,14 +12,14 @@ class Weather {
         uri: weatherUrl,
       };
       const response = await request(options);
-      const weather = JSON.parse(response);
-      const icon = weather.weather[0].icon;
-      const description = weather.weather[0].description;
+      const parsedResponse = JSON.parse(response);
+      const icon = parsedResponse.weather[0].icon;
+      const description = parsedResponse.weather[0].description;
       const iconurl = `http://openweathermap.org/img/w/${icon}.png`;
       const data = {
-        main: weather.weather.main,
-        temp: weather.main.temp,
-        city: weather.name,
+        main: parsedResponse.weather.main,
+        temp: parsedResponse.main.temp,
+        city: parsedResponse.name,
         icon: iconurl,
         description: description,
       };
