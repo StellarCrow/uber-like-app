@@ -39,8 +39,12 @@
         padding: 5% 3%;
         height: 100%;
         display: flex;
-        justify-content: space-evenly;
-        align-items: center;
+        justify-content: space-between;
+        align-items: flex-start;
+
+        & > div {
+            flex: 1 0 50%;
+        }
     }
 }
 

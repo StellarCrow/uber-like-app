@@ -6,7 +6,7 @@
                     <ProfileDetails />
                 </div>
                 <div class="profile__optional">
-                    <div class="feature">
+                    <div class="feature profile__settings">
                         <div class="feature__name">Settings</div>
                         <div class="feature__value">
                             <router-link class="profile__link" to="/settings"
@@ -17,7 +17,9 @@
                             /></router-link>
                         </div>
                     </div>
-                    <div class="profile__weather"></div>
+                    <div class="profile__weather">
+                        <WeatherWidget />
+                    </div>
                 </div>
             </div>
 
@@ -39,11 +41,12 @@
 import ProfileDetails from "../components/ProfileDetails";
 import ItemsList from "../components/ItemsList";
 import LoadItem from "../components/LoadItem";
+import WeatherWidget from "../components/WeatherWidget";
 import { mapActions, mapState, mapGetters } from "vuex";
 
 export default {
     name: "Profile",
-    components: { ProfileDetails, ItemsList, LoadItem },
+    components: { ProfileDetails, ItemsList, LoadItem, WeatherWidget },
     data() {
         return {};
     },
