@@ -15,9 +15,16 @@ class ShipperModel {
     }
   }
 
-  async getLoadsList(id) {
+  async getLoadsList(id, status, pager) {
+    const skip =
+    pager.currentPage === 0 ? 0 : pager.pageSize * (pager.currentPage - 1);
+    const limit = pager.pageSize;
     try {
-      const {loads} = await Shipper.findById(id).populate('loads');
+      const options = {
+        created_by: id,
+        status: {$regex: status},
+      };
+      const loads = await Load.find(options).skip(skip).limit(limit);
       return loads;
     } catch (err) {
       throw new ServerError(err.message);

@@ -18,5 +18,10 @@ export default {
     },
     deleteAccount(id) {
         return Api().delete(`/api/shippers/${id}`);
+    },
+    getLoads(id, status, page) {
+        return Api().get(
+            `/api/shippers/${id}/loads/?filter=${status}&page=${page}`
+        );
     }
 };

@@ -1,3 +1,5 @@
+const loadsPerPage = 10;
+
 const loadStatus = {
   NEW: 'NEW',
   POSTED: 'POSTED',
@@ -48,4 +50,5 @@ module.exports = {
   loadStatusEnum,
   loadStateEnum,
   logMessage,
+  loadsPerPage,
 };

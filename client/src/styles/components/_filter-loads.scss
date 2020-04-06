@@ -1,0 +1,42 @@
+.filter {
+    text-align: right;
+    &__title {
+        @include title;
+        font-size: 1.5em;
+    }
+
+    &__list {
+        @include clean-list;
+        list-style-type: none;
+        display: flex;
+        flex-flow: row wrap;
+        text-align: right;
+        justify-content: flex-end;
+    }
+
+    &__radio {
+        display: none;
+    }
+
+    &__radio:checked + &__label,
+    &__label:hover
+    {
+        color: $primary-color;
+        @include transition;
+    }
+
+    &__radio:checked + &__label {
+        border-bottom: 1px solid $primary-color;
+    }
+
+    &__label {
+        cursor: pointer;
+        color: $text-color--dark;
+        font-weight: $light;
+    }
+
+    &__item {
+        margin-left: 5%;
+        margin-bottom: 5%;
+    }
+}
