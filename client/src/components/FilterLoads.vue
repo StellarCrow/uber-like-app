@@ -7,7 +7,7 @@
                     type="radio"
                     id="all"
                     v-model="loadStatus"
-                    value=""
+                    value="all"
                     class="filter__radio"
                     checked
                 />
@@ -45,25 +45,15 @@ export default {
     },
     computed: {
         ...mapState({
-            shipperId: state => state.Auth.user.role_id
+            shipperId: state => state.Auth.user.role_id,
         }),
         loadStatus: {
             get() {
-                return this.status;
+                return (this.status === "") ? "all" : this.status;
             },
             async set(value) {
                 this.status = value;
-                this.$router.push({ query: { filter: this.status } });
-                // try {
-                //     const payload = {
-                //         shipperId: this.shipperId,
-                //         status: this.status,
-                //         page: this.page
-                //     };
-                //     await this.getLoadsList(payload);
-                // } catch (err) {
-                //     console.log(err);
-                // }
+                this.$router.push({ query: { filter: this.status } }); 
             }
         }
     },

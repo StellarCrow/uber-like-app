@@ -66,16 +66,18 @@ export default {
             this.title = "Trucks";
         } else {
             this.title = "Loads";
+            this.page = parseInt(this.$route.query.page) || 1;
             await this.sendRequestForLoads();
         }
     },
     methods: {
         ...mapActions(["getLoadsList"]),
         async sendRequestForLoads() {
+            const status = (this.filter === "all") ? "" : this.filter;
             try {
                 const payload = {
                     shipperId: this.shipperId,
-                    status: this.filter,
+                    status: status,
                     page: this.page
                 };
                 await this.getLoadsList(payload);
@@ -87,7 +89,7 @@ export default {
     watch: {
         "$route.query": {
             async handler(query) {
-                this.filter = query.filter || "";
+                this.filter = query.filter || this.filter;
                 this.page = query.page || 1;
                 this.sendRequestForLoads();
             }

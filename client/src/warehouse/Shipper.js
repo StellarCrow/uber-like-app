@@ -13,12 +13,10 @@ const state = {
 
 const getters = {
     shippedLoads(state) {
-        const posted = state.loads.filter(load => load.status === "SHIPPED");
-        return posted.length;
+        return state.shipper.shippedCount;
     },
     assignedLoads(state) {
-        const assigned = state.loads.filter(load => load.status === "ASSIGNED");
-        return assigned.length;
+        return state.shipper.assignedCount;
     }
 };
 
@@ -28,11 +26,15 @@ const actions = {
             commit(mutation.GET_SHIPPER_PROFILE_REQUEST);
             const res = await ShipperService.getFullProfile(id);
             const user = res.data.shipper;
+            const shipped = user.loads.filter(load => load.status === "SHIPPED");
+            const assigned = user.loads.filter(load => load.status === "ASSIGNED");
             const shipper = {
                 name: user.user.name,
-                loadsCount: user.loads.length
+                loadsCount: user.loads.length,
+                shippedCount: shipped.length,
+                assignedCount: assigned.length,
             };
-            commit(mutation.GET_SHIPPER__PROFILE_SUCCESS, { user, shipper });
+            commit(mutation.GET_SHIPPER__PROFILE_SUCCESS, shipper);
             return { user: user };
         } catch (err) {
             commit(mutation.GET_SHIPPER__PROFILE_FAILURE);
@@ -132,9 +134,8 @@ const mutations = {
     get_shipper_profile_request(state) {
         state.status = "loading";
     },
-    get_shipper_profile_success(state, { user, shipper }) {
+    get_shipper_profile_success(state, shipper) {
         state.status = "success";
-        state.loads = user.loads;
         state.shipper = shipper;
     },
     get_shipper_profile_failure(state) {
@@ -201,6 +202,7 @@ const mutations = {
             "state",
             loadConstants.loadState.EN_ROUTE_TO_PICK_UP
         );
+        state.shipper.assignedCount++;
         state.status = "success";
     },
     post_load_failure(state) {
