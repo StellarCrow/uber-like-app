@@ -27,13 +27,13 @@
                 <ItemsList />
             </div>
         </div>
-        <div class="profile__row">
-            <div class="profile__load" v-if="load">
+        <div class="profile__row" v-if="load">
+            <div class="profile__load" >
                 <div class="profile__title">Assigned Load</div>
                 <LoadItem :load="this.load" />
             </div>
             <div class="profile__chat">
-                <Messenger />
+                <Messenger :room="this.load._id" />
             </div>
         </div>
     </div>
