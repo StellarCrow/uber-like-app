@@ -47,7 +47,7 @@ export default {
                 room: this.room,
                 userId: this.user
             };
-            this.socket.emit('join', params);
+            this.socket.emit("join", params);
         });
         this.socket.on("newMessage", data => {
             this.history.push(data);

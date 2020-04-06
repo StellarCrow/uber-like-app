@@ -50,6 +50,9 @@ const mutation = {
     POST_LOAD_REQUEST: "post_load_request",
     POST_LOAD_SUCCESS: "post_load_success",
     POST_LOAD_FAILURE: "post_load_failure",
+    GET_ASSIGNED_LOADS_REQUEST: "get_assigned_loads_request",
+    GET_ASSIGNED_LOADS_SUCCESS: "get_assigned_loads_success",
+    GET_ASSIGNED_LOADS_FAILURE: "get_assigned_loads_failure",
     DELETE_ACCOUNT_REQUEST: "delete_account_request",
     DELETE_ACCOUNT_SUCCESS: "delete_account_success",
     DELETE_ACCOUNT_FAILURE: "delete_account_failure"

@@ -28,12 +28,17 @@
             </div>
         </div>
         <div class="profile__row" v-if="load">
-            <div class="profile__load" >
+            <div class="profile__load">
                 <div class="profile__title">Assigned Load</div>
                 <LoadItem :load="this.load" />
             </div>
             <div class="profile__chat">
                 <Messenger :room="this.load._id" />
+            </div>
+        </div>
+        <div class="profile__row" v-if="isShipper">
+            <div class="profile__contacts">
+                <ContactList />
             </div>
         </div>
     </div>
@@ -45,6 +50,7 @@ import ItemsList from "../components/ItemsList";
 import LoadItem from "../components/LoadItem";
 import WeatherWidget from "../components/WeatherWidget";
 import Messenger from "../components/chat/Messenger";
+import ContactList from "../components/chat/ContactList";
 import { mapActions, mapState, mapGetters } from "vuex";
 
 export default {
@@ -54,7 +60,8 @@ export default {
         ItemsList,
         LoadItem,
         WeatherWidget,
-        Messenger
+        Messenger,
+        ContactList
     },
     data() {
         return {};
@@ -64,7 +71,10 @@ export default {
             role: state => state.Auth.role,
             load: state => state.Driver.assignedLoad
         }),
-        ...mapGetters(["userId"])
+        ...mapGetters(["userId"]),
+        isShipper() {
+            return this.role === "shipper";
+        }
     },
     async mounted() {
         try {

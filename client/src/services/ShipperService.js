@@ -23,5 +23,8 @@ export default {
         return Api().get(
             `/api/shippers/${id}/loads/?filter=${status}&page=${page}`
         );
+    },
+    getAssignedLoads(id) {
+        return Api().get(`/api/shippers/${id}/loads/assigned`);
     }
 };

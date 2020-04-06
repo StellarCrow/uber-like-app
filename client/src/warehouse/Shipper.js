@@ -8,7 +8,8 @@ const state = {
     loads: [],
     pagination: {},
     filter: "",
-    status: ""
+    status: "",
+    assignedLoadsList: []
 };
 
 const getters = {
@@ -131,6 +132,18 @@ const actions = {
             commit(mutation.DELETE_ACCOUNT_FAILURE);
             return { error: err };
         }
+    },
+    async getAssignedLoads({ commit }, id) {
+        try {
+            commit(mutation.GET_ASSIGNED_LOADS_REQUEST);
+            const res = await ShipperService.getAssignedLoads(id);
+            const loads = res.data.loads;
+            commit(mutation.GET_ASSIGNED_LOADS_SUCCESS, loads);
+            return res;
+        } catch (err) {
+            commit(mutation.GET_ASSIGNED_LOADS_FAILURE);
+            return { error: err };
+        }
     }
 };
 
@@ -212,6 +225,16 @@ const mutations = {
     post_load_failure(state) {
         state.status = "";
     },
+    get_assigned_loads_request(state) {
+        state.status = "loading";
+    },
+    get_assigned_loads_success(state, loads) {
+        state.assignedLoadsList = loads;
+        state.status = "success";
+    },
+    get_assigned_loads_failure(state) {
+        state.status = "";
+    },
     delete_account_request(state) {
         state.status = "loading";
     },
@@ -229,6 +252,7 @@ const mutations = {
         state.status = "";
         state.pagination = {};
         state.filter = "";
+        state.assignedLoadsList = [];
     }
 };
 
