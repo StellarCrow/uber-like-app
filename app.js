@@ -37,16 +37,16 @@ app.use('/api', driversRoute);
 app.use('/api', shippersRoute);
 
 io.on('connection', (socket) => {
-  console.log('a user is connected');
 
   socket.on('join', (params) => {
+    console.log(`${params.name} joined chat`);
     const room = params.room;
     const userId = params.userId;
     socket.join(room);
     users.removeUser(socket.id);
     users.addUser(socket.id, userId, room);
 
-    socket.emit('newMessage', 'user joined chat');
+    io.to(room).emit('newMessage', `${params.name} joined chat`);
   });
 
   socket.on('message', (data) => {

@@ -38,7 +38,10 @@
         </div>
         <div class="profile__row" v-if="isShipper">
             <div class="profile__contacts">
-                <ContactList />
+                <ContactList @selectedDialog="getRoom" />
+            </div>
+            <div class="profile__chat">
+                <Messenger :room="this.room" v-if="room" />
             </div>
         </div>
     </div>
@@ -64,7 +67,9 @@ export default {
         ContactList
     },
     data() {
-        return {};
+        return {
+            room: ""
+        };
     },
     computed: {
         ...mapState({
@@ -95,7 +100,10 @@ export default {
             "getDriverProfile",
             "getShipperProfile",
             "getAssignedLoad"
-        ])
+        ]),
+        getRoom(room) {
+            this.room = room;
+        }
     }
 };
 </script>

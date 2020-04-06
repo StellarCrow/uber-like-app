@@ -37,28 +37,44 @@ export default {
     },
     computed: {
         ...mapState({
-            user: state => state.Auth.user.role_id
+            userId: state => state.Auth.user.role_id,
+            username: state => state.Auth.user.name
         })
     },
     mounted() {
-        this.socket.on("connect", () => {
-            console.log("connected");
-            const params = {
-                room: this.room,
-                userId: this.user
-            };
-            this.socket.emit("join", params);
-        });
-        this.socket.on("newMessage", data => {
-            this.history.push(data);
-        });
+        this.connectToRoom();
     },
     methods: {
         sendMessage() {
             this.socket.emit("message", { message: this.message });
             this.message = "";
+        },
+        connectToRoom() {
+            this.history = [];
+            this.socket.on("connect", () => {
+                console.log("connected");
+                const params = {
+                    room: this.room,
+                    userId: this.userId,
+                    name: this.username
+                };
+                this.socket.emit("join", params);
+            });
+            this.socket.on("newMessage", data => {
+                this.history.push(data);
+            });
         }
-    }
+    },
+    // watch: {
+    //     room: {
+    //         immediate: true,
+    //         handler() {
+    //             console.log("In watcher");
+                
+    //             this.connectToRoom();
+    //         }
+    //     }
+    // }
 };
 </script>
 
