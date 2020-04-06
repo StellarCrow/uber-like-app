@@ -1,15 +1,21 @@
 <template>
     <ul class="contact-list">
         <li
-            class="contact"
+            class="contact-list__item contact"
             v-for="load in this.assignedLoads"
             :key="load._id"
             @click="selectDialog(load._id)"
         >
-            <div class="contact__name">
-                {{ load.assigned_to.user.name }}
+            <div class="contact__avatar">
+                <img :src="load.assigned_to.user.avatar" class="contact__image" alt="">
             </div>
-            <div class="contact__email">{{ load.assigned_to.user.email }}</div>
+            <div class="contact__details">
+                <div class="contact__name">
+                    {{ load.assigned_to.user.name }}
+                </div>
+                <div class="contact__email">{{ load.assigned_to.user.email }}</div>
+            </div>
+            
             <div class="contact__load">
                 {{ load.name }}
             </div>
@@ -47,4 +53,6 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+@import "../../styles/components/_contact-list.scss";
+</style>

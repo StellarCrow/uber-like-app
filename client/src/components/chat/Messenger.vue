@@ -7,14 +7,14 @@
             </div>
         </div>
         <div class="messenger__footer">
-            <form class="form messenger__form" @submit.prevent="sendMessage">
+            <form class="messenger__form" @submit.prevent="sendMessage">
                 <input
-                    class="form__input"
+                    class="messenger__input"
                     type="text"
                     v-model="message"
                     placeholder="Write a message..."
                 />
-                <button type="submit" class="button form__button">Send</button>
+                <button type="submit" class="button messenger__button">Send</button>
             </form>
         </div>
     </div>
@@ -78,4 +78,6 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+@import '../../styles/components/_messenger.scss';
+</style>

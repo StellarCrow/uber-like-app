@@ -3,7 +3,7 @@
         <div class="weather__title feature__name">Weather</div>
         <div class="weather__body feature__value">
             <div class="weather__icon">
-                <img class="weather__img" :src="icon" :alt="description" />
+                <img class="weather__img" :title="description" :src="icon" :alt="description" />
             </div>
             <span class="weather__city">{{ city }}</span>
             <span class="weather__temp">{{ temperature }} {{ degree }}</span>
