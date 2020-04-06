@@ -26,13 +26,17 @@ const actions = {
             commit(mutation.GET_SHIPPER_PROFILE_REQUEST);
             const res = await ShipperService.getFullProfile(id);
             const user = res.data.shipper;
-            const shipped = user.loads.filter(load => load.status === "SHIPPED");
-            const assigned = user.loads.filter(load => load.status === "ASSIGNED");
+            const shipped = user.loads.filter(
+                load => load.status === "SHIPPED"
+            );
+            const assigned = user.loads.filter(
+                load => load.status === "ASSIGNED"
+            );
             const shipper = {
                 name: user.user.name,
                 loadsCount: user.loads.length,
                 shippedCount: shipped.length,
-                assignedCount: assigned.length,
+                assignedCount: assigned.length
             };
             commit(mutation.GET_SHIPPER__PROFILE_SUCCESS, shipper);
             return { user: user };

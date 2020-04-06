@@ -32,7 +32,9 @@
                 <div class="profile__title">Assigned Load</div>
                 <LoadItem :load="this.load" />
             </div>
-            <div class="profile__chat"></div>
+            <div class="profile__chat">
+                <Messenger />
+            </div>
         </div>
     </div>
 </template>
@@ -42,11 +44,18 @@ import ProfileDetails from "../components/ProfileDetails";
 import ItemsList from "../components/ItemsList";
 import LoadItem from "../components/LoadItem";
 import WeatherWidget from "../components/WeatherWidget";
+import Messenger from "../components/chat/Messenger";
 import { mapActions, mapState, mapGetters } from "vuex";
 
 export default {
     name: "Profile",
-    components: { ProfileDetails, ItemsList, LoadItem, WeatherWidget },
+    components: {
+        ProfileDetails,
+        ItemsList,
+        LoadItem,
+        WeatherWidget,
+        Messenger
+    },
     data() {
         return {};
     },

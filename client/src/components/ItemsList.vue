@@ -73,7 +73,7 @@ export default {
     methods: {
         ...mapActions(["getLoadsList"]),
         async sendRequestForLoads() {
-            const status = (this.filter === "all") ? "" : this.filter;
+            const status = this.filter === "all" ? "" : this.filter;
             try {
                 const payload = {
                     shipperId: this.shipperId,
