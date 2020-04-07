@@ -4,11 +4,11 @@
             class="contact-list__item contact"
             v-for="load in this.assignedLoads"
             :key="load._id"
-            @click="selectDialog(load._id)"
+            @click="selectDialog(load._id, load.assigned_to.user.name)"
         >
             <div class="contact__avatar">
                 <img
-                    :src="load.assigned_to.user.avatar"
+                    :src="avatarSrc(load.assigned_to.user.avatar)"
                     class="contact__image"
                     alt=""
                 />
@@ -31,11 +31,14 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
+import { defaultAvatar } from "../../utils/constants";
 
 export default {
     name: "ContactList",
     data() {
-        return {};
+        return {
+            publicPath: process.env.BASE_URL
+        };
     },
     computed: {
         ...mapState({
@@ -52,8 +55,15 @@ export default {
     },
     methods: {
         ...mapActions(["getAssignedLoads"]),
-        selectDialog(loadId) {
-            this.$emit("selectedDialog", loadId);
+        selectDialog(loadId, name) {
+            this.$emit("selectedDialog", { loadId, name });
+        },
+        avatarSrc(src) {
+            if (src) {
+                return src;
+            } else {
+                return `${this.publicPath}${defaultAvatar}`;
+            }
         }
     }
 };

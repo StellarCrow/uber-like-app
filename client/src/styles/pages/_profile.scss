@@ -23,6 +23,8 @@
 
     &__contacts {
         flex: 0 1 55%;
+        padding: 5% 0 5% 4%;
+        background-color: rgba($color: $success-color, $alpha: 0.3);
     }
 
     &__chat {

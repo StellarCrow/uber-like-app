@@ -38,10 +38,15 @@
         </div>
         <div class="profile__row" v-if="isShipper">
             <div class="profile__contacts">
+                <div class="profile__title">Discuss Assigned Loads</div>
                 <ContactList @selectedDialog="getRoom" />
             </div>
             <div class="profile__chat">
-                <Messenger :room="this.room" v-if="room" />
+                <Messenger
+                    :room="this.room"
+                    :contactName="this.contactName"
+                    v-if="room"
+                />
             </div>
         </div>
     </div>
@@ -68,7 +73,8 @@ export default {
     },
     data() {
         return {
-            room: ""
+            room: "",
+            contactName: ""
         };
     },
     computed: {
@@ -101,8 +107,9 @@ export default {
             "getShipperProfile",
             "getAssignedLoad"
         ]),
-        getRoom(room) {
-            this.room = room;
+        getRoom(roomDetails) {
+            this.room = roomDetails.loadId;
+            this.contactName = roomDetails.name;
         }
     }
 };

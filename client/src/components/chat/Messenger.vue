@@ -1,6 +1,6 @@
 <template>
     <div class="messenger">
-        <div class="messenger__header">Messenger</div>
+        <div class="messenger__header">{{ contactName || "Messenger" }}</div>
         <div class="messenger__body">
             <ul class="messenger__list">
                 <li
@@ -36,7 +36,7 @@ import { mapState } from "vuex";
 
 export default {
     name: "Messenger",
-    props: ["room", "interlocutor"],
+    props: ["room", "contactName"],
     data() {
         return {
             socket: io(serverUrl),
