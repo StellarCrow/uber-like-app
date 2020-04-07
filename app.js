@@ -2,11 +2,12 @@ const express = require('express');
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
+const SocketClass = require('./utils/sockets/Socket');
+const socket = new SocketClass(io);
 const cors = require('cors');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const config = require('config');
-const users = require('./utils/sockets/Users');
 const PORT = process.env.PORT || '3000';
 const MONGO_URI = `mongodb://${config.dbConfig.host}:${config.dbConfig.port}/${config.dbConfig.dbName}`;
 
@@ -36,35 +37,7 @@ app.use('/api', usersRoute);
 app.use('/api', driversRoute);
 app.use('/api', shippersRoute);
 
-io.on('connection', (socket) => {
-  socket.on('join', (params) => {
-    console.log(`${params.name} joined chat`);
-    const room = params.room;
-    const userId = params.userId;
-    socket.join(room);
-    users.removeUser(socket.id);
-    users.addUser(socket.id, userId, room);
-
-    io.to(room).emit('newMessage', {message: `${params.name} joined chat`});
-  });
-
-  socket.on('message', (data) => {
-    const message = data.message;
-    const user = users.getUser(socket.id);
-    const response = {
-      message: message,
-      userId: user.userId,
-    };
-    io.to(user.room).emit('newMessage', response);
-  });
-
-  socket.on('disconnect', () => {
-    const user = users.removeUser(socket.id);
-    if (user) {
-      io.to(user.room).emit('newMessage', 'offline');
-    }
-  });
-});
+socket.connect();
 
 server.listen(PORT, () => {
   console.log(`Listening to requests on http://localhost:${PORT}`);

@@ -73,8 +73,17 @@ export default {
                         text: data.message,
                         user: data.userId
                     };
+                    
                     this.history.push(message);
                 });
+
+                this.socket.on('online', data => {
+                    const message = {
+                        text: data.online,
+                        user: data.userId
+                    };
+                    this.history.push(message);
+                })
             });
         },
         joinRoom() {
