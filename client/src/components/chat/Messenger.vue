@@ -36,7 +36,7 @@ import { mapState } from "vuex";
 
 export default {
     name: "Messenger",
-    props: ["room"],
+    props: ["room", "interlocutor"],
     data() {
         return {
             socket: io(serverUrl),
@@ -73,17 +73,17 @@ export default {
                         text: data.message,
                         user: data.userId
                     };
-                    
+
                     this.history.push(message);
                 });
 
-                this.socket.on('online', data => {
+                this.socket.on("online", data => {
                     const message = {
-                        text: data.online,
+                        text: data.message,
                         user: data.userId
                     };
                     this.history.push(message);
-                })
+                });
             });
         },
         joinRoom() {

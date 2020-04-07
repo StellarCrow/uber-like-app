@@ -30,7 +30,11 @@ class Socket {
 
     this.io
         .to(room)
-        .emit('online', {online: true, userId: userId, name: params.name});
+        .emit('online', {
+          message: `${params.name} joined chat`,
+          userId: userId,
+          name: params.name,
+        });
   }
 
   messageHandler(socket, data) {
