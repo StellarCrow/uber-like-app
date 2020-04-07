@@ -45,15 +45,15 @@ export default {
     },
     computed: {
         ...mapState({
-            shipperId: state => state.Auth.user.role_id,
+            shipperId: state => state.Auth.user.role_id
         }),
         loadStatus: {
             get() {
-                return (this.status === "") ? "all" : this.status;
+                return this.status === "" ? "all" : this.status;
             },
             async set(value) {
                 this.status = value;
-                this.$router.push({ query: { filter: this.status } }); 
+                this.$router.push({ query: { filter: this.status } });
             }
         }
     },

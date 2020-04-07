@@ -1,0 +1,77 @@
+.messenger {
+    max-width: 100%;
+    height: 500px;
+    box-shadow: 0 0 5px $gray;
+
+    &__header {
+        height: 15%;
+        background-color: rgba($color: $success-color, $alpha: 0.6);
+        text-align: center;
+        padding: 1em 1.5em;
+        text-transform: uppercase;
+        font-family: $ff-headers--secondary;
+    }
+
+    &__body {
+        padding: 1em 1.5em;
+        background-color: $text-color--light;
+        font-weight: $light;
+        height: 250px;
+        overflow-y: scroll;
+
+        &::-webkit-scrollbar {
+            display: none;
+          }
+    }
+
+    &__list {
+        @include clean-list;
+        list-style-type: none;
+        display: flex;
+        flex-flow: column nowrap;
+    }
+
+    &__message {
+        margin-bottom: 5%;
+        max-width: 80%;
+    }
+
+    &__footer {
+        padding: 0.5em 1em;
+    }
+
+    &__form {
+        display: flex;
+        justify-content: space-between;
+        flex-flow: row nowrap;
+    }
+
+    &__button {
+        font-size: 0.8em;
+        background-color: $primary-color;
+    }
+
+    &__input {
+        border: 1px solid $gray;
+        border-radius: 0.8em;
+        padding: 0.3em 0.5em;
+        outline: none;
+        font-size: 0.8em;
+        flex: 0 1 60%;
+    }
+}
+
+.message {
+    padding: 0.3em 0.6em;
+    border-radius: 0.5em;
+
+    &--incoming {
+        background-color: $gray--light;
+        align-self: start;
+    }
+
+    &--outcoming {
+        background-color: rgba($color: $primary-color, $alpha: 0.2);
+        align-self: flex-end;
+    }
+}

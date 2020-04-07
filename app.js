@@ -1,5 +1,9 @@
 const express = require('express');
 const app = express();
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+const SocketClass = require('./utils/sockets/Socket');
+const socket = new SocketClass(io);
 const cors = require('cors');
 const logger = require('morgan');
 const mongoose = require('mongoose');
@@ -33,6 +37,8 @@ app.use('/api', usersRoute);
 app.use('/api', driversRoute);
 app.use('/api', shippersRoute);
 
-app.listen(PORT, () => {
+socket.connect();
+
+server.listen(PORT, () => {
   console.log(`Listening to requests on http://localhost:${PORT}`);
 });

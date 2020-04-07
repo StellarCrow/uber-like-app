@@ -159,6 +159,26 @@ class LoadModel {
       throw new ServerError(err.message);
     }
   }
+
+  async getAssignedLoads(shipperId) {
+    try {
+      const loads = await Load.find({
+        created_by: shipperId,
+        status: loadStatus.ASSIGNED,
+      })
+          .select('_id name assigned_to')
+          .populate({
+            path: 'assigned_to',
+            select: 'user -_id',
+            populate: {path: 'user', select: '-password'},
+          })
+          .populate('user', '-password')
+          .exec();
+      return loads;
+    } catch (err) {
+      throw new ServerError(err.message);
+    }
+  }
 }
 
 module.exports = new LoadModel();

@@ -27,12 +27,27 @@
                 <ItemsList />
             </div>
         </div>
-        <div class="profile__row">
-            <div class="profile__load" v-if="load">
+        <div class="profile__row" v-if="load">
+            <div class="profile__load">
                 <div class="profile__title">Assigned Load</div>
                 <LoadItem :load="this.load" />
             </div>
-            <div class="profile__chat"></div>
+            <div class="profile__chat">
+                <Messenger :room="this.load._id" />
+            </div>
+        </div>
+        <div class="profile__row" v-if="isShipper">
+            <div class="profile__contacts">
+                <div class="profile__title">Discuss Assigned Loads</div>
+                <ContactList @selectedDialog="getRoom" />
+            </div>
+            <div class="profile__chat">
+                <Messenger
+                    :room="this.room"
+                    :contactName="this.contactName"
+                    v-if="room"
+                />
+            </div>
         </div>
     </div>
 </template>
@@ -42,20 +57,35 @@ import ProfileDetails from "../components/ProfileDetails";
 import ItemsList from "../components/ItemsList";
 import LoadItem from "../components/LoadItem";
 import WeatherWidget from "../components/WeatherWidget";
+import Messenger from "../components/chat/Messenger";
+import ContactList from "../components/chat/ContactList";
 import { mapActions, mapState, mapGetters } from "vuex";
 
 export default {
     name: "Profile",
-    components: { ProfileDetails, ItemsList, LoadItem, WeatherWidget },
+    components: {
+        ProfileDetails,
+        ItemsList,
+        LoadItem,
+        WeatherWidget,
+        Messenger,
+        ContactList
+    },
     data() {
-        return {};
+        return {
+            room: "",
+            contactName: ""
+        };
     },
     computed: {
         ...mapState({
             role: state => state.Auth.role,
             load: state => state.Driver.assignedLoad
         }),
-        ...mapGetters(["userId"])
+        ...mapGetters(["userId"]),
+        isShipper() {
+            return this.role === "shipper";
+        }
     },
     async mounted() {
         try {
@@ -76,7 +106,11 @@ export default {
             "getDriverProfile",
             "getShipperProfile",
             "getAssignedLoad"
-        ])
+        ]),
+        getRoom(roomDetails) {
+            this.room = roomDetails.loadId;
+            this.contactName = roomDetails.name;
+        }
     }
 };
 </script>

@@ -100,6 +100,11 @@ class ShipperService {
     );
     return paginationInfo;
   }
+
+  async getAssignedLoads(shipperId) {
+    const loads = await LoadModel.getAssignedLoads(shipperId);
+    return loads;
+  }
 }
 
 module.exports = new ShipperService();

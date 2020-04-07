@@ -18,7 +18,17 @@
         background-color: rgba($color: $secondary-color, $alpha: 0.3);
         padding: 3% 2%;
         box-sizing: content-box;
-        min-width: 60%;
+        flex: 0 1 60%;
+    }
+
+    &__contacts {
+        flex: 0 1 55%;
+        padding: 5% 0 5% 4%;
+        background-color: rgba($color: $success-color, $alpha: 0.3);
+    }
+
+    &__chat {
+        flex: 0 1 40%;
     }
 
     &__items {
