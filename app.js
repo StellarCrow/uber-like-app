@@ -37,7 +37,6 @@ app.use('/api', driversRoute);
 app.use('/api', shippersRoute);
 
 io.on('connection', (socket) => {
-
   socket.on('join', (params) => {
     console.log(`${params.name} joined chat`);
     const room = params.room;
@@ -46,13 +45,17 @@ io.on('connection', (socket) => {
     users.removeUser(socket.id);
     users.addUser(socket.id, userId, room);
 
-    io.to(room).emit('newMessage', `${params.name} joined chat`);
+    io.to(room).emit('newMessage', {message: `${params.name} joined chat`});
   });
 
   socket.on('message', (data) => {
     const message = data.message;
     const user = users.getUser(socket.id);
-    io.to(user.room).emit('newMessage', message);
+    const response = {
+      message: message,
+      userId: user.userId,
+    };
+    io.to(user.room).emit('newMessage', response);
   });
 
   socket.on('disconnect', () => {

@@ -2,8 +2,8 @@
     <div class="messenger">
         <div class="messenger__header">Messenger</div>
         <div class="messenger__body">
-            <div v-for="(text, index) in this.history" :key="index">
-                {{ text }}
+            <div v-for="(message, index) in this.history" :key="index">
+                {{ message.text }}
             </div>
         </div>
         <div class="messenger__footer">
@@ -14,7 +14,9 @@
                     v-model="message"
                     placeholder="Write a message..."
                 />
-                <button type="submit" class="button messenger__button">Send</button>
+                <button type="submit" class="button messenger__button">
+                    Send
+                </button>
             </form>
         </div>
     </div>
@@ -42,7 +44,7 @@ export default {
         })
     },
     mounted() {
-        this.connectToRoom();
+
     },
     methods: {
         sendMessage() {
@@ -50,34 +52,53 @@ export default {
             this.message = "";
         },
         connectToRoom() {
-            this.history = [];
+            const params = {
+                room: this.room,
+                userId: this.userId,
+                name: this.username
+            };
             this.socket.on("connect", () => {
                 console.log("connected");
-                const params = {
-                    room: this.room,
-                    userId: this.userId,
-                    name: this.username
-                };
+
                 this.socket.emit("join", params);
+
+                this.socket.on("newMessage", data => {
+                    const message = {
+                        text: data.message,
+                        user: data.userId,
+                    }
+                    this.history.push(message);
+                });
             });
-            this.socket.on("newMessage", data => {
-                this.history.push(data);
-            });
+        },
+        joinRoom() {
+            this.history = []
+            const params = {
+                room: this.room,
+                userId: this.userId,
+                name: this.username
+            };
+            this.socket.emit("join", params);
         }
     },
-    // watch: {
-    //     room: {
-    //         immediate: true,
-    //         handler() {
-    //             console.log("In watcher");
+    watch: {
+        room: {
+            immediate: true,
+            handler(newValue, oldValue) {
+                console.log("In watcher");
+                if((newValue && oldValue) && (newValue !== oldValue)) {
+                    this.joinRoom();
+                }
                 
-    //             this.connectToRoom();
-    //         }
-    //     }
-    // }
+                if (newValue !== oldValue) {
+                    this.connectToRoom();
+                }
+            }
+        }
+    }
 };
 </script>
 
 <style lang="scss" scoped>
-@import '../../styles/components/_messenger.scss';
+@import "../../styles/components/_messenger.scss";
 </style>
