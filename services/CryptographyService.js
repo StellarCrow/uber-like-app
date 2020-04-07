@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const saltRounds = require('config').bcrypt_salt_rounds;
+const {saltRounds} = require('../utils/constants');
 const ServerError = require('../errors/ServerError');
 
 class CryptographyService {
