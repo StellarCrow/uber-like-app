@@ -2,9 +2,16 @@
     <div class="messenger">
         <div class="messenger__header">Messenger</div>
         <div class="messenger__body">
-            <div v-for="(message, index) in this.history" :key="index">
-                {{ message.text }}
-            </div>
+            <ul class="messenger__list">
+                <li
+                    v-for="(message, index) in this.history"
+                    :key="index"
+                    class="messenger__message message"
+                    :class="chooseMessageType(message.user)"
+                >
+                    {{ message.text }}
+                </li>
+            </ul>
         </div>
         <div class="messenger__footer">
             <form class="messenger__form" @submit.prevent="sendMessage">
@@ -43,13 +50,12 @@ export default {
             username: state => state.Auth.user.name
         })
     },
-    mounted() {
-
-    },
+    mounted() {},
     methods: {
         sendMessage() {
             this.socket.emit("message", { message: this.message });
             this.message = "";
+            this.scrollToEnd();
         },
         connectToRoom() {
             const params = {
@@ -65,31 +71,39 @@ export default {
                 this.socket.on("newMessage", data => {
                     const message = {
                         text: data.message,
-                        user: data.userId,
-                    }
+                        user: data.userId
+                    };
                     this.history.push(message);
                 });
             });
         },
         joinRoom() {
-            this.history = []
+            this.history = [];
             const params = {
                 room: this.room,
                 userId: this.userId,
                 name: this.username
             };
             this.socket.emit("join", params);
+        },
+        chooseMessageType(id) {
+            if (this.userId === id) {
+                return "message--outcoming";
+            } else return "message--incoming";
+        },
+        scrollToEnd() {
+            const container = this.$el.querySelector(".messenger__body");
+            container.scrollTop = container.scrollHeight;
         }
     },
     watch: {
         room: {
             immediate: true,
             handler(newValue, oldValue) {
-                console.log("In watcher");
-                if((newValue && oldValue) && (newValue !== oldValue)) {
+                if (newValue && oldValue && newValue !== oldValue) {
                     this.joinRoom();
                 }
-                
+
                 if (newValue !== oldValue) {
                     this.connectToRoom();
                 }

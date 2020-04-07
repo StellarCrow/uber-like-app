@@ -7,15 +7,21 @@
             @click="selectDialog(load._id)"
         >
             <div class="contact__avatar">
-                <img :src="load.assigned_to.user.avatar" class="contact__image" alt="">
+                <img
+                    :src="load.assigned_to.user.avatar"
+                    class="contact__image"
+                    alt=""
+                />
             </div>
             <div class="contact__details">
                 <div class="contact__name">
                     {{ load.assigned_to.user.name }}
                 </div>
-                <div class="contact__email">{{ load.assigned_to.user.email }}</div>
+                <div class="contact__email">
+                    {{ load.assigned_to.user.email }}
+                </div>
             </div>
-            
+
             <div class="contact__load">
                 {{ load.name }}
             </div>

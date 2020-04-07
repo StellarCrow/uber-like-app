@@ -16,7 +16,24 @@
         padding: 1em 1.5em;
         background-color: $text-color--light;
         font-weight: $light;
-        min-height: 250px;
+        height: 250px;
+        overflow-y: scroll;
+
+        &::-webkit-scrollbar {
+            display: none;
+          }
+    }
+
+    &__list {
+        @include clean-list;
+        list-style-type: none;
+        display: flex;
+        flex-flow: column nowrap;
+    }
+
+    &__message {
+        margin-bottom: 5%;
+        max-width: 80%;
     }
 
     &__footer {
@@ -41,5 +58,20 @@
         outline: none;
         font-size: 0.8em;
         flex: 0 1 60%;
+    }
+}
+
+.message {
+    padding: 0.3em 0.6em;
+    border-radius: 0.5em;
+
+    &--incoming {
+        background-color: $gray--light;
+        align-self: start;
+    }
+
+    &--outcoming {
+        background-color: rgba($color: $primary-color, $alpha: 0.2);
+        align-self: flex-end;
     }
 }
