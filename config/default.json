@@ -4,6 +4,14 @@
         "port": "27017",
         "dbName": "uber_like_app"
     },
-    "bcrypt_salt_rounds": 8,
-    "jwt_secret": "secret"
+    "jwt_secret": "secret",
+    "AWS": {
+        "accessKeyId": "accessKey",
+        "secretAccessKey": "secretAccessKey",
+        "BUCKET_NAME": "bucket-name",
+        "REGION": "region"
+    },
+    "weather": {
+        "apiKey": "apikey"
+    } 
 }

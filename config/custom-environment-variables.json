@@ -1,0 +1,17 @@
+{
+    "dbConfig": {
+        "host": "MONGO_HOST",
+        "port": "MONGO_PORT",
+        "dbName": "MONGO_DB_NAME"
+    },
+    "jwt_secret": "JWT_SECRET",
+    "AWS": {
+        "accessKeyId": "AWS_ACCESS_KEY",
+        "secretAccessKey": "AWS_SECRET_KEY",
+        "BUCKET_NAME": "BUCKET_NAME",
+        "REGION": "AWS_REGION"
+    },
+    "weather": {
+        "apiKey": "WEATHER_APIKEY"
+    } 
+}
