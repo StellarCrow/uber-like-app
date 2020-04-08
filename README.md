@@ -3,6 +3,9 @@ Uber-like service for delivering loads.
 Shippers create loads and post them. An app is looking for a free truck and assign posted load to a driver. 
 Drivers add trucks to their profile, assign to themselves one of them and receive a load to delivery. 
 
+## Backend for automated tests:
+https://github.com/StellarCrow/uber-like-app-backend
+
 ## Project setup
 
 ### Run server
@@ -21,6 +24,7 @@ npm run serve
 - MongoDB
 
 ### External Services that app uses
+You need to provide secret keys in config files for this services: 
 - [Amazon S3](https://aws.amazon.com/ru/) for uploading avatar;
 - [OpenWeatherMap](https://openweathermap.org/) for weather info;
 
