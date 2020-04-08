@@ -7,10 +7,18 @@ const validate = require('../middleware/requestValidator');
 /**
  * @api {post} /api/users Registrate new user
  * @apiName PostUser
- * @apiGroup User
+ * @apiGroup Users
+ *
+ * @apiParam {String} name User name
+ * @apiParam {String} email User email
+ * @apiParam {String} password User password for account
+ * @apiParam {String} role User role
  *
  *
  * @apiSuccess {Object} user registrated User.
+ *
+ * @apiError ServerError Server error
+ * @apiError EmailAlreadyRegistered Email is already exist in the system
  */
 
 router.post(
@@ -37,12 +45,19 @@ router.post(
 );
 
 /**
- * @api {post} /api/users Sign in user
+ * @api {post} /api/users/login Login user
  * @apiName PostUser
- * @apiGroup User
+ * @apiGroup Users
+ *
+ * @apiParam {String} email User email
+ * @apiParam {String} password User password for account
  *
  *
  * @apiSuccess {Object} user signed in User.
+ *
+ * @apiError ServerError Server error
+ * @apiError WrongEmail Account with email doesn't exist in the system
+ * @apiError WrongPassword Wrong password
  */
 
 router.post(
