@@ -45,9 +45,9 @@ router.post(
 );
 
 /**
- * @api {post} /api/users/login Sign in user
+ * @api {post} /api/users/login Login user
  * @apiName PostUser
- * @apiGroup User
+ * @apiGroup Users
  *
  * @apiParam {String} email User email
  * @apiParam {String} password User password for account

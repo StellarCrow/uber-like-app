@@ -1,0 +1,8 @@
+{
+    "name": "Krevetochka-delivery documentation",
+    "version": "1.0.0",
+    "description": "Uber-like app",
+    "template": {
+        "forceLanguage": "en"
+    }
+}
