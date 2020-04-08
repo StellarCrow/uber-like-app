@@ -42,7 +42,6 @@ const schemas = {
   createLoad: Joi.object({
     name: Joi.string().required(),
     description: Joi.string(),
-    status: Joi.string().pattern(/NEW/).required(),
     dimensions: Joi.object({
       width: Joi.number().required(),
       length: Joi.number().required(),

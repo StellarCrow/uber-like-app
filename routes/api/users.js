@@ -6,7 +6,19 @@ const UserService = require('../../services/UserService');
 const validate = require('../middleware/requestValidator');
 const schemas = require('../../validation/JoiSchemas');
 
-// update password
+/**
+ * @api {patch} /api/users/:id Update password
+ * @apiName UpdatePassword
+ * @apiGroup Users
+ *
+ * @apiParam {String} id User id
+ * @apiParam {String} password new password
+ *
+ * @apiSuccess {String} message Password was successfully updated!
+ *
+ * @apiError ServerError Server error
+ */
+
 router.patch(
     '/users/:id',
     validate(schemas.passwordUpdate, 'body'),
@@ -24,7 +36,19 @@ router.patch(
     },
 );
 
-// update avatar
+/**
+ * @api {post} /api/users/:id/avatar Upload avatar
+ * @apiName UploadAvatar
+ * @apiGroup Users
+ *
+ * @apiParam {String} id User id
+ * @apiParam {Object} file image file
+ *
+ * @apiSuccess {String} image path to uploaded image
+ *
+ * @apiError ServerError Server error
+ */
+
 router.post('/users/:id/avatar', upload.single('image'), async (req, res) => {
   const id = req.params.id;
 
