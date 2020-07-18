@@ -1,9 +1,5 @@
 {
-    "dbConfig": {
-        "host": "MONGO_HOST",
-        "port": "MONGO_PORT",
-        "dbName": "MONGO_DB_NAME"
-    },
+    "MONGOLAB_URI": "MONGOLAB_URI",
     "jwt_secret": "JWT_SECRET",
     "AWS": {
         "accessKeyId": "AWS_ACCESS_KEY",
@@ -13,5 +9,5 @@
     },
     "weather": {
         "apiKey": "WEATHER_APIKEY"
-    } 
+    }
 }

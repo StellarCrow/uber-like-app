@@ -27,8 +27,9 @@
     "eslint-config-google": "^0.14.0"
   },
   "scripts": {
-    "start": "nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "postinstall": "cd ./client && npm run build"
   },
   "repository": {
     "type": "git",

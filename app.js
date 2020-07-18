@@ -9,7 +9,8 @@ const logger = require('morgan');
 const mongoose = require('mongoose');
 const config = require('config');
 const PORT = process.env.PORT || '3000';
-const MONGO_URI = `mongodb://${config.dbConfig.host}:${config.dbConfig.port}/${config.dbConfig.dbName}`;
+const defaultMongoUri = 'mongodb://localhost:27017/uber';
+const MONGO_URI = config.MONGOLAB_URI || defaultMongoUri;
 
 mongoose.connect(MONGO_URI, {
   useNewUrlParser: true,
@@ -38,6 +39,11 @@ app.use('/api', driversRoute);
 app.use('/api', shippersRoute);
 
 socket.connect();
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(__dirname + '/public/'));
+  app.get('/*', (req, res) => res.sendFile(__dirname + '/public/index.html'));
+}
 
 server.listen(PORT, () => {
   console.log(`Listening to requests on http://localhost:${PORT}`);

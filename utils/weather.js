@@ -1,7 +1,7 @@
 const request = require('request-promise');
 const ServerError = require('../errors/ServerError');
 
-const apiKey = require('config').weather.apiKey;
+const apiKey = process.env.WEATHER_API_KEY || require('config').weather.apiKey;
 const {city} = require('./constants');
 const weatherUrl = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 

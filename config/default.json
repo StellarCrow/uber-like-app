@@ -1,9 +1,5 @@
 {
-    "dbConfig": {
-        "host": "localhost",
-        "port": "27017",
-        "dbName": "uber_like_app"
-    },
+    "MONGOLAB_URI": "url",
     "jwt_secret": "secret",
     "AWS": {
         "accessKeyId": "accessKey",
@@ -13,5 +9,5 @@
     },
     "weather": {
         "apiKey": "apikey"
-    } 
+    }
 }

@@ -1,4 +1,4 @@
-export const serverUrl = "http://localhost:3000";
+export const serverUrl = "/";
 
 export const defaultAvatar = "defaults/avatar.jpg";
 
