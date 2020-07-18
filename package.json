@@ -29,7 +29,7 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "postinstall": "cd ./client && npm run build"
+    "postinstall": "cd ./client && npm install && npm run build"
   },
   "repository": {
     "type": "git",
