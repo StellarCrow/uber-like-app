@@ -30,6 +30,11 @@ app.use(logger('dev'));
 app.use(cors());
 app.use(express.json());
 
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(__dirname + '/public/'));
+  app.get('/*', (req, res) => res.sendFile(__dirname + '/public/index.html'));
+}
+
 app.use('/api', registerRoute);
 
 app.use('/api', weatherRoute);
@@ -39,11 +44,6 @@ app.use('/api', driversRoute);
 app.use('/api', shippersRoute);
 
 socket.connect();
-
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(__dirname + '/public/'));
-  app.get('/*', (req, res) => res.sendFile(__dirname + '/public/index.html'));
-}
 
 server.listen(PORT, () => {
   console.log(`Listening to requests on http://localhost:${PORT}`);
