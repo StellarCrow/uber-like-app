@@ -215,8 +215,7 @@ export default {
                 dimensions: this.dimensions,
                 payload: this.payload,
                 deliveryAddress: this.deliveryAddress,
-                pickUpAddress: this.pickUpAddress,
-                status: "NEW"
+                pickUpAddress: this.pickUpAddress
             };
             try {
                 const res = await this.addNewLoad({
