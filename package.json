@@ -10,7 +10,7 @@
     "bcrypt": "^4.0.1",
     "config": "^3.3.0",
     "cors": "^2.8.5",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "joi-objectid": "^3.0.1",
     "jsonwebtoken": "^8.5.1",
     "jw-paginate": "^1.0.4",
